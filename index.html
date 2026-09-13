@@ -1,105 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gabriel Fortun Cantave</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:32px 12px 60px;overflow-x:hidden}
-    .tree{display:flex;flex-direction:column;align-items:center}
-    .vl{width:1px;background:#1e1e1e;margin:0 auto}
-    .h24{height:24px}.h20{height:20px}.h16{height:16px}
-    .nd{border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .25s,box-shadow .25s,border-color .25s;text-decoration:none;color:#666;z-index:2}
-    .nd:hover{transform:scale(1.1);color:#ccc}
-    .nd svg{fill:currentColor}
-    .lb{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:#333;text-align:center;margin-top:5px;white-space:nowrap}
-    .root{width:100px;height:100px;background:#fff;box-shadow:0 0 30px rgba(255,255,255,.05)}
-    .root:hover{box-shadow:0 0 50px rgba(255,255,255,.1)}
-    .root .lt{font-size:44px;font-weight:800;color:#0a0a0a}
-    .rn{font-size:13px;font-weight:600;letter-spacing:-.3px;margin-top:8px;color:#888}
-    @media(min-width:600px){.root{width:120px;height:120px}.root .lt{font-size:52px}}
-    .cat{width:56px;height:56px;background:#111;border:1px solid #1e1e1e}
-    .cat:hover{border-color:#444}
-    .cat .ct{font-size:15px;font-weight:700;color:#555}
-    .cat:hover .ct{color:#ccc}
-    @media(min-width:600px){.cat{width:64px;height:64px}}
-    .lf{width:44px;height:44px;background:#0e0e0e;border:1px solid #181818}
-    .lf:hover{border-color:#333}
-    .lf .em{font-size:18px}
-    .lf svg{width:16px;height:16px}
-    @media(min-width:600px){.lf{width:50px;height:50px}}
-    .row{display:flex;align-items:flex-start;justify-content:center;gap:16px;position:relative}
-    @media(min-width:600px){.row{gap:24px}}
-    .col{display:flex;flex-direction:column;align-items:center}
-    .hl{position:absolute;top:0;height:1px;background:#1e1e1e}
-    .sides{display:flex;gap:40px;width:100%;justify-content:center}
-    @media(min-width:600px){.sides{gap:60px}}
-    .branch{display:flex;flex-direction:column;align-items:center}
-    .ov{position:fixed;inset:0;background:rgba(0,0,0,.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s}
-    .ov.on{opacity:1;pointer-events:auto}
-    .bc{max-width:380px;width:92%;padding:32px 24px;background:#0e0e0e;border:1px solid #1a1a1a;border-radius:16px;text-align:center;transform:translateY(12px);transition:transform .25s}
-    .ov.on .bc{transform:translateY(0)}
-    .bc .av{width:60px;height:60px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 12px}
-    .bc .av span{font-size:28px;font-weight:800;color:#0a0a0a}
-    .bc h2{font-size:16px;font-weight:700;margin-bottom:2px}
-    .bc .su{font-size:11px;color:#555;margin-bottom:16px}
-    .bc .tx{font-size:12px;color:#888;line-height:1.7;text-align:left}
-    .bc .lk{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-    .bc .lk a{font-size:11px;color:#444;text-decoration:none;padding:6px 12px;border:1px solid #1a1a1a;border-radius:8px;transition:border-color .2s,color .2s}
-    .bc .lk a:hover{border-color:#333;color:#999}
-    .bc .cl{margin-top:16px;padding:8px 20px;background:#141414;border:1px solid #222;border-radius:8px;color:#666;font-size:11px;cursor:pointer;transition:background .2s}
-    .bc .cl:hover{background:#1a1a1a;color:#aaa}
-    .ph{margin-top:28px;display:flex;gap:14px;justify-content:center}
-    .ph a{font-size:10px;color:#222;text-decoration:none}
-    .ph a:hover{color:#555}
-    .gr{margin-top:36px;font-size:9px;color:#161616;letter-spacing:2px;text-transform:uppercase}
-    .gr:hover{color:#333}
-  </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gabriel Fortun Cantave</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#070707;color:#fff;min-height:100vh;overflow-x:hidden}
+
+/* Canvas for SVG lines */
+.canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+.canvas line{stroke:#1a1a1a;stroke-width:1}
+
+/* Page content */
+.page{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;padding:48px 20px 80px;min-height:100vh}
+
+/* Root */
+.root-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:48px}
+.root{width:110px;height:110px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,box-shadow .3s;box-shadow:0 0 40px rgba(255,255,255,.04)}
+.root:hover{transform:scale(1.06);box-shadow:0 0 60px rgba(255,255,255,.08)}
+.root span{font-size:48px;font-weight:800;color:#070707}
+@media(min-width:640px){.root{width:130px;height:130px}.root span{font-size:56px}}
+.root-name{font-size:15px;font-weight:600;color:#666;margin-top:12px;letter-spacing:-.3px}
+.root-sub{font-size:10px;color:#2a2a2a;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+
+/* Section */
+.section{width:100%;max-width:700px;margin-bottom:36px}
+.section-title{font-size:10px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#2a2a2a;margin-bottom:16px;padding-left:4px}
+
+/* Grid of cards */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(min-width:480px){.grid{grid-template-columns:repeat(3,1fr);gap:12px}}
+@media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+.grid.g2{grid-template-columns:repeat(2,1fr)}
+@media(min-width:480px){.grid.g2{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:640px){.grid.g2{grid-template-columns:repeat(5,1fr)}}
+
+/* Card */
+.card{background:#0d0d0d;border:1px solid #161616;border-radius:14px;padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:border-color .25s,background .25s,transform .25s;text-decoration:none;color:#555}
+.card:hover{border-color:#2a2a2a;background:#111;transform:translateY(-2px);color:#ccc}
+.card .icon{font-size:24px;line-height:1}
+.card svg{width:24px;height:24px;fill:currentColor}
+.card .name{font-size:10px;font-weight:500;letter-spacing:1px;text-transform:uppercase;text-align:center}
+.card.soon{opacity:.35;cursor:default}
+.card.soon:hover{border-color:#161616;background:#0d0d0d;transform:none;color:#555}
+.card .tag{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:#333;background:#0a0a0a;padding:2px 6px;border-radius:4px;margin-top:-4px}
+
+/* Divider line */
+.divider{width:1px;height:32px;background:linear-gradient(to bottom,#1a1a1a,transparent);margin:0 auto 36px}
+
+/* Bio overlay */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:200;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.on{opacity:1;pointer-events:auto}
+.bio{max-width:400px;width:92%;padding:36px 28px;background:#0c0c0c;border:1px solid #181818;border-radius:18px;text-align:center;transform:scale(.96);transition:transform .3s}
+.ov.on .bio{transform:scale(1)}
+.bio .av{width:64px;height:64px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+.bio .av span{font-size:30px;font-weight:800;color:#070707}
+.bio h2{font-size:17px;font-weight:700;margin-bottom:3px}
+.bio .su{font-size:11px;color:#444;margin-bottom:18px}
+.bio .tx{font-size:12.5px;color:#777;line-height:1.75;text-align:left}
+.bio .lk{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.bio .lk a{font-size:10px;color:#444;text-decoration:none;padding:5px 10px;border:1px solid #1a1a1a;border-radius:8px;transition:all .2s}
+.bio .lk a:hover{border-color:#333;color:#aaa}
+.bio .cl{margin-top:18px;padding:8px 22px;background:transparent;border:1px solid #222;border-radius:8px;color:#555;font-size:11px;cursor:pointer;transition:all .2s}
+.bio .cl:hover{border-color:#444;color:#aaa}
+
+/* Footer */
+.foot{margin-top:48px;text-align:center}
+.foot a{font-size:10px;color:#1a1a1a;text-decoration:none;margin:0 8px;transition:color .2s}
+.foot a:hover{color:#555}
+.foot .gr{font-size:8px;color:#111;letter-spacing:3px;text-transform:uppercase;margin-top:20px}
+</style>
 </head>
 <body>
-<div class="tree">
-  <div class="col">
-    <div class="nd root" onclick="document.getElementById('bio').classList.add('on')"><span class="lt">G</span></div>
-    <div class="rn">Gabriel Fortun Cantave</div>
+
+<div class="page">
+
+  <div class="root-wrap">
+    <div class="root" onclick="document.getElementById('bio').classList.add('on')"><span>G</span></div>
+    <div class="root-name">Gabriel Fortun Cantave</div>
+    <div class="root-sub">Biography</div>
   </div>
-  <div class="vl h24"></div>
-  <div class="row" style="gap:60px">
-    <div class="hl" style="left:calc(50% - 60px);width:120px"></div>
-    <div class="col"><div class="vl h16"></div><div class="nd cat"><span class="ct">P</span></div><div class="lb">Projects</div></div>
-    <div class="col"><div class="vl h16"></div><div class="nd cat"><span class="ct">C</span></div><div class="lb">Connect</div></div>
-  </div>
-  <div class="sides">
-    <div class="branch">
-      <div class="vl h20"></div>
-      <div class="row">
-        <div class="hl" style="left:calc(50% - 100px);width:200px"></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">🎪</span></div><div class="lb">Events</div></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">🌐</span></div><div class="lb">Web</div></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">👕</span></div><div class="lb">Clothing</div></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">🛒</span></div><div class="lb">Etsy</div></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">📈</span></div><div class="lb">Trading</div></div>
-        <div class="col"><div class="vl h16"></div><div class="nd lf"><span class="em">🤖</span></div><div class="lb">Hackathon</div></div>
+
+  <div class="divider"></div>
+
+  <!-- PROJECTS -->
+  <div class="section">
+    <div class="section-title">Projects</div>
+    <div class="grid">
+      <div class="card">
+        <div class="icon">🎪</div>
+        <div class="name">Events</div>
+      </div>
+      <div class="card">
+        <div class="icon">🌐</div>
+        <div class="name">Web Design</div>
+      </div>
+      <div class="card">
+        <div class="icon">👕</div>
+        <div class="name">Clothing</div>
+      </div>
+      <div class="card">
+        <div class="icon">🛒</div>
+        <div class="name">Etsy</div>
+      </div>
+      <div class="card">
+        <div class="icon">📈</div>
+        <div class="name">Trading</div>
+      </div>
+      <div class="card">
+        <div class="icon">🤖</div>
+        <div class="name">Claude Hackathon</div>
       </div>
     </div>
-    <div class="branch">
-      <div class="vl h20"></div>
-      <div class="row">
-        <div class="hl" style="left:calc(50% - 55px);width:110px"></div>
-        <div class="col"><div class="vl h16"></div><a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank" class="nd lf"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg></a><div class="lb">LinkedIn</div></div>
-        <div class="col"><div class="vl h16"></div><a href="https://www.instagram.com/frtn.gabriel" target="_blank" class="nd lf"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg></a><div class="lb">Insta</div></div>
-        <div class="col"><div class="vl h16"></div><a href="https://github.com/gabrielfortuncantave-dot" target="_blank" class="nd lf"><svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg></a><div class="lb">GitHub</div></div>
-        <div class="col"><div class="vl h16"></div><a href="mailto:gabrielfortuncantave@gmail.com" class="nd lf"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg></a><div class="lb">Email</div></div>
-        <div class="col"><div class="vl h16"></div><a href="https://revolut.me/gfortuncantave" target="_blank" class="nd lf"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.8 15.4V19h-1.6v-1.6c-1.52-.16-2.88-.88-3.72-1.96l1.28-1.08c.64.8 1.56 1.32 2.56 1.44v-3.24c-2-.44-3.2-1.36-3.2-3.04 0-1.72 1.36-3 3.2-3.16V4h1.6v1.36c1.28.16 2.4.72 3.2 1.64l-1.24 1.12c-.56-.64-1.28-1.04-2.08-1.16v3.08c2.12.48 3.28 1.4 3.28 3.12 0 1.84-1.4 3.08-3.28 3.24zm-1.6-7.52V7.04c-.88.12-1.52.68-1.52 1.44 0 .68.44 1.16 1.52 1.4zm1.6 5.24c.96-.12 1.6-.72 1.6-1.52 0-.72-.48-1.2-1.6-1.48v3z"/></svg></a><div class="lb">Revolut</div></div>
-      </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- CONNECT -->
+  <div class="section">
+    <div class="section-title">Connect</div>
+    <div class="grid g2">
+      <a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank" class="card">
+        <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        <div class="name">LinkedIn</div>
+      </a>
+      <a href="https://www.instagram.com/frtn.gabriel" target="_blank" class="card">
+        <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+        <div class="name">Instagram</div>
+      </a>
+      <a href="https://github.com/gabrielfortuncantave-dot" target="_blank" class="card">
+        <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+        <div class="name">GitHub</div>
+      </a>
+      <a href="mailto:gabrielfortuncantave@gmail.com" class="card">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        <div class="name">Email</div>
+      </a>
+      <a href="https://revolut.me/gfortuncantave" target="_blank" class="card">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.22V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.94s4.18 1.36 4.18 3.87c0 1.87-1.38 2.93-3.12 3.17z"/></svg>
+        <div class="name">Revolut</div>
+      </a>
     </div>
   </div>
+
+  <div class="foot">
+    <a href="tel:+6580745034">+65 8074 5034</a>
+    <a href="tel:+33787211613">+33 7 87 21 16 13</a>
+    <div class="gr">the tree grows</div>
+  </div>
+
 </div>
-<div class="ph"><a href="tel:+6580745034">+65 8074 5034</a><a href="tel:+33787211613">+33 7 87 21 16 13</a></div>
-<div class="gr">the tree grows</div>
+
+<!-- Bio -->
 <div class="ov" id="bio" onclick="if(event.target===this)this.classList.remove('on')">
-  <div class="bc">
+  <div class="bio">
     <div class="av"><span>G</span></div>
     <h2>Gabriel Fortun Cantave</h2>
     <p class="su">ESSEC Business School &middot; Global BBA &middot; Singapore</p>
@@ -114,5 +170,6 @@
     <button class="cl" onclick="document.getElementById('bio').classList.remove('on')">Close</button>
   </div>
 </div>
+
 </body>
 </html>
