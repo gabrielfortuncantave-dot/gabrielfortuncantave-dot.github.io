@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gabriel Fortun Cantave</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 16px;overflow-x:hidden}
+
+    .tree{display:flex;flex-direction:column;align-items:center;gap:0;position:relative}
+
+    /* Nodes */
+    .node{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s,box-shadow .3s;position:relative;text-decoration:none;color:#999;z-index:2}
+    .node:hover{transform:scale(1.1)}
+    .node svg{width:28px;height:28px;fill:currentColor}
+    .node-label{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#444;text-align:center;margin-top:6px;white-space:nowrap}
+
+    /* Root */
+    .root{width:110px;height:110px;background:#fff;box-shadow:0 0 40px rgba(255,255,255,.06)}
+    .root:hover{box-shadow:0 0 60px rgba(255,255,255,.12)}
+    .root .letter{font-size:50px;font-weight:800;color:#0a0a0a;line-height:1}
+    .root-label{font-size:11px;letter-spacing:2px;color:#555;margin-top:8px}
+    @media(min-width:600px){.root{width:130px;height:130px}.root .letter{font-size:58px}}
+
+    /* Branch nodes */
+    .branch{background:#131313;border:1px solid #222}
+    .branch:hover{border-color:#444;color:#fff}
+
+    /* Trunk line */
+    .trunk{width:1px;height:36px;background:linear-gradient(to bottom,#333,#1a1a1a);margin:0 auto}
+    @media(min-width:600px){.trunk{height:44px}}
+
+    /* Rows */
+    .row{display:flex;align-items:flex-start;justify-content:center;gap:32px;position:relative}
+    @media(min-width:600px){.row{gap:52px}}
+
+    /* Horizontal connector between siblings */
+    .row::before{content:'';position:absolute;top:0;height:1px;background:#222;z-index:1}
+    .row-3::before{left:calc(50% - 100px);width:200px}
+    .row-2::before{left:calc(50% - 68px);width:136px}
+    @media(min-width:600px){.row-3::before{left:calc(50% - 140px);width:280px}.row-2::before{left:calc(50% - 100px);width:200px}}
+
+    /* Vertical connectors from horizontal line to each node */
+    .col{display:flex;flex-direction:column;align-items:center}
+    .col::before{content:'';width:1px;height:20px;background:#222}
+
+    /* Leaf indicator */
+    .leaf-dot{width:6px;height:6px;border-radius:50%;background:#222;margin-top:8px}
+
+    /* Bio overlay */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+    .overlay.active{opacity:1;pointer-events:auto}
+    .bio-card{max-width:400px;width:90%;padding:36px 28px;background:#111;border:1px solid #222;border-radius:18px;text-align:center;transform:translateY(16px);transition:transform .3s}
+    .overlay.active .bio-card{transform:translateY(0)}
+    .bio-card .av{width:70px;height:70px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 14px}
+    .bio-card .av span{font-size:32px;font-weight:800;color:#0a0a0a}
+    .bio-card h2{font-size:18px;font-weight:700;margin-bottom:3px}
+    .bio-card .sub{font-size:12px;color:#666;margin-bottom:18px}
+    .bio-card .txt{font-size:13px;color:#aaa;line-height:1.7;text-align:left}
+    .bio-card .close{margin-top:20px;padding:9px 24px;background:#1a1a1a;border:1px solid #2a2a2a;border-radius:10px;color:#888;font-size:12px;cursor:pointer;transition:background .2s}
+    .bio-card .close:hover{background:#222;color:#ccc}
+
+    /* Phone row */
+    .phones{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+    .phones a{font-size:11px;color:#333;text-decoration:none;transition:color .2s}
+    .phones a:hover{color:#888}
+
+    /* Growing hint */
+    .hint{margin-top:40px;font-size:10px;color:#1a1a1a;letter-spacing:1px;text-transform:uppercase;text-align:center;transition:color .3s}
+    .hint:hover{color:#333}
+  </style>
+</head>
+<body>
+
+  <div class="tree">
+
+    <!-- ROOT: Biography -->
+    <div class="col" style="border:none">
+      <div class="node root" onclick="document.getElementById('bio').classList.add('active')">
+        <span class="letter">G</span>
+      </div>
+      <div class="root-label">Gabriel Fortun Cantave</div>
+    </div>
+
+    <div class="trunk"></div>
+
+    <!-- LEVEL 1: 3 branches -->
+    <div class="row row-3">
+      <div class="col">
+        <a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank" class="node branch">
+          <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>
+        </a>
+        <div class="node-label">LinkedIn</div>
+        <div class="leaf-dot"></div>
+      </div>
+      <div class="col">
+        <a href="https://www.instagram.com/frtn.gabriel" target="_blank" class="node branch">
+          <svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+        </a>
+        <div class="node-label">Instagram</div>
+        <div class="leaf-dot"></div>
+      </div>
+      <div class="col">
+        <a href="https://github.com/gabrielfortuncantave-dot" target="_blank" class="node branch">
+          <svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>
+        </a>
+        <div class="node-label">GitHub</div>
+        <div class="leaf-dot"></div>
+      </div>
+    </div>
+
+    <div class="trunk"></div>
+
+    <!-- LEVEL 2: 2 branches -->
+    <div class="row row-2">
+      <div class="col">
+        <a href="mailto:gabrielfortuncantave@gmail.com" class="node branch">
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </a>
+        <div class="node-label">Email</div>
+        <div class="leaf-dot"></div>
+      </div>
+      <div class="col">
+        <a href="https://revolut.me/gfortuncantave" target="_blank" class="node branch">
+          <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm.8 15.4V19h-1.6v-1.6c-1.52-.16-2.88-.88-3.72-1.96l1.28-1.08c.64.8 1.56 1.32 2.56 1.44v-3.24c-2-.44-3.2-1.36-3.2-3.04 0-1.72 1.36-3 3.2-3.16V4h1.6v1.36c1.28.16 2.4.72 3.2 1.64l-1.24 1.12c-.56-.64-1.28-1.04-2.08-1.16v3.08c2.12.48 3.28 1.4 3.28 3.12 0 1.84-1.4 3.08-3.28 3.24zm-1.6-7.52V7.04c-.88.12-1.52.68-1.52 1.44 0 .68.44 1.16 1.52 1.4zm1.6 5.24c.96-.12 1.6-.72 1.6-1.52 0-.72-.48-1.2-1.6-1.48v3z"/></svg>
+        </a>
+        <div class="node-label">Revolut</div>
+        <div class="leaf-dot"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="phones">
+    <a href="tel:+6580745034">+65 8074 5034</a>
+    <a href="tel:+33787211613">+33 7 87 21 16 13</a>
+  </div>
+
+  <div class="hint">the tree grows</div>
+
+  <!-- Bio Overlay -->
+  <div class="overlay" id="bio" onclick="if(event.target===this)this.classList.remove('active')">
+    <div class="bio-card">
+      <div class="av"><span>G</span></div>
+      <h2>Gabriel Fortun Cantave</h2>
+      <p class="sub">ESSEC Business School &middot; Global BBA &middot; Singapore</p>
+      <div class="txt">
+        Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.<br><br>
+        I have organized 9 large-scale events in Paris over the past two years, leading a dedicated communication team across rented venues in the 6th arrondissement.<br><br>
+        Currently exploring AI and building communities around Claude and Anthropic tools. 9 Anthropic Academy certifications completed. Aiming to found the first Claude Builder Club at ESSEC Asia-Pacific.
+      </div>
+      <button class="close" onclick="document.getElementById('bio').classList.remove('active')">Close</button>
+    </div>
+  </div>
+
+</body>
+</html>
