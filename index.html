@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gabriel Fortun Cantave</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#08090B;
+  --line:rgba(255,255,255,.07);
+  --line-hi:rgba(255,255,255,.18);
+  --txt:rgba(236,240,245,.92);
+  --txt-2:rgba(236,240,245,.45);
+  --txt-3:rgba(236,240,245,.22);
+  --accent:rgba(150,180,215,.55);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg)}
+body{
+  font-family:'Space Grotesk',system-ui,sans-serif;
+  color:var(--txt);
+  -webkit-font-smoothing:antialiased;
+}
+
+canvas#field{position:fixed;inset:0;z-index:1}
+
+/* ---------- frame ---------- */
+.frame{position:fixed;inset:28px;z-index:20;pointer-events:none;border:1px solid rgba(255,255,255,.035)}
+.meta{
+  position:fixed;z-index:21;pointer-events:none;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:300;letter-spacing:.18em;
+  color:var(--txt-3);text-transform:uppercase;
+}
+.meta-tl{top:40px;left:44px}
+.meta-tr{top:40px;right:44px}
+.meta-bl{bottom:40px;left:44px}
+.meta-br{bottom:40px;right:44px}
+
+/* ---------- center ---------- */
+.core{
+  position:fixed;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  z-index:10;text-align:center;
+  pointer-events:none;user-select:none;
+}
+.mark{
+  font-size:64px;font-weight:300;
+  letter-spacing:.04em;
+  color:var(--txt);
+  line-height:1;
+  pointer-events:auto;cursor:pointer;
+  transition:opacity .5s ease;
+  opacity:.92;
+}
+.mark:hover{opacity:1}
+.mark-ring{
+  position:absolute;top:50%;left:50%;
+  width:132px;height:132px;
+  margin:-66px 0 0 -66px;
+  border:1px solid rgba(255,255,255,.05);
+  border-radius:50%;
+  pointer-events:none;
+  animation:breathe 7s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{transform:scale(1);opacity:.5}
+  50%{transform:scale(1.05);opacity:.9}
+}
+.name{
+  margin-top:22px;
+  font-size:12px;font-weight:400;
+  letter-spacing:.42em;text-transform:uppercase;
+  color:var(--txt-2);
+  padding-left:.42em;
+}
+.role{
+  margin-top:9px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:300;
+  letter-spacing:.16em;
+  color:var(--txt-3);
+  min-height:14px;
+}
+
+/* ---------- panels ---------- */
+.panel{
+  position:fixed;z-index:5;
+  width:150px;padding:18px 16px 16px;
+  border:1px solid var(--line);
+  border-radius:2px;
+  background:rgba(255,255,255,.012);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:.14;
+  transform:translateY(4px);
+  transition:opacity .7s cubic-bezier(.22,1,.36,1),
+             transform .7s cubic-bezier(.22,1,.36,1),
+             border-color .45s ease,
+             background .45s ease;
+  cursor:pointer;
+}
+.panel.near{opacity:1;transform:translateY(0)}
+.panel:hover{
+  border-color:var(--line-hi);
+  background:rgba(255,255,255,.028);
+}
+.panel .idx{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:300;
+  letter-spacing:.14em;
+  color:var(--txt-3);
+  display:block;margin-bottom:14px;
+}
+.panel .ttl{
+  font-size:13px;font-weight:400;
+  letter-spacing:.03em;
+  color:var(--txt-2);
+  transition:color .45s ease;
+}
+.panel:hover .ttl{color:var(--txt)}
+.panel .rule{
+  margin-top:12px;height:1px;width:100%;
+  background:var(--line);
+  position:relative;overflow:hidden;
+}
+.panel .rule::after{
+  content:'';position:absolute;inset:0;
+  background:var(--accent);
+  transform:translateX(-100%);
+  transition:transform .6s cubic-bezier(.22,1,.36,1);
+}
+.panel:hover .rule::after{transform:translateX(0)}
+
+.p0{top:13%;left:50%;margin-left:-75px}
+.p1{top:27%;left:13%}
+.p2{top:27%;right:13%}
+.p3{top:52%;left:7%}
+.p4{top:52%;right:7%}
+.p5{bottom:16%;left:24%}
+.p6{bottom:16%;right:24%}
+
+/* ---------- overlay ---------- */
+.ov{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(8,9,11,.88);
+  backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .55s ease;
+}
+.ov.on{opacity:1;pointer-events:auto}
+.card{
+  width:min(430px,92%);
+  padding:34px 30px 28px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  background:rgba(255,255,255,.018);
+  max-height:88vh;overflow-y:auto;
+  transform:translateY(12px);
+  transition:transform .55s cubic-bezier(.22,1,.36,1);
+}
+.ov.on .card{transform:translateY(0)}
+.card h2{
+  font-size:15px;font-weight:500;letter-spacing:.02em;
+  color:var(--txt);
+}
+.card .sub{
+  margin-top:5px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:300;letter-spacing:.13em;
+  color:var(--txt-3);text-transform:uppercase;
+}
+.card .div{height:1px;background:var(--line);margin:20px 0}
+.card .body{
+  font-size:13.5px;font-weight:300;line-height:1.85;
+  color:var(--txt-2);
+}
+.lab{
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:300;letter-spacing:.2em;
+  color:var(--txt-3);text-transform:uppercase;
+  margin-bottom:13px;
+}
+.links{display:flex;flex-wrap:wrap;gap:7px}
+.links a{
+  font-size:12px;font-weight:300;letter-spacing:.01em;
+  color:var(--txt-2);text-decoration:none;
+  padding:7px 13px;
+  border:1px solid var(--line);
+  border-radius:2px;
+  transition:border-color .35s ease,color .35s ease;
+  display:flex;align-items:center;gap:7px;
+}
+.links a:hover{border-color:var(--line-hi);color:var(--txt)}
+.links a svg{width:12px;height:12px;fill:currentColor;opacity:.6}
+.tel{
+  display:flex;gap:18px;margin-top:14px;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9.5px;font-weight:300;letter-spacing:.08em;
+}
+.tel a{color:var(--txt-3);text-decoration:none;transition:color .35s}
+.tel a:hover{color:var(--txt-2)}
+.close{
+  margin-top:24px;width:100%;padding:11px;
+  background:none;border:1px solid var(--line);
+  border-radius:2px;cursor:pointer;
+  font-family:'JetBrains Mono',monospace;
+  font-size:9px;font-weight:300;letter-spacing:.2em;
+  color:var(--txt-3);text-transform:uppercase;
+  transition:border-color .35s,color .35s;
+}
+.close:hover{border-color:var(--line-hi);color:var(--txt-2)}
+
+@media(max-width:820px){
+  .frame{inset:16px}
+  .meta{font-size:8.5px}
+  .meta-tl{top:26px;left:30px}.meta-tr{top:26px;right:30px}
+  .meta-bl{bottom:26px;left:30px}.meta-br{bottom:26px;right:30px}
+  .mark{font-size:48px}
+  .mark-ring{width:104px;height:104px;margin:-52px 0 0 -52px}
+  .name{font-size:10px;letter-spacing:.3em;padding-left:.3em}
+  .panel{width:112px;padding:13px 12px 12px;opacity:1;transform:none}
+  .panel .ttl{font-size:11px}
+  .panel .idx{margin-bottom:9px;font-size:8px}
+  .p0{top:9%;left:50%;margin-left:-56px}
+  .p1{top:22%;left:4%}.p2{top:22%;right:4%}
+  .p3{top:49%;left:2%}.p4{top:49%;right:2%}
+  .p5{bottom:13%;left:7%}.p6{bottom:13%;right:7%}
+}
+</style>
+</head>
+<body>
+
+<canvas id="field"></canvas>
+
+<div class="frame"></div>
+<div class="meta meta-tl">Gabriel Fortun Cantave</div>
+<div class="meta meta-tr">Singapore</div>
+<div class="meta meta-bl">ESSEC / Global BBA</div>
+<div class="meta meta-br" id="clock">--:--</div>
+
+<div class="core">
+  <div style="position:relative;display:inline-block">
+    <div class="mark-ring"></div>
+    <div class="mark" id="mark">G</div>
+  </div>
+  <div class="name">Gabriel Fortun Cantave</div>
+  <div class="role" id="role"></div>
+</div>
+
+<div class="panel p0"><span class="idx">01</span><div class="ttl">Events</div><div class="rule"></div></div>
+<div class="panel p1"><span class="idx">02</span><div class="ttl">Web Design</div><div class="rule"></div></div>
+<div class="panel p2"><span class="idx">03</span><div class="ttl">Clothing</div><div class="rule"></div></div>
+<div class="panel p3"><span class="idx">04</span><div class="ttl">Trading</div><div class="rule"></div></div>
+<div class="panel p4"><span class="idx">05</span><div class="ttl">Etsy</div><div class="rule"></div></div>
+<div class="panel p5"><span class="idx">06</span><div class="ttl">Hackathon</div><div class="rule"></div></div>
+<div class="panel p6"><span class="idx">07</span><div class="ttl">Ideas</div><div class="rule"></div></div>
+
+<div class="ov" id="ov" onclick="if(event.target===this)this.classList.remove('on')">
+  <div class="card">
+    <h2>Gabriel Fortun Cantave</h2>
+    <div class="sub">ESSEC Business School / Global BBA / Singapore</div>
+    <div class="div"></div>
+    <div class="body">Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.<br><br>Building projects across events, web design, e-commerce and trading. Exploring AI with 9 Anthropic Academy certifications completed.</div>
+    <div class="div"></div>
+    <div class="lab">Connect</div>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank"><svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h14m-.5 15.5v-5.3a3.26 3.26 0 00-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 011.4 1.4v4.93h2.79M6.88 8.56a1.68 1.68 0 001.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 00-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37h2.77z"/></svg>LinkedIn</a>
+      <a href="https://www.instagram.com/frtn.gabriel" target="_blank"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5M12 7a5 5 0 110 10 5 5 0 010-10m0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>Instagram</a>
+      <a href="https://github.com/gabrielfortuncantave-dot" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2A10 10 0 002 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33.85 0 1.71.11 2.5.33 1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0012 2z"/></svg>GitHub</a>
+      <a href="mailto:gabrielfortuncantave@gmail.com"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>Email</a>
+      <a href="https://revolut.me/gfortuncantave" target="_blank"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.22V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.94s4.18 1.36 4.18 3.87c0 1.87-1.38 2.93-3.12 3.17z"/></svg>Revolut</a>
+    </div>
+    <div class="tel">
+      <a href="tel:+6580745034">+65 8074 5034</a>
+      <a href="tel:+33787211613">+33 7 87 21 16 13</a>
+    </div>
+    <button class="close" onclick="document.getElementById('ov').classList.remove('on')">Close</button>
+  </div>
+</div>
+
+<script>
+/* ---------- quiet particle field ---------- */
+const c = document.getElementById('field');
+const x = c.getContext('2d');
+let W,H,CX,CY;
+const M = {x:-9999,y:-9999};
+const N = 170;
+const pts = [];
+
+function size(){
+  W = c.width = innerWidth;
+  H = c.height = innerHeight;
+  CX = W/2; CY = H/2;
+}
+size();
+addEventListener('resize',size);
+
+for(let i=0;i<N;i++){
+  const a = Math.random()*Math.PI*2;
+  const r = 60 + Math.pow(Math.random(),.65)*Math.min(W,H)*.42;
+  pts.push({
+    a, r,
+    x: CX+Math.cos(a)*r, y: CY+Math.sin(a)*r,
+    s: Math.random()*1.05+.25,
+    sp: (Math.random()-.5)*.00035,
+    o: Math.random()*.22+.05,
+    ph: Math.random()*Math.PI*2,
+    dx:0, dy:0
+  });
+}
+
+function tick(){
+  x.clearRect(0,0,W,H);
+
+  for(const p of pts){
+    p.a += p.sp;
+    p.ph += .006;
+    const tx = CX+Math.cos(p.a)*p.r;
+    const ty = CY+Math.sin(p.a)*p.r;
+
+    /* gentle drift toward orbit */
+    p.x += (tx-p.x)*.015;
+    p.y += (ty-p.y)*.015;
+
+    /* soft mouse parallax — subtle push, no jitter */
+    const ddx = p.x-M.x, ddy = p.y-M.y;
+    const d = Math.hypot(ddx,ddy);
+    const R = 170;
+    if(d<R && d>0){
+      const f = (R-d)/R;
+      p.dx += (ddx/d)*f*.9;
+      p.dy += (ddy/d)*f*.9;
+    }
+    p.dx *= .90; p.dy *= .90;
+
+    const px = p.x+p.dx, py = p.y+p.dy;
+    const o = p.o*(.72+.28*Math.sin(p.ph));
+
+    x.beginPath();
+    x.arc(px,py,p.s,0,6.283);
+    x.fillStyle = 'rgba(214,226,240,'+o+')';
+    x.fill();
+    p._px = px; p._py = py;
+  }
+
+  /* sparse hairline links */
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const a=pts[i], b=pts[j];
+      const dx=a._px-b._px, dy=a._py-b._py;
+      const d2=dx*dx+dy*dy;
+      if(d2<9500){
+        const al=(1-d2/9500)*.055;
+        x.beginPath();
+        x.moveTo(a._px,a._py);
+        x.lineTo(b._px,b._py);
+        x.strokeStyle='rgba(190,208,228,'+al+')';
+        x.lineWidth=.5;
+        x.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* ---------- proximity reveal ---------- */
+const panels=[...document.querySelectorAll('.panel')];
+function near(mx,my){
+  for(const p of panels){
+    const r=p.getBoundingClientRect();
+    const d=Math.hypot(mx-(r.left+r.width/2), my-(r.top+r.height/2));
+    if(d<300) p.classList.add('near');
+  }
+}
+addEventListener('mousemove',e=>{
+  M.x=e.clientX; M.y=e.clientY;
+  near(e.clientX,e.clientY);
+});
+addEventListener('touchmove',e=>{
+  const t=e.touches[0];
+  M.x=t.clientX; M.y=t.clientY;
+},{passive:true});
+
+/* ---------- overlay ---------- */
+document.getElementById('mark').addEventListener('click',()=>{
+  document.getElementById('ov').classList.add('on');
+});
+addEventListener('keydown',e=>{
+  if(e.key==='Escape') document.getElementById('ov').classList.remove('on');
+});
+
+/* ---------- clock ---------- */
+function clk(){
+  const d=new Date();
+  document.getElementById('clock').textContent=
+    String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+clk(); setInterval(clk,10000);
+
+/* ---------- role cycle ---------- */
+const roles=['Global BBA Student','Builder','Web Design','AI & Automation'];
+let ri=0, ci=0, del=false;
+const rEl=document.getElementById('role');
+function type(){
+  const cur=roles[ri];
+  if(!del){
+    rEl.textContent=cur.slice(0,++ci);
+    if(ci===cur.length){del=true;return setTimeout(type,2600);}
+    setTimeout(type,55);
+  }else{
+    rEl.textContent=cur.slice(0,--ci);
+    if(ci===0){del=false;ri=(ri+1)%roles.length;return setTimeout(type,500);}
+    setTimeout(type,26);
+  }
+}
+setTimeout(type,900);
+</script>
+
+</body>
+</html>
