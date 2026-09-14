@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Gabriel Fortun Cantave</title>
+<meta name="description" content="Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#020503;
+  --w:#FFFFFF;
+  --w2:rgba(214,244,224,.44);
+  --w3:rgba(214,244,224,.18);
+  --hair:rgba(150,240,180,.09);
+  --g1:74,222,128;       /* bright leaf green */
+  --g2:34,160,94;        /* mid green        */
+  --eo:cubic-bezier(.25,.46,.45,.94);
+  --drawer:cubic-bezier(.32,.72,0,1);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg)}
+body{font-family:'JetBrains Mono',ui-monospace,monospace;color:var(--w);-webkit-font-smoothing:antialiased}
+
+#stage{position:fixed;inset:0;transform-origin:50% 0%;
+  transition:transform 500ms var(--drawer),filter 500ms var(--drawer);will-change:transform}
+body.open #stage{transform:scale(.955) translateY(12px);filter:brightness(.45)}
+
+canvas#sky{position:fixed;inset:0;z-index:1}
+canvas#tree{position:fixed;inset:0;z-index:2}
+.vig{position:fixed;inset:0;z-index:3;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 40%,transparent 42%,rgba(0,0,0,.55) 100%)}
+
+/* ---------- corner labels ---------- */
+.lab{position:fixed;z-index:30;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--w2);opacity:0}
+.l-tl{top:26px;left:28px}
+.l-tr{top:26px;right:28px;text-align:right}
+.l-bl{bottom:26px;left:28px}
+.l-br{bottom:26px;right:28px}
+.lab .dim{color:var(--w3);display:block;margin-top:5px}
+#bioBtn{font-family:inherit;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--w2);background:none;border:none;cursor:pointer;padding:0;
+  display:inline-flex;align-items:center;gap:8px;
+  transition:color 180ms var(--eo),transform 180ms var(--eo)}
+#bioBtn:hover{color:rgb(var(--g1))}
+#bioBtn:active{transform:scale(.97)}
+#bioBtn .ar{width:18px;height:1px;background:currentColor;transition:width 180ms var(--eo)}
+#bioBtn:hover .ar{width:26px}
+
+/* ---------- seed G ---------- */
+#seed{position:fixed;z-index:20;top:0;left:0;
+  display:flex;flex-direction:column;align-items:center;
+  cursor:pointer;will-change:transform;opacity:0}
+#seed .orb{width:92px;height:92px;border-radius:50%;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 45%,
+    rgba(var(--g1),.26) 0%,rgba(var(--g2),.1) 45%,transparent 72%);
+  transition:transform 260ms var(--eo)}
+#seed:hover .orb{transform:scale(1.05)}
+#seed:active .orb{transform:scale(.98)}
+#seed .ring{position:absolute;inset:8px;border-radius:50%;
+  border:1px solid rgba(var(--g1),.22)}
+#seed .ring.r2{inset:-4px;border-color:transparent;
+  border-top-color:rgba(var(--g1),.34);
+  animation:spin 22s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#seed .g{font-size:38px;font-weight:300;color:#EAFFF1;
+  text-shadow:0 0 22px rgba(var(--g1),.6),0 0 54px rgba(var(--g1),.3)}
+#seed .halo{position:absolute;inset:-26px;border-radius:50%;
+  background:radial-gradient(circle,rgba(var(--g1),.13) 0%,transparent 66%);
+  pointer-events:none}
+
+/* ---------- fruit nodes ---------- */
+.node{position:fixed;z-index:20;top:0;left:0;
+  display:flex;flex-direction:column;align-items:center;
+  cursor:pointer;will-change:transform;opacity:0}
+.node .dot{width:12px;height:12px;border-radius:50%;
+  background:#D9FFE7;position:relative;
+  box-shadow:0 0 10px rgba(var(--g1),.85),0 0 26px rgba(var(--g1),.4);
+  transition:transform 240ms var(--eo),box-shadow 240ms var(--eo)}
+.node:hover .dot{transform:scale(1.45);
+  box-shadow:0 0 16px rgba(var(--g1),1),0 0 40px rgba(var(--g1),.6)}
+.node:active .dot{transform:scale(1.2)}
+.node .dot::after{content:'';position:absolute;inset:-9px;border-radius:50%;
+  border:1px solid rgba(var(--g1),.4);opacity:0;transform:scale(.8);
+  transition:opacity 240ms var(--eo),transform 240ms var(--eo)}
+.node:hover .dot::after{opacity:1;transform:scale(1)}
+.node .cap{margin-top:12px;font-size:8.5px;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--w3);white-space:nowrap;
+  transition:color 180ms var(--eo);text-align:center}
+.node .cap b{display:block;font-weight:400;color:rgba(var(--g1),.5);
+  font-size:7.5px;margin-bottom:3px;letter-spacing:.2em}
+.node:hover .cap{color:#EAFFF1}
+
+/* ---------- drawer ---------- */
+#scrim{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.66);
+  opacity:0;pointer-events:none;transition:opacity 500ms var(--drawer)}
+body.open #scrim{opacity:1;pointer-events:auto}
+#drawer{position:fixed;left:0;right:0;bottom:0;z-index:160;margin:0 auto;
+  width:min(520px,100%);background:rgba(5,12,8,.93);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border:1px solid var(--hair);border-bottom:none;border-radius:14px 14px 0 0;
+  padding:10px 28px calc(32px + env(safe-area-inset-bottom));
+  transform:translate3d(0,100%,0);transition:transform 500ms var(--drawer);
+  will-change:transform;max-height:88vh;overflow-y:auto;touch-action:pan-y}
+body.open #drawer{transform:translate3d(0,0,0)}
+#drawer.drag{transition:none}
+.grab{width:36px;height:3px;border-radius:100px;background:rgba(150,240,180,.2);margin:0 auto 24px}
+#drawer h2{font-size:13px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.dsub{margin-top:8px;font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--w3)}
+.rule{height:1px;background:var(--hair);margin:20px 0}
+.dbody{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:300;line-height:1.8;color:var(--w2)}
+.dlab{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--w3);margin-bottom:13px}
+.dlinks{display:flex;flex-direction:column;gap:1px}
+.dlinks a{display:flex;align-items:center;gap:10px;font-size:10.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--w2);text-decoration:none;
+  padding:10px 2px;border-bottom:1px solid rgba(150,240,180,.06);
+  transition:color 180ms var(--eo),padding-left 180ms var(--eo)}
+.dlinks a:hover{color:#EAFFF1;padding-left:8px}
+.dlinks a .ar{color:rgba(var(--g1),.75);font-size:10px}
+.dtel{display:flex;gap:18px;margin-top:16px;font-size:9.5px;letter-spacing:.07em}
+.dtel a{color:var(--w3);text-decoration:none;transition:color 180ms var(--eo)}
+.dtel a:hover{color:var(--w2)}
+
+@media(max-width:860px){
+  .lab{font-size:9px}
+  .l-tl{top:18px;left:18px}.l-tr{top:18px;right:18px}
+  .l-bl{bottom:18px;left:18px}.l-br{bottom:18px;right:18px}
+  #seed .orb{width:74px;height:74px}
+  #seed .g{font-size:30px}
+  .node .cap{font-size:7px;letter-spacing:.1em}
+  .node .cap b{font-size:6.5px}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <canvas id="sky"></canvas>
+  <canvas id="tree"></canvas>
+  <div class="vig"></div>
+
+  <div class="lab l-tl">Gabriel Fortun Cantave<span class="dim">Portfolio — 2026</span></div>
+  <div class="lab l-tr">Singapore<span class="dim" id="clock">--:--</span></div>
+  <div class="lab l-bl">ESSEC<span class="dim">Global BBA</span></div>
+  <div class="lab l-br"><button id="bioBtn"><span class="ar"></span>Biography</button></div>
+
+  <div id="seed">
+    <div class="orb">
+      <span class="halo"></span>
+      <span class="ring"></span><span class="ring r2"></span>
+      <span class="g">G</span>
+    </div>
+  </div>
+</div>
+
+<div id="scrim"></div>
+
+<div id="drawer" role="dialog" aria-modal="true" aria-label="Biography">
+  <div class="grab"></div>
+  <h2>Gabriel Fortun Cantave</h2>
+  <div class="dsub">ESSEC Business School / Global BBA / Singapore</div>
+  <div class="rule"></div>
+  <div class="dbody">Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.<br><br>Building projects across events, web design, e-commerce and trading. Exploring AI with 9 Anthropic Academy certifications completed.</div>
+  <div class="rule"></div>
+  <div class="dlab">Connect</div>
+  <div class="dlinks">
+    <a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank" rel="noopener"><span class="ar">-&gt;</span>LinkedIn</a>
+    <a href="https://www.instagram.com/frtn.gabriel" target="_blank" rel="noopener"><span class="ar">-&gt;</span>Instagram</a>
+    <a href="https://github.com/gabrielfortuncantave-dot" target="_blank" rel="noopener"><span class="ar">-&gt;</span>GitHub</a>
+    <a href="mailto:gabrielfortuncantave@gmail.com"><span class="ar">-&gt;</span>Email</a>
+    <a href="https://revolut.me/gfortuncantave" target="_blank" rel="noopener"><span class="ar">-&gt;</span>Revolut</a>
+  </div>
+  <div class="dtel">
+    <a href="tel:+6580745034">+65 8074 5034</a>
+    <a href="tel:+33787211613">+33 7 87 21 16 13</a>
+  </div>
+</div>
+
+<script>
+const HAS_M=typeof Motion!=='undefined'&&Motion.animate;
+const animate=HAS_M?Motion.animate:null, stagger=HAS_M?Motion.stagger:null;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EO=[.25,.46,.45,.94];
+const P={x:-9999,y:-9999,has:false};
+addEventListener('pointermove',e=>{P.x=e.clientX;P.y=e.clientY;P.has=true},{passive:true});
+
+/* ================= seeded rng ================= */
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;
+  let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;
+  return((t^t>>>14)>>>0)/4294967296}}
+
+/* ================= canvases ================= */
+const sky=document.getElementById('sky'), sg=sky.getContext('2d');
+const tc =document.getElementById('tree'), tg=tc.getContext('2d');
+let W,H,DPR;
+function sizeAll(){
+  DPR=Math.min(devicePixelRatio||1,2);
+  W=innerWidth;H=innerHeight;
+  for(const [c,x] of [[sky,sg],[tc,tg]]){
+    c.width=W*DPR;c.height=H*DPR;
+    c.style.width=W+'px';c.style.height=H+'px';
+    x.setTransform(DPR,0,0,DPR,0,0);
+  }
+}
+sizeAll();
+
+/* ================= build the tree ================= */
+const ITEMS=[['01','Events'],['02','Web Design'],['03','Clothing'],
+             ['04','Trading'],['05','Etsy'],['06','Hackathon'],['07','Ideas']];
+let SEGS=[], LEAVES=[], MAXLVL=0, seedPt={x:0,y:0};
+
+const ORB=()=>W<860?74:92;
+const ORBTOP=()=>H*(W<860?.085:.095);
+
+function grow(){
+  SEGS=[];LEAVES=[];
+  const rnd=mulberry32(20260914);
+  const mob=W<860;
+  /* trunk emerges from the BOTTOM of the orb, never through the letter */
+  seedPt={x:W/2, y:ORBTOP()+ORB()+5};
+
+  const avail=H*0.90-seedPt.y;
+  const startLen=Math.max(72, Math.min(avail*0.30, 168));
+  const DEPTH=mob?5:6;
+  MAXLVL=DEPTH;
+
+  (function branch(x,y,ang,len,depth,thick,lvl){
+    if(depth===0){LEAVES.push({x,y,lvl});return}
+    const x2=x+Math.cos(ang)*len, y2=y+Math.sin(ang)*len;
+    SEGS.push({x1:x,y1:y,x2,y2,thick,lvl,depth});
+    const n = (depth>=DEPTH-1 || rnd()<.22) ? 3 : 2;
+    const spread=.40+rnd()*.22;
+    for(let i=0;i<n;i++){
+      const t = n===1?0:(i/(n-1))*2-1;
+      const a = ang + t*spread + (rnd()-.5)*.22;
+      branch(x2,y2,a,len*(.70+rnd()*.12),depth-1,thick*.66,lvl+1);
+    }
+  })(seedPt.x,seedPt.y,Math.PI/2,startLen,DEPTH,mob?5.5:7,0);
+
+  /* pick 7 well-spread leaves for the projects */
+  const sorted=[...LEAVES].sort((a,b)=>a.x-b.x);
+  const picks=[];
+  const bucket=Math.floor(sorted.length/ITEMS.length);
+  for(let i=0;i<ITEMS.length;i++){
+    const slice=sorted.slice(i*bucket,(i+1)*bucket);
+    if(!slice.length){picks.push(sorted[Math.min(i,sorted.length-1)]);continue}
+    slice.sort((a,b)=>b.y-a.y);           // deepest in bucket
+    picks.push(slice[0]);
+  }
+  return picks;
+}
+
+/* ---- draw tree, optionally partial (growth animation) ---- */
+function paintTree(prog){
+  tg.clearRect(0,0,W,H);
+  tg.lineCap='round';
+  const front=prog*(MAXLVL+1);
+  for(const s of SEGS){
+    if(s.lvl>front)continue;
+    const local=Math.min(1,front-s.lvl);
+    const x2=s.x1+(s.x2-s.x1)*local;
+    const y2=s.y1+(s.y2-s.y1)*local;
+    const k=s.lvl/MAXLVL;                 // 0 trunk -> 1 tip
+    const r=Math.round(26+(74-26)*k);
+    const g=Math.round(110+(222-110)*k);
+    const b=Math.round(70+(128-70)*k);
+    tg.strokeStyle=`rgba(${r},${g},${b},${.30+k*.55})`;
+    tg.lineWidth=Math.max(.6,s.thick);
+    tg.shadowColor=`rgba(74,222,128,${.18+k*.32})`;
+    tg.shadowBlur=6+k*12;
+    tg.beginPath();tg.moveTo(s.x1,s.y1);tg.lineTo(x2,y2);tg.stroke();
+  }
+  tg.shadowBlur=0;
+}
+
+/* ================= star dust ================= */
+const DUST=[];
+function seedDust(){
+  DUST.length=0;
+  /* density scales with viewport so it stays "all around" on any screen */
+  const count=Math.max(760,Math.min(1500,Math.round((W*H)/1450)));
+  for(let i=0;i<count;i++){
+    const layer=Math.random();
+    let s,o,vy;
+    if(layer<.56){            /* far haze */
+      s=Math.random()*.55+.16; o=Math.random()*.20+.025; vy=-(Math.random()*.05+.008);
+    }else if(layer<.89){      /* mid field */
+      s=Math.random()*.95+.38; o=Math.random()*.38+.05;  vy=-(Math.random()*.09+.018);
+    }else{                    /* near motes */
+      s=Math.random()*1.65+.75;o=Math.random()*.58+.11;  vy=-(Math.random()*.15+.04);
+    }
+    DUST.push({
+      x:Math.random()*W, y:Math.random()*H, s, o, vy,
+      vx:(Math.random()-.5)*.055,
+      ph:Math.random()*Math.PI*2,
+      tw:Math.random()*.028+.006,
+      lime:Math.random()<.32
+    });
+  }
+}
+seedDust();
+
+function paintSky(){
+  sg.clearRect(0,0,W,H);
+  /* canopy bloom around the seed */
+  const bl=sg.createRadialGradient(seedPt.x,seedPt.y,0,seedPt.x,seedPt.y,Math.min(W,H)*.55);
+  bl.addColorStop(0,'rgba(74,222,128,.075)');
+  bl.addColorStop(.3,'rgba(34,160,94,.03)');
+  bl.addColorStop(1,'transparent');
+  sg.fillStyle=bl;sg.fillRect(0,0,W,H);
+
+  for(const p of DUST){
+    p.x+=p.vx;p.y+=p.vy;p.ph+=p.tw;
+    if(p.y<-6){p.y=H+6;p.x=Math.random()*W}
+    if(p.x<-6)p.x=W+6; if(p.x>W+6)p.x=-6;
+    let px=p.x,py=p.y;
+    if(P.has){
+      const dx=px-P.x,dy=py-P.y,d=Math.hypot(dx,dy),R=150;
+      if(d<R&&d>0){const f=(R-d)/R*18;px+=dx/d*f;py+=dy/d*f}
+    }
+    const o=p.o*(.55+.45*Math.sin(p.ph));
+    sg.beginPath();sg.arc(px,py,p.s,0,6.283);
+    sg.fillStyle=p.lime?`rgba(150,250,190,${o})`:`rgba(226,248,234,${o*.8})`;
+    sg.fill();
+  }
+  requestAnimationFrame(paintSky);
+}
+
+/* ================= dom nodes ================= */
+const seedEl=document.getElementById('seed');
+const nodes=ITEMS.map(([n,t])=>{
+  const el=document.createElement('div');
+  el.className='node';
+  el.innerHTML=`<div class="dot"></div><div class="cap"><b>${n}</b>${t}</div>`;
+  document.getElementById('stage').appendChild(el);
+  return{el,bx:0,by:0,mx:0,my:0};
+});
+
+function layout(){
+  sizeAll();
+  const picks=grow();
+  seedEl.style.transform=
+    `translate3d(${W/2-ORB()/2}px,${ORBTOP()}px,0)`;
+  nodes.forEach((nd,i)=>{
+    const p=picks[i];
+    nd.bx=p.x-6; nd.by=p.y-6;
+  });
+  seedDust();
+}
+layout();
+
+function magnet(){
+  for(const nd of nodes){
+    const dx=P.x-(nd.bx+6), dy=P.y-(nd.by+6);
+    const d=Math.hypot(dx,dy),R=120;
+    let tx=0,ty=0;
+    if(P.has&&d<R){const f=1-d/R;tx=dx*f*.16;ty=dy*f*.16}
+    nd.mx+=(tx-nd.mx)*.12;nd.my+=(ty-nd.my)*.12;
+    nd.el.style.transform=`translate3d(${nd.bx+nd.mx}px,${nd.by+nd.my}px,0)`;
+  }
+  requestAnimationFrame(magnet);
+}
+magnet();
+paintSky();
+
+/* ================= growth animation ================= */
+let growProg=0;
+function runGrowth(ts0){
+  const D=2600;
+  function step(t){
+    const e=Math.min(1,(t-ts0)/D);
+    growProg=1-Math.pow(1-e,3);          // ease-out cubic
+    paintTree(growProg);
+    if(e<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+addEventListener('resize',()=>{layout();paintTree(growProg||1)});
+
+/* ================= drawer ================= */
+const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+const openD=()=>document.body.classList.add('open');
+const closeD=()=>{drawer.classList.remove('drag');drawer.style.transform='';document.body.classList.remove('open')};
+document.getElementById('bioBtn').addEventListener('click',openD);
+seedEl.addEventListener('click',openD);
+nodes.forEach(nd=>nd.el.addEventListener('click',openD));
+scrim.addEventListener('click',closeD);
+addEventListener('keydown',e=>{if(e.key==='Escape')closeD()});
+
+let dr=false,sy0=0,cy0=0,ly=0,lt=0,vel=0;
+drawer.addEventListener('pointerdown',e=>{
+  if(drawer.scrollTop>0)return;
+  dr=true;sy0=e.clientY;cy0=0;ly=e.clientY;lt=performance.now();vel=0;
+  drawer.classList.add('drag')});
+drawer.addEventListener('pointermove',e=>{
+  if(!dr)return;const dy=e.clientY-sy0;cy0=dy>0?dy:dy*.22;
+  const now=performance.now(),dt=now-lt;
+  if(dt>0){vel=(e.clientY-ly)/dt;ly=e.clientY;lt=now}
+  drawer.style.transform=`translate3d(0,${cy0}px,0)`});
+const endDrag=()=>{if(!dr)return;dr=false;drawer.classList.remove('drag');
+  const h=drawer.offsetHeight;drawer.style.transform='';
+  if(vel>0.11||cy0>h*.4)closeD()};
+drawer.addEventListener('pointerup',endDrag);
+drawer.addEventListener('pointercancel',endDrag);
+
+/* ================= clock ================= */
+const clk=()=>{const d=new Date();document.getElementById('clock').textContent=
+  String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' SGT'};
+clk();setInterval(clk,10000);
+
+/* ================= boot ================= */
+addEventListener('load',()=>{
+  if(RM||!HAS_M){
+    growProg=1;paintTree(1);
+    document.querySelectorAll('.lab,.node,#seed').forEach(n=>n.style.opacity='1');
+    return;
+  }
+  animate('#seed',{opacity:[0,1]},{duration:.7,easing:EO,delay:.15});
+  animate('#seed .orb',{transform:['scale(.92)','scale(1)']},{duration:.8,easing:EO,delay:.15});
+  requestAnimationFrame(t=>runGrowth(t+500));
+  nodes.forEach((nd,i)=>{
+    animate(nd.el,{opacity:[0,1]},{duration:.55,easing:EO,delay:2.0+i*.07});
+    /* Emil: never scale from 0 — start at .92 so it reads as a real object */
+    animate(nd.el.querySelector('.dot'),{transform:['scale(.92)','scale(1)']},
+      {duration:.55,easing:EO,delay:2.0+i*.07});
+  });
+  animate('.lab',{opacity:[0,1]},{duration:.55,easing:EO,delay:stagger(.07,{start:2.4})});
+});
+</script>
+
+</body>
+</html>
