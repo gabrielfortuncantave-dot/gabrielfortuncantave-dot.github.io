@@ -9,22 +9,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Palette: Undergrowth, warm dark wood, earthy olive tones */
+            /* Palette: Undergrowth, warm dark wood, earthy olive tones (Optimized WCAG AA contrast) */
             --bg: #0d0a07;
-            --panel-bg: #14110d;
-            --text-main: #e6dec9;
-            --text-muted: #8c8273;
-            --accent: #879669; /* Soft olive green */
-            --accent-glow: rgba(135, 150, 105, 0.25);
-            --branch: #3a332a; /* Warm dark wood line */
-            --border: #241f18;
+            --panel-bg: #15120e;
+            --text-main: #f0ebd8;
+            --text-muted: #9a8e7e;
+            --accent: #8f9e70; /* Soft olive green */
+            --accent-glow: rgba(143, 158, 112, 0.2);
+            --branch: #423a30; /* Warm dark wood line */
+            --border: #28221b;
             
             --font-heading: 'Cormorant Garamond', serif;
             --font-body: 'DM Sans', sans-serif;
-            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * {
+        /* Reset & Box Sizing */
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -41,16 +42,22 @@
             justify-content: center;
         }
 
-        /* Layout structure */
+        /* Focus State for Accessibility */
+        a:focus-visible, button:focus-visible {
+            outline: 1px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        /* Layout Structure */
         .container {
             width: 100%;
             max-width: 680px;
             padding: 10vh 24px 14vh 24px;
-            animation: fadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation: fadeIn 1.4s var(--ease-out-expo) forwards;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -70,7 +77,10 @@
 
         .branch-col svg {
             display: block;
+            width: 100%;
+            height: 100%;
             overflow: visible;
+            shape-rendering: geometricPrecision;
         }
 
         .content-col {
@@ -81,7 +91,7 @@
             padding-left: 12px;
         }
 
-        /* Section layout heights */
+        /* Section Heights */
         .header-row { min-height: 160px; margin-bottom: 24px; }
         .project-row { min-height: 88px; }
         .footer-row { min-height: 120px; margin-top: 16px; }
@@ -131,10 +141,10 @@
             color: var(--accent);
         }
 
-        /* Project Items (Locked / Coming Soon) */
+        /* Project Items */
         .project-item {
-            opacity: 0.75;
-            transition: var(--transition-smooth);
+            opacity: 0.8;
+            transition: opacity 0.5s var(--ease-out-expo);
         }
 
         .project-item:hover {
@@ -146,8 +156,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 0;
-            border-bottom: 1px solid rgba(36, 31, 24, 0.6);
-            transition: var(--transition-smooth);
+            border-bottom: 1px solid rgba(40, 34, 27, 0.7);
+            transition: padding 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo);
         }
 
         .project-meta {
@@ -161,7 +171,7 @@
             font-size: 22px;
             font-weight: 400;
             color: var(--text-main);
-            transition: var(--transition-smooth);
+            transition: color 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
         }
 
         .project-badges {
@@ -176,10 +186,10 @@
             letter-spacing: 0.15em;
             color: var(--text-muted);
             font-weight: 400;
-            transition: var(--transition-smooth);
+            transition: color 0.5s var(--ease-out-expo);
         }
 
-        /* Subtle Lock Icon Styling */
+        /* Lock Icon Styling */
         .lock-icon {
             width: 11px;
             height: 11px;
@@ -188,11 +198,11 @@
             stroke-width: 1.5;
             stroke-linecap: round;
             stroke-linejoin: round;
-            transition: var(--transition-smooth);
+            transition: stroke 0.5s var(--ease-out-expo), opacity 0.5s var(--ease-out-expo);
             opacity: 0.6;
         }
 
-        /* Project Row Hover Effects */
+        /* Project Row Hover Effects (Using Transform & Opacity for Zero Jank) */
         .project-row:hover .project-content {
             padding-left: 8px;
             border-bottom-color: var(--border);
@@ -213,7 +223,7 @@
         }
 
         .leaf-node {
-            transition: var(--transition-smooth);
+            transition: fill 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
             transform-origin: center;
         }
 
@@ -234,7 +244,7 @@
             padding: 12px 26px;
             border-radius: 40px;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: border-color 0.5s var(--ease-out-expo), color 0.5s var(--ease-out-expo), background-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
             outline: none;
             align-self: flex-start;
         }
@@ -243,21 +253,21 @@
             border-color: var(--accent);
             color: var(--bg);
             background-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
+            box-shadow: 0 0 24px var(--accent-glow);
         }
 
-        /* Bio Panel Overlay */
+        /* Bio Panel Overlay & Panel */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(13, 10, 7, 0.8);
+            background: rgba(13, 10, 7, 0.82);
             backdrop-filter: blur(6px);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.7s ease;
+            transition: opacity 0.6s var(--ease-out-expo);
             z-index: 50;
         }
 
@@ -275,7 +285,7 @@
             border-top: 1px solid var(--border);
             padding: 56px 24px;
             transform: translateY(100%);
-            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.7s var(--ease-out-expo);
             z-index: 100;
         }
 
@@ -315,7 +325,7 @@
             letter-spacing: 0.2em;
             text-transform: uppercase;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: color 0.5s var(--ease-out-expo);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -327,7 +337,7 @@
             width: 18px;
             height: 1px;
             background-color: var(--text-muted);
-            transition: var(--transition-smooth);
+            transition: background-color 0.5s var(--ease-out-expo), width 0.5s var(--ease-out-expo);
         }
 
         .close-btn:hover {
@@ -355,16 +365,15 @@
 </head>
 <body>
 
-    <div class="overlay" id="overlay"></div>
+    <div class="overlay" id="overlay" aria-hidden="true"></div>
 
     <div class="container">
         
         <!-- Header Section -->
         <header class="row header-row">
-            <div class="branch-col">
+            <div class="branch-col" aria-hidden="true">
                 <svg viewBox="0 0 64 160" width="64" height="160">
                     <circle cx="32" cy="80" r="3" fill="var(--accent)" />
-                    <!-- Root curving down smoothly -->
                     <path d="M 32,80 C 14,115 48,135 32,160" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                 </svg>
             </div>
@@ -375,7 +384,7 @@
         </header>
 
         <!-- Index Progress Tracker -->
-        <div class="index-tracker">
+        <div class="index-tracker" aria-label="Portfolio progress">
             <span class="tracker-label">Index // 07 Ventures</span>
             <span class="tracker-status">More roots growing soon</span>
         </div>
@@ -384,7 +393,7 @@
         <main>
             <!-- Events -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -398,7 +407,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -406,7 +415,7 @@
 
             <!-- Web Design -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -420,7 +429,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -428,7 +437,7 @@
 
             <!-- Clothing -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -442,7 +451,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -450,7 +459,7 @@
 
             <!-- Trading -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -464,7 +473,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -472,7 +481,7 @@
 
             <!-- Etsy -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -486,7 +495,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -494,7 +503,7 @@
 
             <!-- Hackathon -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -508,7 +517,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -516,7 +525,7 @@
 
             <!-- Ideas -->
             <div class="row project-row project-item">
-                <div class="branch-col">
+                <div class="branch-col" aria-hidden="true">
                     <svg viewBox="0 0 64 88" width="64" height="88">
                         <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                         <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
@@ -530,7 +539,7 @@
                         </div>
                         <div class="project-badges">
                             <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                         </div>
                     </div>
                 </div>
@@ -539,21 +548,21 @@
 
         <!-- Footer / Bio Toggle -->
         <footer class="row footer-row">
-            <div class="branch-col">
+            <div class="branch-col" aria-hidden="true">
                 <svg viewBox="0 0 64 120" width="64" height="120">
                     <path d="M 32,0 C 32,35 42,48 54,64" stroke="var(--branch)" stroke-width="1.2" fill="none" />
                     <circle cx="54" cy="64" r="3" fill="var(--accent)" />
                 </svg>
             </div>
             <div class="content-col">
-                <button class="bio-btn" id="btn-bio">Read Bio</button>
+                <button class="bio-btn" id="btn-bio" aria-expanded="false" aria-controls="bio-panel">Read Bio</button>
             </div>
         </footer>
 
     </div>
 
     <!-- Bio Panel -->
-    <aside class="bio-panel" id="bio-panel">
+    <aside class="bio-panel" id="bio-panel" aria-hidden="true" role="dialog" aria-label="Biography">
         <div class="bio-content">
             <h3 class="bio-title">Roots & Growth</h3>
             <p class="bio-text">
@@ -569,14 +578,31 @@
         const bioPanel = document.getElementById('bio-panel');
         const overlay = document.getElementById('overlay');
 
-        function toggleBio() {
-            bioPanel.classList.toggle('active');
-            overlay.classList.toggle('active');
+        function openBio() {
+            bioPanel.classList.add('active');
+            overlay.classList.add('active');
+            btnBio.setAttribute('aria-expanded', 'true');
+            bioPanel.setAttribute('aria-hidden', 'false');
+            closeBio.focus();
         }
 
-        btnBio.addEventListener('click', toggleBio);
-        closeBio.addEventListener('click', toggleBio);
-        overlay.addEventListener('click', toggleBio);
+        function closeBioPanel() {
+            bioPanel.classList.remove('active');
+            overlay.classList.remove('active');
+            btnBio.setAttribute('aria-expanded', 'false');
+            bioPanel.setAttribute('aria-hidden', 'true');
+            btnBio.focus();
+        }
+
+        btnBio.addEventListener('click', openBio);
+        closeBio.addEventListener('click', closeBioPanel);
+        overlay.addEventListener('click', closeBioPanel);
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && bioPanel.classList.contains('active')) {
+                closeBioPanel();
+            }
+        });
     </script>
 </body>
 </html>
