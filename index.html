@@ -1,976 +1,582 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Gabriel Fortun Cantave</title>
-<meta name="description" content="Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.">
-<meta name="theme-color" content="#020503">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23020503'/%3E%3Ctext x='16' y='22' font-family='monospace' font-size='18' font-weight='300' fill='%234ade80' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/motion@10.18.0/dist/motion.min.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --bg:#020503;
-  --w1:#EAFFF1;
-  --w2:rgba(214,244,224,.44);
-  --w3:rgba(214,244,224,.18);
-  --hair:rgba(150,240,180,.09);
-  --g1:74,222,128;
-  --g2:34,160,94;
-  --eo:cubic-bezier(.25,.46,.45,.94);
-  --drawer:cubic-bezier(.32,.72,0,1);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gabriel Fortun Cantave</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Palette: Undergrowth, warm dark wood, earthy olive tones */
+            --bg: #0d0a07;
+            --panel-bg: #14110d;
+            --text-main: #e6dec9;
+            --text-muted: #8c8273;
+            --accent: #879669; /* Soft olive green */
+            --accent-glow: rgba(135, 150, 105, 0.25);
+            --branch: #3a332a; /* Warm dark wood line */
+            --border: #241f18;
+            
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'DM Sans', sans-serif;
+            --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
 
-  /* type + spacing scale */
-  --pad:clamp(18px,2.7vw,30px);
-  --fs-lab:clamp(9px,.66vw,10.5px);
-  --tr-lab:.17em;
-  --tr-caps:.24em;
-}
-html{scroll-behavior:smooth}
-body{background:var(--bg);font-family:'JetBrains Mono',ui-monospace,monospace;
-  color:var(--w1);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
-  overflow-x:hidden;font-variant-ligatures:none}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-/* fixed canvas layers */
-canvas#sky,canvas#tree{position:fixed;inset:0;z-index:1;pointer-events:none}
-canvas#tree{z-index:2}
-.vig{position:fixed;inset:0;z-index:3;pointer-events:none;
-  background:radial-gradient(ellipse at 50% 45%,transparent 38%,rgba(0,0,0,.62) 100%)}
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+        }
 
-#doc{position:relative;z-index:5}
+        /* Layout structure */
+        .container {
+            width: 100%;
+            max-width: 680px;
+            padding: 10vh 24px 14vh 24px;
+            animation: fadeIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
 
-/* ---------- corner labels (fixed) ---------- */
-.lab{position:fixed;z-index:40;font-size:var(--fs-lab);letter-spacing:var(--tr-lab);
-  text-transform:uppercase;color:var(--w2);opacity:0;line-height:1.5;
-  font-variant-numeric:tabular-nums}
-.l-tl{top:var(--pad);left:var(--pad)}
-.l-tr{top:var(--pad);right:var(--pad);text-align:right}
-.l-bl{bottom:var(--pad);left:var(--pad)}
-.l-br{bottom:var(--pad);right:var(--pad)}
-.lab .dim{color:var(--w3);display:block;margin-top:6px;letter-spacing:.14em}
-#bioBtn{font-family:inherit;font-size:var(--fs-lab);letter-spacing:var(--tr-lab);
-  text-transform:uppercase;color:var(--w2);background:none;border:none;cursor:pointer;
-  padding:6px 0;display:inline-flex;align-items:center;gap:9px;
-  transition:color 200ms var(--eo),transform 200ms var(--eo)}
-#bioBtn:hover{color:rgb(var(--g1))}
-#bioBtn:active{transform:scale(.97)}
-#bioBtn .ar{width:18px;height:1px;background:currentColor;transition:width 240ms var(--eo)}
-#bioBtn:hover .ar{width:28px}
-:focus-visible{outline:1px solid rgba(var(--g1),.55);outline-offset:4px}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-/* ---------- scroll rail ---------- */
-#rail{position:fixed;z-index:38;right:calc(var(--pad) + 1px);
-  top:calc(var(--pad) + 52px);bottom:calc(var(--pad) + 52px);width:1px;
-  background:rgba(150,240,180,.07);opacity:0;transition:opacity 500ms var(--eo)}
-#rail.on{opacity:1}
-#rail i{position:absolute;left:-1px;width:3px;border-radius:2px;
-  background:linear-gradient(to bottom,transparent,rgba(var(--g1),.75),transparent);
-  height:64px;top:0;will-change:transform}
+        .row {
+            display: flex;
+            align-items: stretch;
+            width: 100%;
+        }
 
-/* ---------- seed G ---------- */
-#seed{position:absolute;z-index:20;left:0;top:0;
-  display:flex;flex-direction:column;align-items:center;cursor:pointer;opacity:0}
-#seed .orb{width:92px;height:92px;border-radius:50%;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(circle at 50% 45%,
-    rgba(var(--g1),.26) 0%,rgba(var(--g2),.1) 45%,transparent 72%);
-  transition:transform 420ms var(--eo)}
-#seed:hover .orb{transform:scale(1.06)}
-#seed:active .orb{transform:scale(.98)}
-#seed .halo{position:absolute;inset:-30px;border-radius:50%;
-  background:radial-gradient(circle,rgba(var(--g1),.13) 0%,transparent 66%)}
-#seed .ring{position:absolute;inset:8px;border-radius:50%;border:1px solid rgba(var(--g1),.22);
-  transition:inset 420ms var(--eo),border-color 420ms var(--eo)}
-#seed:hover .ring{inset:4px;border-color:rgba(var(--g1),.34)}
-#seed .ring.r2{inset:-4px;border-color:transparent;border-top-color:rgba(var(--g1),.34);
-  animation:spin 26s linear infinite}
-#seed:hover .ring.r2{inset:-4px}
-@keyframes spin{to{transform:rotate(360deg)}}
-#seed .g{font-size:38px;font-weight:300;letter-spacing:.02em;color:var(--w1);
-  text-shadow:0 0 22px rgba(var(--g1),.6),0 0 54px rgba(var(--g1),.3)}
+        .branch-col {
+            width: 64px;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-/* ---------- scroll hint ---------- */
-#hint{position:absolute;left:50%;z-index:20;
-  font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--w3);
-  display:flex;flex-direction:row;align-items:center;gap:13px;opacity:0;white-space:nowrap}
-#hint .bar{width:26px;height:1px;
-  background:linear-gradient(to right,rgba(var(--g1),.15),rgba(var(--g1),.6));
-  animation:drop 2.8s ease-in-out infinite}
-@keyframes drop{0%,100%{opacity:.25;transform:scaleX(.5);transform-origin:left}
-  50%{opacity:1;transform:scaleX(1);transform-origin:left}}
+        .branch-col svg {
+            display: block;
+            overflow: visible;
+        }
 
-/* ---------- borderless projections ---------- */
-.proj{
-  position:fixed;z-index:20;
-  width:min(400px,36vw);
-  opacity:0;
-  pointer-events:auto;cursor:pointer;
-  -webkit-mask-image:radial-gradient(ellipse 80% 88% at 50% 50%,#000 46%,transparent 90%);
-          mask-image:radial-gradient(ellipse 80% 88% at 50% 50%,#000 46%,transparent 90%);
-  will-change:transform,opacity;
-}
-.proj .inner{position:relative;padding:clamp(22px,2.4vw,34px) clamp(18px,2vw,28px)}
-.proj .pttl{
-  font-size:clamp(26px,3.4vw,46px);font-weight:300;line-height:1.02;
-  letter-spacing:.055em;text-transform:uppercase;color:var(--w1);
-  text-shadow:0 0 20px rgba(var(--g1),.32),0 0 56px rgba(var(--g1),.15);
-  transition:letter-spacing 520ms var(--eo),text-shadow 520ms var(--eo);
-}
-.proj:hover .pttl{letter-spacing:.09em;
-  text-shadow:0 0 22px rgba(var(--g1),.48),0 0 66px rgba(var(--g1),.24)}
-.proj .pstat{
-  margin-top:clamp(12px,1.1vw,16px);
-  font-size:clamp(8.5px,.65vw,9.5px);letter-spacing:.32em;text-transform:uppercase;
-  color:rgba(214,244,224,.32);display:inline-flex;align-items:center;gap:9px;
-  transition:color 420ms var(--eo);
-}
-.proj:hover .pstat{color:rgba(var(--g1),.62)}
-.proj .pstat b{width:4px;height:4px;border-radius:50%;font-weight:inherit;flex:none;
-  background:rgba(var(--g1),.8);box-shadow:0 0 8px rgba(var(--g1),.7)}
-.proj.soon .pstat b{background:transparent;box-shadow:none;
-  border:1px solid rgba(var(--g1),.5);animation:brth 3.4s ease-in-out infinite}
-@keyframes brth{0%,100%{opacity:.3}50%{opacity:1}}
-.proj.right{text-align:left}
-.proj.left{text-align:right}
-.proj.left .pstat{flex-direction:row-reverse}
-.proj.mid{text-align:center}
-.proj.mid .pstat{justify-content:center}
+        .content-col {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 12px;
+        }
 
-/* ---------- drawer ---------- */
-#scrim{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.66);
-  opacity:0;pointer-events:none;transition:opacity 500ms var(--drawer)}
-body.open #scrim{opacity:1;pointer-events:auto}
-#drawer{position:fixed;left:0;right:0;bottom:0;z-index:160;margin:0 auto;
-  width:min(520px,100%);background:rgba(5,12,8,.93);
-  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
-  border:1px solid var(--hair);border-bottom:none;border-radius:16px 16px 0 0;
-  padding:10px clamp(20px,3vw,30px) calc(34px + env(safe-area-inset-bottom));
-  transform:translate3d(0,100%,0);transition:transform 520ms var(--drawer);
-  will-change:transform;max-height:88vh;overflow-y:auto;touch-action:pan-y}
-body.open #drawer{transform:translate3d(0,0,0)}
-#drawer.drag{transition:none}
-.grab{width:34px;height:3px;border-radius:100px;background:rgba(150,240,180,.2);margin:0 auto 26px}
-#drawer h2{font-size:13px;font-weight:500;letter-spacing:.15em;text-transform:uppercase}
-.dsub{margin-top:9px;font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;color:var(--w3)}
-.rule{height:1px;background:var(--hair);margin:22px 0}
-.dbody{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:300;line-height:1.82;
-  color:var(--w2);letter-spacing:.005em}
-.dlab{font-size:9px;letter-spacing:var(--tr-caps);text-transform:uppercase;color:var(--w3);margin-bottom:14px}
-.dlinks{display:flex;flex-direction:column;gap:1px}
-.dlinks a{display:flex;align-items:center;gap:11px;font-size:10.5px;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--w2);text-decoration:none;
-  padding:11px 2px;border-bottom:1px solid rgba(150,240,180,.06);
-  transition:color 200ms var(--eo),padding-left 240ms var(--eo)}
-.dlinks a:hover{color:var(--w1);padding-left:8px}
-.dlinks a .ar{color:rgba(var(--g1),.75);font-size:10px;transition:transform 240ms var(--eo)}
-.dlinks a:hover .ar{transform:translateX(3px)}
-.drec{display:flex;flex-direction:column;gap:1px}
-.drec div{padding:11px 0;border-bottom:1px solid rgba(150,240,180,.06);
-  display:flex;flex-direction:column;gap:5px}
-.drec b{font-size:11px;font-weight:400;letter-spacing:.07em;color:var(--w1);text-transform:uppercase}
-.drec span{font-family:'Inter',sans-serif;font-size:12px;font-weight:300;color:var(--w2)}
-.drec i{font-style:normal;font-size:9px;letter-spacing:.16em;color:var(--w3);
-  font-variant-numeric:tabular-nums}
-.dtag{display:flex;flex-wrap:wrap;gap:7px}
-.dtag span{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;color:var(--w2);
-  padding:8px 12px;border:1px solid rgba(150,240,180,.12)}
-.dtel{display:flex;flex-wrap:wrap;gap:18px;margin-top:18px;font-size:9.5px;letter-spacing:.08em;
-  font-variant-numeric:tabular-nums}
-.dtel a{color:var(--w3);text-decoration:none;transition:color 200ms var(--eo)}
-.dtel a:hover{color:var(--w2)}
+        /* Section layout heights */
+        .header-row { min-height: 160px; margin-bottom: 24px; }
+        .project-row { min-height: 88px; }
+        .footer-row { min-height: 120px; margin-top: 16px; }
 
-/* ---------- project detail view ---------- */
-#view{
-  position:fixed;inset:0;z-index:120;
-  display:flex;align-items:center;justify-content:center;
-  opacity:0;pointer-events:none;
-  transition:opacity 340ms var(--eo);
-  overflow-y:auto;padding:clamp(76px,10vh,104px) clamp(20px,4vw,30px) clamp(96px,13vh,118px);
-}
-#view.on{opacity:1;pointer-events:auto}
-#viewBg{
-  position:fixed;inset:0;z-index:-1;
-  background:radial-gradient(ellipse at 50% 40%,rgba(3,10,6,.82) 0%,rgba(2,5,3,.95) 62%);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
-}
-.vwrap{width:min(720px,100%);margin:auto}
-.vnum{
-  font-size:clamp(64px,11.4vw,132px);font-weight:300;line-height:.86;
-  color:rgba(var(--g1),.13);letter-spacing:-.04em;font-variant-numeric:tabular-nums;
-}
-.vttl{
-  margin-top:clamp(-18px,-1.4vw,-12px);
-  font-size:clamp(26px,4.9vw,50px);font-weight:400;
-  letter-spacing:.025em;text-transform:uppercase;color:var(--w1);line-height:1.04;
-  text-shadow:0 0 26px rgba(var(--g1),.3),0 0 64px rgba(var(--g1),.13);
-}
-.vmeta{
-  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,26px);
-  margin-top:clamp(24px,3vw,32px);
-  padding-bottom:24px;border-bottom:1px solid rgba(150,240,180,.08);
-}
-.vmeta div{display:flex;flex-direction:column;gap:8px;min-width:0}
-.vmeta .k{font-size:8.5px;letter-spacing:var(--tr-caps);text-transform:uppercase;color:var(--w3)}
-.vmeta .v{font-size:11px;letter-spacing:.09em;color:rgba(var(--g1),.72);text-transform:uppercase;
-  line-height:1.4;font-variant-numeric:tabular-nums}
-.vbody{
-  font-family:'Inter',sans-serif;font-size:clamp(13.5px,1.05vw,15px);font-weight:300;
-  line-height:1.86;color:var(--w2);margin-top:clamp(24px,3vw,30px);max-width:62ch;
-}
-.vbody p+p{margin-top:17px}
+        /* Typography & Header */
+        h1 {
+            font-family: var(--font-heading);
+            font-size: clamp(32px, 5vw, 38px);
+            font-weight: 500;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            letter-spacing: 0.01em;
+            line-height: 1.15;
+        }
 
-/* intentional "coming soon" block */
-.vsoon{margin-top:clamp(24px,3vw,30px);max-width:56ch}
-.vsoon .k{display:inline-flex;align-items:center;gap:9px;
-  font-size:8.5px;letter-spacing:var(--tr-caps);text-transform:uppercase;color:rgba(var(--g1),.6)}
-.vsoon .k b{width:4px;height:4px;border-radius:50%;font-weight:inherit;
-  border:1px solid rgba(var(--g1),.6);animation:brth 3.4s ease-in-out infinite}
-.vsoon p{font-family:'Inter',sans-serif;font-size:clamp(13.5px,1.05vw,15px);font-weight:300;
-  line-height:1.86;color:rgba(214,244,224,.34);margin-top:14px}
-.vsoon .bar{margin-top:22px;height:1px;width:100%;
-  background:linear-gradient(90deg,rgba(var(--g1),.4),rgba(150,240,180,.05) 42%,transparent)}
+        .tagline {
+            font-size: 13px;
+            font-weight: 300;
+            color: var(--text-muted);
+            line-height: 1.7;
+            max-width: 440px;
+        }
 
-.vlist{margin-top:clamp(26px,3.2vw,34px);padding-top:22px;border-top:1px solid rgba(150,240,180,.08)}
-.vlist-k{font-size:8.5px;letter-spacing:var(--tr-caps);text-transform:uppercase;color:rgba(var(--g1),.6)}
-.vlist ul{list-style:none;margin-top:16px;display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:2px 26px}
-.vlist li{font-size:11px;letter-spacing:.05em;color:var(--w2);line-height:1.5;
-  padding:8px 0 8px 18px;position:relative;border-bottom:1px solid rgba(150,240,180,.05)}
-.vlist li:before{content:'';position:absolute;left:0;top:14px;width:6px;height:1px;
-  background:rgba(var(--g1),.55)}
-.vlinks{display:flex;flex-wrap:wrap;gap:9px;margin-top:clamp(26px,3.4vw,34px)}
-.vlinks a{
-  display:inline-flex;align-items:center;gap:10px;
-  font-size:10px;letter-spacing:.17em;text-transform:uppercase;
-  color:var(--w2);text-decoration:none;padding:12px 19px;
-  border:1px solid rgba(150,240,180,.14);
-  transition:border-color 240ms var(--eo),color 240ms var(--eo),transform 200ms var(--eo),background-color 240ms var(--eo);
-}
-.vlinks a:hover{border-color:rgba(var(--g1),.5);color:var(--w1);background:rgba(var(--g1),.04)}
-.vlinks a:active{transform:scale(.97)}
-.vnav{
-  position:fixed;left:0;right:0;bottom:0;z-index:130;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:22px var(--pad) calc(22px + env(safe-area-inset-bottom));
-  opacity:0;pointer-events:none;transition:opacity 340ms var(--eo);
-  background:linear-gradient(to top,rgba(2,5,3,.92),transparent);
-}
-#view.on ~ .vnav{opacity:1;pointer-events:auto}
-.vnav button{
-  font-family:inherit;font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;
-  color:var(--w2);background:none;border:none;cursor:pointer;padding:9px 2px;
-  display:inline-flex;align-items:center;gap:10px;
-  transition:color 200ms var(--eo),transform 200ms var(--eo);
-}
-.vnav button:hover{color:rgb(var(--g1))}
-.vnav button:active{transform:scale(.97)}
-.vnav button:disabled{opacity:.2;cursor:default}
-.vnav .ar{width:20px;height:1px;background:currentColor;transition:width 240ms var(--eo)}
-.vnav button:hover:not(:disabled) .ar{width:30px}
-#vClose{
-  position:fixed;top:calc(var(--pad) - 4px);right:var(--pad);z-index:135;
-  font-family:inherit;font-size:9.5px;letter-spacing:.19em;text-transform:uppercase;
-  color:var(--w2);background:none;border:none;cursor:pointer;padding:8px;
-  opacity:0;pointer-events:none;transition:opacity 340ms var(--eo),color 200ms var(--eo);
-}
-#view.on ~ #vClose{opacity:1;pointer-events:auto}
-#vClose:hover{color:rgb(var(--g1))}
-body.viewing .lab,body.viewing #rail{opacity:0!important;pointer-events:none}
+        /* Index Tracker Indicator */
+        .index-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 0 24px 76px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 12px;
+        }
 
-@media(max-width:860px){
-  :root{--tr-caps:.2em}
-  #seed .orb{width:74px;height:74px}
-  #seed .g{font-size:30px}
-  #rail{display:none}
-  .proj{width:min(330px,84vw)}
-  .proj .pstat{letter-spacing:.26em}
-  .vmeta{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 20px}
-  .dtel{gap:14px}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition-duration:.01ms!important}}
-</style>
+        .tracker-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .tracker-status {
+            font-size: 10px;
+            font-family: var(--font-heading);
+            font-style: italic;
+            letter-spacing: 0.05em;
+            color: var(--accent);
+        }
+
+        /* Project Items (Locked / Coming Soon) */
+        .project-item {
+            opacity: 0.75;
+            transition: var(--transition-smooth);
+        }
+
+        .project-item:hover {
+            opacity: 1;
+        }
+
+        .project-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(36, 31, 24, 0.6);
+            transition: var(--transition-smooth);
+        }
+
+        .project-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        h2 {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text-main);
+            transition: var(--transition-smooth);
+        }
+
+        .project-badges {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-badge {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            font-weight: 400;
+            transition: var(--transition-smooth);
+        }
+
+        /* Subtle Lock Icon Styling */
+        .lock-icon {
+            width: 11px;
+            height: 11px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: var(--transition-smooth);
+            opacity: 0.6;
+        }
+
+        /* Project Row Hover Effects */
+        .project-row:hover .project-content {
+            padding-left: 8px;
+            border-bottom-color: var(--border);
+        }
+
+        .project-row:hover h2 {
+            color: var(--accent);
+            transform: translateX(2px);
+        }
+
+        .project-row:hover .status-badge {
+            color: var(--text-main);
+        }
+
+        .project-row:hover .lock-icon {
+            stroke: var(--accent);
+            opacity: 1;
+        }
+
+        .leaf-node {
+            transition: var(--transition-smooth);
+            transform-origin: center;
+        }
+
+        .project-row:hover .leaf-node {
+            fill: var(--accent);
+            transform: scale(1.35);
+        }
+
+        /* Bio Button */
+        .bio-btn {
+            background: transparent;
+            border: 1px solid var(--branch);
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 12px 26px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            outline: none;
+            align-self: flex-start;
+        }
+
+        .bio-btn:hover {
+            border-color: var(--accent);
+            color: var(--bg);
+            background-color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* Bio Panel Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 10, 7, 0.8);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease;
+            z-index: 50;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .bio-panel {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--panel-bg);
+            border-top: 1px solid var(--border);
+            padding: 56px 24px;
+            transform: translateY(100%);
+            transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 100;
+        }
+
+        .bio-panel.active {
+            transform: translateY(0);
+        }
+
+        .bio-content {
+            max-width: 680px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .bio-title {
+            font-family: var(--font-heading);
+            font-size: 26px;
+            font-style: italic;
+            color: var(--accent);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .bio-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
+            max-width: 520px;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-btn::before {
+            content: '';
+            display: block;
+            width: 18px;
+            height: 1px;
+            background-color: var(--text-muted);
+            transition: var(--transition-smooth);
+        }
+
+        .close-btn:hover {
+            color: var(--text-main);
+        }
+
+        .close-btn:hover::before {
+            background-color: var(--accent);
+            width: 28px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 480px) {
+            .container {
+                padding: 6vh 16px 10vh 16px;
+            }
+            .index-tracker {
+                padding-left: 54px;
+            }
+            .branch-col {
+                width: 48px;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<canvas id="sky" aria-hidden="true"></canvas>
-<canvas id="tree" aria-hidden="true"></canvas>
-<div class="vig" aria-hidden="true"></div>
-<div id="rail" aria-hidden="true"><i></i></div>
+    <div class="overlay" id="overlay"></div>
 
-<div class="lab l-tl">Gabriel Fortun Cantave<span class="dim">Portfolio — 2026</span></div>
-<div class="lab l-tr">Singapore<span class="dim" id="clock">--:--</span></div>
-<div class="lab l-bl">ESSEC<span class="dim">Global BBA</span></div>
-<div class="lab l-br"><button id="bioBtn"><span class="ar"></span>Biography</button></div>
+    <div class="container">
+        
+        <!-- Header Section -->
+        <header class="row header-row">
+            <div class="branch-col">
+                <svg viewBox="0 0 64 160" width="64" height="160">
+                    <circle cx="32" cy="80" r="3" fill="var(--accent)" />
+                    <!-- Root curving down smoothly -->
+                    <path d="M 32,80 C 14,115 48,135 32,160" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                </svg>
+            </div>
+            <div class="content-col">
+                <h1>Gabriel Fortun Cantave</h1>
+                <p class="tagline">Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore</p>
+            </div>
+        </header>
 
-<div id="doc">
-  <div id="seed" role="button" tabindex="0" aria-label="Biography">
-    <div class="orb">
-      <span class="halo"></span><span class="ring"></span><span class="ring r2"></span>
-      <span class="g">G</span>
+        <!-- Index Progress Tracker -->
+        <div class="index-tracker">
+            <span class="tracker-label">Index // 07 Ventures</span>
+            <span class="tracker-status">More roots growing soon</span>
+        </div>
+
+        <!-- Project List -->
+        <main>
+            <!-- Events -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Events</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Design -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Web Design</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clothing -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Clothing</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trading -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Trading</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Etsy -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Etsy</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hackathon -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Hackathon</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ideas -->
+            <div class="row project-row project-item">
+                <div class="branch-col">
+                    <svg viewBox="0 0 64 88" width="64" height="88">
+                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
+                    </svg>
+                </div>
+                <div class="content-col">
+                    <div class="project-content">
+                        <div class="project-meta">
+                            <h2>Ideas</h2>
+                        </div>
+                        <div class="project-badges">
+                            <span class="status-badge">Coming soon</span>
+                            <svg class="lock-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer / Bio Toggle -->
+        <footer class="row footer-row">
+            <div class="branch-col">
+                <svg viewBox="0 0 64 120" width="64" height="120">
+                    <path d="M 32,0 C 32,35 42,48 54,64" stroke="var(--branch)" stroke-width="1.2" fill="none" />
+                    <circle cx="54" cy="64" r="3" fill="var(--accent)" />
+                </svg>
+            </div>
+            <div class="content-col">
+                <button class="bio-btn" id="btn-bio">Read Bio</button>
+            </div>
+        </footer>
+
     </div>
-  </div>
-  <div id="hint" aria-hidden="true">Scroll<span class="bar"></span></div>
-</div>
 
-<div id="view" role="dialog" aria-modal="true">
-  <div id="viewBg"></div>
-  <div class="vwrap" id="vwrap"></div>
-</div>
-<button id="vClose">Close</button>
-<div class="vnav">
-  <button id="vPrev"><span class="ar"></span><span>Prev</span></button>
-  <button id="vIndex">Index</button>
-  <button id="vNext"><span>Next</span><span class="ar"></span></button>
-</div>
+    <!-- Bio Panel -->
+    <aside class="bio-panel" id="bio-panel">
+        <div class="bio-content">
+            <h3 class="bio-title">Roots & Growth</h3>
+            <p class="bio-text">
+                Gabriel Fortun Cantave. Global BBA student positioned at the intersection of business strategy and organic execution. Cultivating thoughtful ventures across digital and physical domains from Singapore.
+            </p>
+            <button class="close-btn" id="close-bio">Return</button>
+        </div>
+    </aside>
 
-<div id="scrim"></div>
-<div id="drawer" role="dialog" aria-modal="true" aria-label="Biography">
-  <div class="grab"></div>
-  <h2>Gabriel Fortun Cantave</h2>
-  <div class="dsub">ESSEC Business School / Global BBA / Singapore</div>
-  <div class="rule"></div>
-  <div class="dbody">Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore.<br><br>Before Singapore: two years of CPGE and a Baccalaur&eacute;at in Paris, and a year of school in Miami. Building projects across events, web design, e-commerce and trading, and exploring AI with nine Anthropic Academy certifications completed.</div>
-  <div class="rule"></div>
-  <div class="dlab">Education</div>
-  <div class="drec">
-    <div><b>ESSEC Business School</b><span>Global BBA &middot; Asia-Pacific, Singapore</span><i>2026 &mdash;</i></div>
-    <div><b>CPGE Lyc&eacute;e H&eacute;l&egrave;ne Boucher</b><span>ECG &middot; Advanced mathematics &middot; Paris</span><i>2025 &mdash; 2026</i></div>
-    <div><b>Lyc&eacute;e Louis Armand</b><span>Baccalaur&eacute;at &middot; Paris 15e</span><i>2020 &mdash; 2024</i></div>
-    <div><b>Franck C. Martin Middle School</b><span>Miami, Florida</span><i>2019 &mdash; 2020</i></div>
-  </div>
-  <div class="rule"></div>
-  <div class="dlab">Experience</div>
-  <div class="drec">
-    <div><b>Event organiser</b><span>Independent &middot; Paris 6e</span><i>2023 &mdash; 2025</i></div>
-    <div><b>Sales associate</b><span>Librairie des Marques</span><i>2021 &mdash; 2022</i></div>
-    <div><b>Youth football coach, U10</b><span>Jeunesse Maurice Maignen</span><i>2020 &mdash; 2022</i></div>
-  </div>
-  <div class="rule"></div>
-  <div class="dlab">Languages</div>
-  <div class="dtag"><span>French &middot; Native</span><span>English &middot; Bilingual, IELTS 7</span><span>Spanish &middot; Beginner</span></div>
-  <div class="rule"></div>
-  <div class="dlab">Connect</div>
-  <div class="dlinks">
-    <a href="https://www.linkedin.com/in/gabriel-fortun-277295339" target="_blank" rel="noopener"><span class="ar">-&gt;</span>LinkedIn</a>
-    <a href="https://www.instagram.com/frtn.gabriel" target="_blank" rel="noopener"><span class="ar">-&gt;</span>Instagram</a>
-    <a href="https://github.com/gabrielfortuncantave-dot" target="_blank" rel="noopener"><span class="ar">-&gt;</span>GitHub</a>
-    <a href="mailto:gabrielfortuncantave@gmail.com"><span class="ar">-&gt;</span>Email</a>
-    <a href="https://revolut.me/gfortuncantave" target="_blank" rel="noopener"><span class="ar">-&gt;</span>Revolut</a>
-  </div>
-  <div class="dtel">
-    <a href="tel:+6580745034">+65 8074 5034</a>
-    <a href="tel:+33787211613">+33 7 87 21 16 13</a>
-  </div>
-</div>
+    <script>
+        const btnBio = document.getElementById('btn-bio');
+        const closeBio = document.getElementById('close-bio');
+        const bioPanel = document.getElementById('bio-panel');
+        const overlay = document.getElementById('overlay');
 
-<script>
-const HAS_M=typeof Motion!=='undefined'&&Motion.animate;
-const animate=HAS_M?Motion.animate:null, stagger=HAS_M?Motion.stagger:null;
-const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
-const EO=[.25,.46,.45,.94];
-
-/* ============================================================
-   PROJECT CONTENT — edit these objects to update the site.
-   `body`  : array of paragraphs (real content)
-   `pending`: visitor-facing line shown when body is empty
-   ============================================================ */
-const PROJECTS=[
-  {slug:'events',title:'Events',meta:'Production',year:'2023 — 2025',
-   role:'Lead organiser',status:'Completed',
-   body:[
-     'Nine large-scale events organised in Paris between 2023 and 2025, held in rented bars and nightclubs across the 6th arrondissement.',
-     'Lead organiser on every edition: booking the venue, running a dedicated communication team, and bringing in around 120 guests each night.'
-   ],
-   links:[],pending:''},
-
-  {slug:'web-design',title:'Web Design',meta:'Interface',year:'2026',
-   role:'Design & Build',status:'Live',
-   body:[
-     'This site. One static page, no framework, deployed on GitHub Pages behind a custom domain.',
-     'The tree is generated, not drawn: a seeded recursive algorithm grows the trunk, the limbs and the canopy onto a canvas, with a layered star-dust field behind it.',
-     'Each project hangs off its own limb. A beam fires from the branch tip and projects the title into the dark as you descend.'
-   ],
-   links:[['View repository','https://github.com/gabrielfortuncantave-dot/gabrielfortuncantave-dot.github.io']],
-   pending:''},
-
-  {slug:'clothing',title:'Clothing',meta:'Product',year:'2026',
-   role:'Founder',status:'In progress',body:[],links:[],
-   pending:'In development. The concept and the first pieces will be documented here.'},
-
-  {slug:'trading',title:'Trading',meta:'Markets',year:'2026',
-   role:'Participant',status:'Upcoming',body:[],links:[],
-   pending:'Upcoming. Approach and results will be published as they happen.'},
-
-  {slug:'etsy',title:'Etsy',meta:'Commerce',year:'2026',
-   role:'Shop setup & brand',status:'Live',
-   body:[
-     'ByPaulineDesign is a Singapore-based Etsy shop selling handmade gifts. The shop is Pauline\u2019s; I handle the setup and the visual identity.',
-     'Rebranded around the line \u201CUnique handmade gifts for every occasion\u201D. Produced the shop banner and the matching circular logo, and prepared the product photography for the first listings.'
-   ],
-   links:[['Visit the shop','https://www.etsy.com/shop/ByPaulineDesign']],
-   pending:''},
-
-  {slug:'hackathon',title:'Hackathon',meta:'Build',year:'2026',
-   role:'Co-founder',status:'In progress',
-   body:[
-     'Working to found a Claude Builder Club at ESSEC Asia-Pacific in Singapore, alongside Gaspard Moulinier. There is no Claude Builder Club in Singapore yet.',
-     'Applying to the Anthropic Ambassador programme on the undergraduate track. My side of it is the community: getting people who do not write code into the room and building with them.'
-   ],
-   list:{label:'Anthropic Academy \u2014 9 certifications',items:[
-     'Claude 101','AI Capabilities and Limitations','Claude Code 101',
-     'Claude Code en action','Introduction to Claude Cowork',
-     'Ma\u00EEtrise de l\u2019IA pour le travail cr\u00E9atif','AI Fluency pour les \u00E9ducateurs',
-     'AI Fluency pour les \u00E9tudiants','Ma\u00EEtrise de l\u2019IA : Mod\u00E8les & Fondamentaux'
-   ]},
-   links:[['Anthropic Academy','https://anthropic.skilljar.com/']],
-   pending:''},
-
-  {slug:'ideas',title:'Ideas',meta:'Research',year:'2026',
-   role:'Notes',status:'Open',body:[],links:[],
-   pending:'An open notebook. Concepts being explored, published here as they take shape.'}
-];
-
-PROJECTS.forEach((p,i)=>{p.n=String(i+1).padStart(2,'0');p.soon=!(p.body&&p.body.length)});
-const ITEMS=PROJECTS.map(p=>[p.n,p.title,p.meta]);
-
-function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;
-  let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;
-  return((t^t>>>14)>>>0)/4294967296}}
-
-const sky=document.getElementById('sky'),sg=sky.getContext('2d');
-const tc=document.getElementById('tree'),tg=tc.getContext('2d');
-const docEl=document.getElementById('doc');
-const seedEl=document.getElementById('seed');
-const hintEl=document.getElementById('hint');
-const railEl=document.getElementById('rail'),railI=railEl.firstElementChild;
-
-let W,H,DPR,DOCH,MOB=false,GTOP=0,SEGS=[],TIPS=[],CROWN=[],LEAVES=[],panels=[];
-const P={x:-9999,y:-9999,has:false};
-addEventListener('pointermove',e=>{P.x=e.clientX;P.y=e.clientY;P.has=true},{passive:true});
-
-/* ================= build panels ================= */
-PROJECTS.forEach((p,i)=>{
-  const el=document.createElement('div');
-  el.className='proj'+(p.soon?' soon':'');
-  el.setAttribute('role','link');
-  el.tabIndex=0;
-  el.setAttribute('aria-label',p.title+' — '+(p.soon?'Coming soon':p.status));
-  el.innerHTML='<div class="inner">'+
-      '<div class="pttl">'+p.title+'</div>'+
-      '<div class="pstat"><b></b>'+(p.soon?'Coming soon':p.status)+'</div>'+
-    '</div>';
-  const go=()=>{location.hash='#/'+p.slug};
-  el.addEventListener('click',go);
-  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go()}});
-  docEl.appendChild(el);
-  panels.push(el);
-});
-
-/* ================= layout + tree ================= */
-function build(){
-  DPR=Math.min(devicePixelRatio||1,2);
-  W=innerWidth;H=innerHeight;
-  MOB=W<860;
-  const NARROW=W<680;
-  for(const [c,x] of [[sky,sg],[tc,tg]]){
-    c.width=W*DPR;c.height=H*DPR;
-    c.style.width=W+'px';c.style.height=H+'px';
-    x.setTransform(DPR,0,0,DPR,0,0);
-  }
-  DOCH=H*(1+ITEMS.length*(MOB?.94:.85));
-  docEl.style.height=DOCH+'px';
-
-  const orb=MOB?74:92;
-  const gTop=H*(MOB?.34:.36);GTOP=gTop;
-  seedEl.style.transform='translate3d('+(W/2-orb/2)+'px,'+gTop+'px,0)';
-  hintEl.style.top=(gTop+orb+34)+'px';
-
-  const rnd=mulberry32(20260914);
-  SEGS=[];TIPS=[];
-
-  const trunkTop=gTop+orb+6;
-  const trunkBot=DOCH-H*(MOB?.30:.26);
-  const cx=W/2;
-
-  /* --- central trunk, gently meandering --- */
-  const STEPS=120;
-  let prev={x:cx,y:trunkTop};
-  const pts=[prev];
-  for(let i=1;i<=STEPS;i++){
-    const t=i/STEPS;
-    const y=trunkTop+(trunkBot-trunkTop)*t;
-    const x=cx+Math.sin(t*Math.PI*2.1)*(MOB?16:30)+Math.sin(t*Math.PI*6.3)*(MOB?4:9);
-    const p={x,y};
-    SEGS.push({x1:prev.x,y1:prev.y,x2:x,y2:y,
-      thick:(MOB?6:8)*(1-t*.72)+.8, k:t*.35});
-    pts.push(p);prev=p;
-  }
-
-  /* --- one branch per project, alternating sides --- */
-  ITEMS.forEach((it,i)=>{
-    const t=(i+.85)/(ITEMS.length+.6);
-    const anchor=pts[Math.round(t*STEPS)];
-    const dir=i%2===0?1:-1;
-    const reach=MOB?W*.20:Math.min(W*.19,240);
-    const drop=MOB?H*.07:H*.075;
-
-    let bx=anchor.x, by=anchor.y;
-    const SEGN=5;
-    let lx=bx,ly=by;
-    for(let s=1;s<=SEGN;s++){
-      const u=s/SEGN;
-      const nx=bx+dir*reach*Math.pow(u,.82);
-      const ny=by+drop*u*u+drop*.25*u;
-      SEGS.push({x1:lx,y1:ly,x2:nx,y2:ny,
-        thick:(MOB?3.4:4.4)*(1-u*.68)+.6,k:.45+u*.5});
-      if(s>=2&&s<=4){
-        const tl=reach*(.17+rnd()*.15);
-        const ta=(rnd()-.5)*1.1;
-        const tx=nx+dir*tl*Math.cos(ta), ty=ny+tl*Math.sin(ta)+tl*.5;
-        SEGS.push({x1:nx,y1:ny,x2:tx,y2:ty,thick:1.1,k:.85});
-        if(rnd()<.6){
-          const t2=tl*.55,a2=(rnd()-.5)*1.2;
-          SEGS.push({x1:tx,y1:ty,x2:tx+dir*t2*Math.cos(a2),y2:ty+t2*Math.sin(a2)+t2*.5,
-            thick:.7,k:.95});
+        function toggleBio() {
+            bioPanel.classList.toggle('active');
+            overlay.classList.toggle('active');
         }
-      }
-      lx=nx;ly=ny;
-    }
-    TIPS.push({x:lx,y:ly,dir});
-  });
 
-  /* --- decorative side twigs along trunk --- */
-  for(let i=0;i<26;i++){
-    const t=.08+rnd()*.88;
-    const a=pts[Math.round(t*STEPS)];
-    const dir=rnd()<.5?1:-1;
-    const len=(MOB?26:44)*(.5+rnd());
-    const ang=(rnd()*.5+.15);
-    const x2=a.x+dir*len*Math.cos(ang), y2=a.y+len*Math.sin(ang)+len*.4;
-    SEGS.push({x1:a.x,y1:a.y,x2,y2,thick:1.3,k:.8});
-    if(rnd()<.5){
-      const l2=len*.5,a2=(rnd()*.7+.1);
-      SEGS.push({x1:x2,y1:y2,x2:x2+dir*l2*Math.cos(a2),y2:y2+l2*Math.sin(a2)+l2*.4,
-        thick:.7,k:.95});
-    }
-  }
-
-  /* --- crown: limbs climbing above the G, carrying leaves --- */
-  CROWN=[];LEAVES=[];
-  const XS=MOB?1.22:1.38;            /* canopy spreads wider than it climbs */
-  (function(){
-    function grow(x,y,ang,len,depth,k){
-      const nx=x+Math.cos(ang)*len*XS, ny=y+Math.sin(ang)*len;
-      CROWN.push({x1:x,y1:y,x2:nx,y2:ny,thick:Math.max(.5,depth*.8),k:k,m:.5});
-      if(depth<=2){
-        const cnt=1+Math.round(rnd()*2);
-        for(let i=0;i<cnt;i++){
-          const t=.2+rnd()*.8;
-          const off=(rnd()-.5)*len*.3;
-          LEAVES.push({x:x+(nx-x)*t+off,y:y+(ny-y)*t+(rnd()-.5)*len*.2,
-            a:ang+(rnd()-.5)*1.9,
-            r:(MOB?3.6:4.8)+rnd()*(MOB?2.4:3.6),
-            p:rnd()*6.283,h:rnd()});
-        }
-      }
-      if(depth<=1)return;
-      const n=rnd()<.42?3:2;
-      for(let i=0;i<n;i++){
-        const sp=(i-(n-1)/2)*(.64+rnd()*.34);
-        const out=(ang<-Math.PI/2?-.07:.07);
-        grow(nx,ny,ang+sp+out+(rnd()-.5)*.22,len*(.70+rnd()*.14),depth-1,Math.min(1,k+.16));
-      }
-    }
-    const base=gTop+orb*.06;
-    const prim=MOB?4:5;
-    const step=MOB?.48:.43;
-    for(let i=0;i<prim;i++){
-      const a=-Math.PI/2+(i-(prim-1)/2)*step+(rnd()-.5)*.14;
-      grow(cx,base,a,H*(MOB?.050:.058)*(.9+rnd()*.35),5,.5);
-    }
-  })();
-
-  /* --- position projection panels at branch tips --- */
-  panels.forEach((el,i)=>{
-    const tip=TIPS[i];
-    const right=tip.dir>0;
-    el.classList.toggle('mid',NARROW);
-    el.classList.toggle('right',!NARROW&&right);
-    el.classList.toggle('left',!NARROW&&!right);
-    const w=el.offsetWidth||320;
-    const h=el.offsetHeight||170;
-    let x;
-    if(NARROW){ x=(W-w)/2; }
-    else { x = right ? Math.min(W-w-24, tip.x-6) : Math.max(24, tip.x-w+6); }
-    el.dataset.x=x;
-    el.dataset.y=tip.y-h/2+(NARROW?h*.34:0);
-  });
-
-  seedDust();
-}
-
-/* ================= draw ================= */
-let TT=0; /* slow time for sway */
-function sway(k,y){ return Math.sin(TT*.55+y*.0032)*k*2.6 }
-
-function strokeSet(list,sy,top,bot){
-  for(const s of list){
-    if(Math.max(s.y1,s.y2)<top||Math.min(s.y1,s.y2)>bot)continue;
-    const k=s.k;
-    const r=Math.round(26+(74-26)*k);
-    const g=Math.round(104+(222-104)*k);
-    const b=Math.round(66+(128-66)*k);
-    const m=s.m||1;
-    tg.strokeStyle='rgba('+r+','+g+','+b+','+((.32+k*.5)*m).toFixed(3)+')';
-    tg.lineWidth=Math.max(.55,s.thick);
-    tg.shadowColor='rgba(74,222,128,'+((.16+k*.3)*m).toFixed(3)+')';
-    tg.shadowBlur=(5+k*11)*m;
-    tg.beginPath();
-    tg.moveTo(s.x1+sway(k,s.y1),s.y1-sy);
-    tg.lineTo(s.x2+sway(k,s.y2),s.y2-sy);
-    tg.stroke();
-  }
-  tg.shadowBlur=0;
-}
-
-function paintLeaves(sy,top,bot){
-  for(const L of LEAVES){
-    if(L.y<top||L.y>bot)continue;
-    const y=L.y-sy;
-    const tw=.5+.5*Math.sin(TT*1.15+L.p);
-    tg.save();
-    tg.translate(L.x+sway(.95,L.y),y);
-    tg.rotate(L.a+Math.sin(TT*.52+L.p)*.10);
-    tg.beginPath();
-    tg.ellipse(0,0,L.r,L.r*.40,0,0,6.283);
-    tg.fillStyle='rgba('+Math.round(104+L.h*58)+','+Math.round(226+L.h*24)+','+Math.round(150+L.h*40)+','+(.06+tw*.15).toFixed(3)+')';
-    tg.shadowColor='rgba(74,222,128,.4)';tg.shadowBlur=4+tw*6;
-    tg.fill();
-    tg.restore();
-  }
-  tg.shadowBlur=0;
-}
-
-/* --- the projector: a real light cone fired from each branch tip --- */
-function paintBeams(sy){
-  tg.save();
-  tg.globalCompositeOperation='lighter';
-  for(let i=0;i<panels.length;i++){
-    const el=panels[i], ea=el._ea||0;
-    if(ea<.03)continue;
-    const tp=TIPS[i];
-    const ax=tp.x+sway(.95,tp.y), ay=tp.y-sy;
-    const rw=el._rw||el.offsetWidth, rh=el._rh||el.offsetHeight;
-    const cx2=(el._rx||0)+rw/2, cy2=(el._ry||0)+rh/2;
-    let dx=cx2-ax, dy=cy2-ay;
-    const L=Math.hypot(dx,dy);
-    if(L<24)continue;
-    const ux=dx/L, uy=dy/L, nx=-uy, ny=ux;
-    const F=L+Math.max(rw,rh)*.58;
-    const HW=Math.max(rh*.60,rw*.17);
-    const fl=.87+.13*Math.sin(TT*8.4+i*2.1)*Math.sin(TT*3.1+i);
-    const ex=ax+ux*F, ey=ay+uy*F;
-
-    const cone=(halfw,alpha)=>{
-      const g=tg.createLinearGradient(ax,ay,ex,ey);
-      g.addColorStop(0,'rgba(150,255,196,'+(alpha*ea*fl).toFixed(4)+')');
-      g.addColorStop(.42,'rgba(74,222,128,'+(alpha*.52*ea*fl).toFixed(4)+')');
-      g.addColorStop(1,'rgba(74,222,128,0)');
-      tg.beginPath();
-      tg.moveTo(ax,ay);
-      tg.lineTo(ex+nx*halfw,ey+ny*halfw);
-      tg.lineTo(ex-nx*halfw,ey-ny*halfw);
-      tg.closePath();
-      tg.fillStyle=g;tg.fill();
-    };
-    cone(HW,.085);          /* soft spill */
-    cone(HW*.42,.10);       /* hot core   */
-
-    /* crisp cone edges */
-    tg.lineWidth=1;
-    for(const s of [1,-1]){
-      const g2=tg.createLinearGradient(ax,ay,ex,ey);
-      g2.addColorStop(0,'rgba(180,255,214,'+(.16*ea*fl).toFixed(4)+')');
-      g2.addColorStop(1,'rgba(74,222,128,0)');
-      tg.strokeStyle=g2;
-      tg.beginPath();tg.moveTo(ax,ay);tg.lineTo(ex+nx*HW*s,ey+ny*HW*s);tg.stroke();
-    }
-
-    /* the surface the words land on */
-    const R=Math.max(rw,rh)*.62;
-    const sfc=tg.createRadialGradient(cx2,cy2,0,cx2,cy2,R);
-    sfc.addColorStop(0,'rgba(74,222,128,'+(.085*ea).toFixed(4)+')');
-    sfc.addColorStop(.55,'rgba(34,160,94,'+(.03*ea).toFixed(4)+')');
-    sfc.addColorStop(1,'rgba(34,160,94,0)');
-    tg.fillStyle=sfc;
-    tg.beginPath();tg.ellipse(cx2,cy2,R,R*.56,0,0,6.283);tg.fill();
-
-    /* lens flare at the emitter */
-    const lens=tg.createRadialGradient(ax,ay,0,ax,ay,26);
-    lens.addColorStop(0,'rgba(224,255,236,'+(.55*ea*fl).toFixed(4)+')');
-    lens.addColorStop(1,'rgba(74,222,128,0)');
-    tg.fillStyle=lens;
-    tg.beginPath();tg.arc(ax,ay,26,0,6.283);tg.fill();
-  }
-  tg.restore();
-}
-
-function paintTree(sy){
-  tg.clearRect(0,0,W,H);
-  tg.lineCap='round';
-  const top=sy-140, bot=sy+H+140;
-  paintBeams(sy);
-  strokeSet(SEGS,sy,top,bot);
-  strokeSet(CROWN,sy,top,bot);
-  paintLeaves(sy,top,bot);
-
-  /* glowing node at each branch tip */
-  TIPS.forEach((tp,i)=>{
-    const y=tp.y-sy;
-    if(y<-40||y>H+40)return;
-    const pulse=.8+.2*Math.sin(TT*1.1+i*1.7);
-    tg.beginPath();tg.arc(tp.x+sway(.95,tp.y),y,3.2,0,6.283);
-    tg.fillStyle='rgba(217,255,231,'+(.7+.25*pulse)+')';
-    tg.shadowColor='rgba(74,222,128,.9)';tg.shadowBlur=13+6*pulse;
-    tg.fill();tg.shadowBlur=0;
-  });
-}
-
-/* ================= star dust ================= */
-const DUST=[];
-function seedDust(){
-  DUST.length=0;
-  const dens=MOB?2100:1350;
-  const count=Math.max(600,Math.min(MOB?900:1600,Math.round((W*H)/dens)));
-  for(let i=0;i<count;i++){
-    const L=Math.random();
-    let s,o,vy,par;
-    if(L<.56){s=Math.random()*.55+.16;o=Math.random()*.20+.025;vy=-(Math.random()*.05+.008);par=.12}
-    else if(L<.89){s=Math.random()*.95+.38;o=Math.random()*.38+.05;vy=-(Math.random()*.09+.018);par=.26}
-    else{s=Math.random()*1.65+.75;o=Math.random()*.58+.11;vy=-(Math.random()*.15+.04);par=.46}
-    DUST.push({x:Math.random()*W,y:Math.random()*H,s,o,vy,par,
-      vx:(Math.random()-.5)*.055,ph:Math.random()*Math.PI*2,
-      tw:Math.random()*.028+.006,lime:Math.random()<.32});
-  }
-}
-
-function paintSky(sy){
-  sg.clearRect(0,0,W,H);
-  const gy=GTOP-sy+46;
-  const bl=sg.createRadialGradient(W/2,gy,0,W/2,gy,Math.min(W,H)*.6);
-  bl.addColorStop(0,'rgba(74,222,128,.07)');
-  bl.addColorStop(.3,'rgba(34,160,94,.028)');
-  bl.addColorStop(1,'transparent');
-  sg.fillStyle=bl;sg.fillRect(0,0,W,H);
-
-  for(const p of DUST){
-    p.x+=p.vx;p.y+=p.vy;p.ph+=p.tw;
-    if(p.y<-6){p.y=H+6;p.x=Math.random()*W}
-    if(p.x<-6)p.x=W+6; if(p.x>W+6)p.x=-6;
-    let px=p.x, py=p.y-(sy*p.par)%(H+12);
-    if(py<-6)py+=H+12;
-    if(P.has){
-      const dx=px-P.x,dy=py-P.y,d=Math.hypot(dx,dy),R=150;
-      if(d<R&&d>0){const f=(R-d)/R*18;px+=dx/d*f;py+=dy/d*f}
-    }
-    const o=p.o*(.55+.45*Math.sin(p.ph));
-    sg.beginPath();sg.arc(px,py,p.s,0,6.283);
-    sg.fillStyle=p.lime?'rgba(150,250,190,'+o+')':'rgba(226,248,234,'+(o*.8)+')';
-    sg.fill();
-  }
-}
-
-/* ================= scroll-driven reveal ================= */
-function updatePanels(sy){
-  const mid=sy+H/2;
-  panels.forEach(el=>{
-    const y=parseFloat(el.dataset.y||0);
-    const x=parseFloat(el.dataset.x||0);
-    const h=el.offsetHeight||170;
-    const d=(y+h/2-mid)/(H*.62);              /* -1..1 window */
-    const a=Math.max(0,1-Math.abs(d));
-    const ease=a*a*(3-2*a);                   /* smoothstep */
-    el.style.opacity=ease.toFixed(3);
-    const off=d*46;
-    const sc=.962+ease*.038;
-    el.style.transform='translate3d('+x+'px,'+(y-sy+off)+'px,0) scale('+sc+')';
-    const bl=(1-ease)*4.5;
-    el.style.filter=bl>.12?'blur('+bl.toFixed(2)+'px)':'none';
-    el._rx=x; el._ry=y-sy+off; el._rw=el.offsetWidth; el._rh=h; el._ea=ease;
-  });
-}
-
-/* ================= loop ================= */
-let sy=0,ssy=0,last=performance.now(),paused=false;
-addEventListener('scroll',()=>{sy=scrollY},{passive:true});
-document.addEventListener('visibilitychange',()=>{paused=document.hidden;
-  if(!paused){last=performance.now();requestAnimationFrame(loop)}});
-
-function loop(now){
-  if(paused)return;
-  const t=now||performance.now();
-  const dt=Math.min(64,t-last);last=t;
-  TT+=dt/1000;
-
-  /* smoothed scroll — everything canvas-side eases toward the real value */
-  const lerp=RM?1:1-Math.pow(.0016,dt/1000);
-  ssy+=(sy-ssy)*Math.min(1,lerp);
-  if(Math.abs(sy-ssy)<.4)ssy=sy;
-
-  paintSky(ssy);
-  updatePanels(ssy);
-  paintTree(ssy);
-
-  /* fade seed + hint as you leave the top */
-  const f=Math.max(0,1-ssy/(H*.42));
-  seedEl.style.transform='translate3d('+(W/2-(MOB?37:46))+'px,'+(GTOP-ssy)+'px,0)';
-  if(seedEl.dataset.ready==='1')seedEl.style.opacity=f.toFixed(3);
-  hintEl.style.opacity=(f*(hintEl.dataset.ready==='1'?1:0)).toFixed(3);
-  hintEl.style.transform='translate3d(calc(-100% - '+(MOB?20:30)+'px),'+(-ssy)+'px,0)';
-
-  /* scroll rail */
-  if(!MOB){
-    const max=Math.max(1,DOCH-H);
-    const prog=Math.min(1,Math.max(0,ssy/max));
-    railEl.classList.toggle('on',ssy>H*.12);
-    railI.style.transform='translateY('+(prog*(railEl.clientHeight-64))+'px)';
-  }
-  requestAnimationFrame(loop);
-}
-
-/* ================= drawer ================= */
-const drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
-const openD=()=>document.body.classList.add('open');
-const closeD=()=>{drawer.classList.remove('drag');drawer.style.transform='';document.body.classList.remove('open')};
-document.getElementById('bioBtn').addEventListener('click',()=>{location.hash='#/about'});
-seedEl.addEventListener('click',()=>{location.hash='#/about'});
-seedEl.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();location.hash='#/about'}});
-scrim.addEventListener('click',()=>{location.hash=''});
-addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('open'))location.hash=''});
-let dr=false,sy0=0,cy0=0,ly=0,lt=0,vel=0;
-drawer.addEventListener('pointerdown',e=>{
-  if(drawer.scrollTop>0)return;
-  dr=true;sy0=e.clientY;cy0=0;ly=e.clientY;lt=performance.now();vel=0;
-  drawer.classList.add('drag')});
-drawer.addEventListener('pointermove',e=>{
-  if(!dr)return;const dy=e.clientY-sy0;cy0=dy>0?dy:dy*.22;
-  const now=performance.now(),dt=now-lt;
-  if(dt>0){vel=(e.clientY-ly)/dt;ly=e.clientY;lt=now}
-  drawer.style.transform='translate3d(0,'+cy0+'px,0)'});
-const endDrag=()=>{if(!dr)return;dr=false;drawer.classList.remove('drag');
-  const h=drawer.offsetHeight;drawer.style.transform='';
-  if(vel>0.11||cy0>h*.4)location.hash=''};
-drawer.addEventListener('pointerup',endDrag);
-drawer.addEventListener('pointercancel',endDrag);
-
-/* ================= router + project views ================= */
-const viewEl=document.getElementById('view');
-const vwrap=document.getElementById('vwrap');
-const vPrev=document.getElementById('vPrev'),vNext=document.getElementById('vNext');
-const vIndex=document.getElementById('vIndex'),vClose=document.getElementById('vClose');
-let curIdx=-1;
-
-function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-
-function renderProject(i){
-  const p=PROJECTS[i];
-  const bodyHtml = p.soon
-    ? '<div class="vsoon"><div class="k"><b></b>In development</div><p>'+esc(p.pending||'')+'</p><div class="bar"></div></div>'
-    : '<div class="vbody">'+p.body.map(t=>'<p>'+esc(t)+'</p>').join('')+'</div>';
-  const listHtml = p.list
-    ? '<div class="vlist"><div class="vlist-k">'+esc(p.list.label)+'</div><ul>'+
-       p.list.items.map(t=>'<li>'+esc(t)+'</li>').join('')+'</ul></div>'
-    : '';
-  const linksHtml = (p.links&&p.links.length)
-    ? '<div class="vlinks">'+p.links.map(([l,u])=>
-        '<a href="'+esc(u)+'" target="_blank" rel="noopener">-&gt; '+esc(l)+'</a>').join('')+'</div>'
-    : '';
-  vwrap.innerHTML=
-    '<div class="vnum">'+esc(p.n)+'</div>'+
-    '<div class="vttl">'+esc(p.title)+'</div>'+
-    '<div class="vmeta">'+
-      '<div><span class="k">Year</span><span class="v">'+esc(p.year)+'</span></div>'+
-      '<div><span class="k">Role</span><span class="v">'+esc(p.role)+'</span></div>'+
-      '<div><span class="k">Status</span><span class="v">'+esc(p.status)+'</span></div>'+
-      '<div><span class="k">Field</span><span class="v">'+esc(p.meta)+'</span></div>'+
-    '</div>'+bodyHtml+listHtml+linksHtml;
-
-  vPrev.disabled = i<=0;
-  vNext.disabled = i>=PROJECTS.length-1;
-  viewEl.scrollTop=0;
-  curIdx=i;
-  document.title=p.title+' — Gabriel Fortun Cantave';
-}
-
-function openView(i){
-  renderProject(i);
-  viewEl.classList.add('on');
-  document.body.classList.add('viewing');
-  document.body.style.overflow='hidden';
-  if(HAS_M&&!RM){
-    animate(vwrap,{opacity:[0,1],transform:['translateY(16px)','translateY(0)']},
-      {duration:.46,easing:EO});
-  }
-}
-function closeView(){
-  if(curIdx<0)return;
-  viewEl.classList.remove('on');
-  document.body.classList.remove('viewing');
-  document.body.style.overflow='';
-  curIdx=-1;
-  document.title='Gabriel Fortun Cantave';
-}
-
-function route(){
-  const h=location.hash.replace(/^#\/?/,'');
-  if(h==='about'){closeView();openD();return}
-  const i=PROJECTS.findIndex(p=>p.slug===h);
-  if(i>=0){closeD();openView(i)}
-  else{closeView();closeD()}
-}
-addEventListener('hashchange',route);
-
-vClose.addEventListener('click',()=>{location.hash=''});
-vIndex.addEventListener('click',()=>{location.hash=''});
-vPrev.addEventListener('click',()=>{if(curIdx>0)location.hash='#/'+PROJECTS[curIdx-1].slug});
-vNext.addEventListener('click',()=>{if(curIdx<PROJECTS.length-1)location.hash='#/'+PROJECTS[curIdx+1].slug});
-addEventListener('keydown',e=>{
-  if(curIdx<0)return;
-  if(e.key==='Escape'){location.hash=''}
-  if(e.key==='ArrowLeft'&&curIdx>0){location.hash='#/'+PROJECTS[curIdx-1].slug}
-  if(e.key==='ArrowRight'&&curIdx<PROJECTS.length-1){location.hash='#/'+PROJECTS[curIdx+1].slug}
-});
-
-/* ================= clock ================= */
-const clk=()=>{const d=new Date();document.getElementById('clock').textContent=
-  String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')+' SGT'};
-clk();setInterval(clk,10000);
-
-/* ================= boot ================= */
-let rt;
-addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(build,140)});
-build();requestAnimationFrame(loop);route();
-
-addEventListener('load',()=>{
-  build();
-  if(RM||!HAS_M){
-    document.querySelectorAll('.lab').forEach(n=>n.style.opacity='1');
-    seedEl.style.opacity='1';hintEl.style.opacity='1';
-    seedEl.dataset.ready='1';hintEl.dataset.ready='1';
-    return;
-  }
-  animate(seedEl,{opacity:[0,1]},{duration:.75,easing:EO,delay:.15})
-    .finished.then(()=>seedEl.dataset.ready='1');
-  animate('#seed .orb',{transform:['scale(.92)','scale(1)']},{duration:.85,easing:EO,delay:.15});
-  animate(hintEl,{opacity:[0,1]},{duration:.6,easing:EO,delay:1.15})
-    .finished.then(()=>hintEl.dataset.ready='1');
-  animate('.lab',{opacity:[0,1]},{duration:.6,easing:EO,delay:stagger(.08,{start:.6})});
-});
-</script>
-
+        btnBio.addEventListener('click', toggleBio);
+        closeBio.addEventListener('click', toggleBio);
+        overlay.addEventListener('click', toggleBio);
+    </script>
 </body>
 </html>
