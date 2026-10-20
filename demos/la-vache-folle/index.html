@@ -7,7 +7,8 @@
 <meta name="description" content="La Vache Folle, bar dansant au 32 rue Dauphine (Paris 6e, métro Odéon). Ouvert tous les jours de 15h à 2h. Happy hour, DJ le vendredi et le samedi, karaoké, fléchettes, beer pong, privatisation jusqu'à 170 personnes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Instrument+Sans:wght@400;500;700&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Instrument+Sans:wght@400;500;700&display=swap"></noscript>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -148,6 +149,21 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20width='64'%20height='64'%20rx='14'%20fill='%23ff3d8b'/%3E%3Ctext%20x='32'%20y='45'%20text-anchor='middle'%20font-family='Georgia,serif'%20font-weight='700'%20font-size='38'%20fill='%23ffffff'%3EV%3C/text%3E%3C/svg%3E">
 <style>.gf-demo{background:#111;color:#e9e9e4;font:500 13px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif;text-align:center;padding:9px 14px}.gf-demo a{color:#fff;text-decoration:underline;text-underline-offset:2px}</style>
 <style>.nav-cta,.btn:not(.ghost){background:#ea005e;border-color:#ea005e}.btn:not(.ghost):hover{background:var(--lait);border-color:var(--lait)}</style>
+<style>.gf-mbar{display:none}@media (max-width:760px){.gf-mbar{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:90;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#111;border-top:1px solid #000;box-shadow:0 -12px 30px rgba(0,0,0,.16)}.gf-mbar a{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;padding:0 6px;border-radius:999px;font:700 15px/1 'Instrument Sans',system-ui,sans-serif;text-decoration:none;background:#fffaf0;color:#111;white-space:nowrap}.gf-mbar a.p{background:#ea005e;color:#fff}.gf-mbar svg{width:18px;height:18px;flex:none}body{padding-bottom:calc(72px + env(safe-area-inset-bottom))}}</style>
+<style>
+.hero-inner{padding-left:1.25rem;padding-right:1.25rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:.8rem;margin:1.6rem 0 .4rem}
+.hero-ctas .btn{font-size:1.05rem;padding:.85rem 1.4rem}
+.btn.ink{background:var(--lait);color:var(--noir);border-color:var(--noir)}
+.btn.ink:hover{background:var(--noir);color:var(--lait);border-color:var(--noir)}
+@media (max-width:600px){
+ .hero{min-height:0}
+ .hero-inner{padding:2.6rem 1.25rem 6rem}
+ .tag{margin-top:1.4rem}
+ .cloche{width:84px;bottom:1.2rem}
+}
+::selection{background:#ff3d8b;color:#fff}
+</style>
 </head>
 <body>
 <aside class="gf-demo" aria-label="Avertissement : site de démonstration">Démo réalisée par <a href="/">Gabriel Fortun</a> : exemple de site, pas le site officiel de l'établissement.</aside>
@@ -183,7 +199,7 @@
       <span class="l2">Folle</span>
     </h1>
     <p class="tag"><strong>Bar dansant au 32 rue Dauphine.</strong> Pintes pas chères, DJ le week-end, karaoké et fléchettes, à deux pas d'Odéon.</p>
-    <br>
+    <div class="hero-ctas"><a class="btn" href="tel:+33609246249">Appeler le bar</a><a class="btn ink" href="https://www.google.com/maps/search/?api=1&query=32+Rue+Dauphine+75006+Paris" target="_blank" rel="noopener">Itinéraire</a></div>
     <p class="open-now" id="openNow" aria-live="polite"><i></i><span>Tous les jours de 15h à 2h</span></p>
   </div>
 
@@ -337,5 +353,7 @@
       : 'Fermé, on ouvre à 15h';
   })();
 </script>
+<div class="gf-mbar" role="group" aria-label="Actions rapides"><a class="p" href="tel:+33609246249"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>Appeler</a><a class="" href="https://www.google.com/maps/search/?api=1&query=32+Rue+Dauphine+75006+Paris" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Itinéraire</a><a class="" href="https://www.privateaser.com/lieu/55199-la-vache-folle" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Réserver</a></div>
+<script>(()=>{const m=matchMedia("(max-width:600px)"),sp=document.querySelector(".hero .spots");if(!sp)return;const f=()=>sp.setAttribute("preserveAspectRatio",m.matches?"xMidYMin meet":"xMidYMid slice");f();m.addEventListener("change",f)})();</script>
 </body>
 </html>
