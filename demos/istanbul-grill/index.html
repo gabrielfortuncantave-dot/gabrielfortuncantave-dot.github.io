@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Istanbul Grill Kebab · 94 bd de Port-Royal, Paris 5e</title>
+<meta name="description" content="Kebab, grillades, sandwichs et assiettes turques au 94 boulevard de Port-Royal, Paris 5e, à la sortie du RER B Port-Royal. Sur place ou à emporter.">
+<meta property="og:title" content="Istanbul Grill Kebab, Port-Royal">
+<meta property="og:description" content="Kebab, grillades et assiettes à la sortie du RER Port-Royal. 94 bd de Port-Royal, Paris 5e.">
+<meta property="og:type" content="restaurant">
+<meta name="theme-color" content="#C8161D">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23C8161D'/%3E%3Cpath d='M32 10v44' stroke='%23fff' stroke-width='3'/%3E%3Cpath d='M22 18h20l-3 30H25z' fill='%23F4B02A'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@400;500;600&family=Yellowtail&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": "Istanbul Grill Kebab",
+  "servesCuisine": ["Turque", "Kebab", "Grillades"],
+  "priceRange": "€",
+  "telephone": "+33605721483",
+  "address": {"@type": "PostalAddress", "streetAddress": "94 boulevard de Port-Royal", "postalCode": "75005", "addressLocality": "Paris", "addressCountry": "FR"},
+  "geo": {"@type": "GeoCoordinates", "latitude": 48.8395291, "longitude": 2.3379481},
+  "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "11:00", "closes": "22:00"}]
+}
+</script>
+<style>
+:root{
+  --red:#C8161D;
+  --red-deep:#8E0F14;
+  --ink:#231C19;
+  --paper:#FFFFFF;
+  --mist:#F6F2EE;
+  --fries:#F4B02A;
+  --herb:#2E7D3A;
+  --line:#E6DED8;
+  --script:'Yellowtail', cursive;
+  --cond:'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --body:'Barlow', system-ui, sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.55 var(--body);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--fries);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{font:700 22px/1 var(--cond);letter-spacing:.01em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.brand i{display:inline-block;width:12px;height:12px;border-radius:50%;background:var(--red);box-shadow:0 0 0 4px rgba(200,22,29,.15)}
+.bar nav{display:flex;gap:22px;align-items:center}
+.bar nav a{text-decoration:none;font:600 17px/1 var(--cond)}
+.bar nav a:hover{color:var(--red)}
+.call{background:var(--red);color:#fff!important;padding:10px 16px;border-radius:999px}
+.call:hover{background:var(--red-deep)}
+
+/* hero */
+.hero{position:relative;overflow:hidden;background:var(--red);color:#fff}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:40px;align-items:center;min-height:560px;padding-top:56px;padding-bottom:56px}
+.hero h1{font:800 clamp(64px,10vw,132px)/.86 var(--cond);margin:0 0 22px;letter-spacing:-.01em}
+.hero h1 span{display:block;font:400 clamp(44px,6vw,76px)/1 var(--script);color:var(--fries);letter-spacing:0;margin-bottom:6px;transform:rotate(-3deg);transform-origin:left}
+.hero p.lead{font-size:20px;max-width:30ch;margin:0 0 26px;opacity:.95}
+.status{display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.18);padding:8px 14px;border-radius:999px;font:600 17px/1 var(--cond);margin-bottom:26px}
+.status b{width:10px;height:10px;border-radius:50%;background:#9BE59F;display:inline-block}
+.status.closed b{background:#FFB4B4}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+.btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;font:700 19px/1 var(--cond);padding:15px 22px;border-radius:999px;border:2px solid #fff}
+.btn.solid{background:#fff;color:var(--red)}
+.btn.solid:hover{background:var(--fries);border-color:var(--fries);color:var(--ink)}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.btn svg{width:18px;height:18px}
+
+/* broche */
+.spit{justify-self:center;position:relative;width:min(340px,80vw);aspect-ratio:3/4}
+.spit svg{width:100%;height:100%;overflow:visible}
+.glow{position:absolute;inset:8% -10% 8% 55%;background:radial-gradient(closest-side,rgba(255,170,60,.55),rgba(255,120,40,0));filter:blur(6px);animation:flicker 3.2s ease-in-out infinite}
+@keyframes flicker{0%,100%{opacity:.75}45%{opacity:1}60%{opacity:.85}}
+.meat-bands{animation:turn 2.6s linear infinite}
+@keyframes turn{from{transform:translateX(0)}to{transform:translateX(-48px)}}
+.spit-note{position:absolute;right:-8px;bottom:6%;font:400 30px/1 var(--script);color:var(--fries);transform:rotate(-6deg)}
+
+/* student strip */
+.student{background:var(--ink);color:#fff}
+.student .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-top:26px;padding-bottom:26px;flex-wrap:wrap}
+.student h2{margin:0;font:400 40px/1 var(--script);color:var(--fries)}
+.student p{margin:0;font:600 22px/1.25 var(--cond);flex:1;min-width:260px}
+.student small{font:400 15px/1.4 var(--body);opacity:.75}
+
+/* menu */
+section{scroll-margin-top:70px}
+.carte{padding:88px 0 72px}
+.head{display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+.head h2{margin:0;font:400 clamp(56px,7vw,84px)/.9 var(--script);color:var(--red)}
+.head p{margin:0;max-width:44ch;color:#5d524d}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 30px;padding:0;list-style:none}
+.tabs button{font:600 18px/1 var(--cond);background:var(--mist);color:var(--ink);border:0;padding:12px 18px;border-radius:999px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--red);color:#fff}
+.tabs button:hover:not([aria-selected="true"]){background:#EDE4DD}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:6px 56px}
+.panel[hidden]{display:none}
+.item{display:grid;grid-template-columns:1fr auto;gap:2px 16px;padding:16px 0;border-bottom:1px dashed var(--line)}
+.item h3{margin:0;font:700 23px/1.1 var(--cond)}
+.item p{margin:0;grid-column:1;color:#6b605a;font-size:15.5px}
+.price{grid-row:1/span 2;grid-column:2;align-self:start;text-align:right;font:700 22px/1.1 var(--cond);color:var(--red);white-space:nowrap}
+.price small{display:block;font:500 15px/1.3 var(--cond);color:#7b6f69}
+.panel-note{grid-column:1/-1;margin:18px 0 0;color:#6b605a;font-size:15.5px}
+.sauces{display:flex;flex-wrap:wrap;gap:10px;grid-column:1/-1;padding-top:8px}
+.sauces span{font:600 19px/1 var(--cond);padding:11px 16px;border-radius:999px;border:2px solid var(--ink)}
+.sauces span.extra{border-color:var(--fries);background:#FFF4DB}
+.fineprint{margin-top:34px;font-size:14.5px;color:#7b6f69;max-width:70ch}
+
+/* infos */
+.infos{background:var(--mist);padding:84px 0}
+.infos .grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:48px;align-items:start}
+.infos h2{margin:0 0 22px;font:400 clamp(52px,6vw,76px)/.9 var(--script);color:var(--red)}
+.hours{width:100%;border-collapse:collapse;font:600 21px/1 var(--cond);margin-bottom:34px}
+.hours td{padding:12px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right}
+.hours tr.today td{color:var(--red)}
+.hours tr.today td:first-child::after{content:" · aujourd’hui";font-weight:500;color:#7b6f69}
+.addr{font:700 28px/1.1 var(--cond);margin:0 0 8px}
+.access{margin:0 0 22px;padding:0;list-style:none;color:#5d524d}
+.access li{margin:4px 0}
+.chip{display:inline-block;font:700 14px/1 var(--cond);padding:4px 7px;border-radius:5px;color:#fff;margin-right:6px;vertical-align:2px}
+.chip.rer{background:#5291CE}
+.chip.bus{background:#2E7D3A}
+.map{width:100%;aspect-ratio:4/3;border:0;border-radius:18px;background:#e9e2dc;display:block}
+.infos .ctas .btn{border-color:var(--red);color:var(--red)}
+.infos .ctas .btn.solid{background:var(--red);color:#fff}
+.infos .ctas .btn.solid:hover{background:var(--red-deep);border-color:var(--red-deep);color:#fff}
+.infos .ctas .btn.ghost:hover{background:#fff}
+
+footer{background:var(--red-deep);color:#fff;padding:34px 0;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
+
+@media (max-width:860px){
+  .hero .wrap{grid-template-columns:1fr;min-height:0;padding-top:40px}
+  .spit{width:min(240px,60vw);order:-1;margin-bottom:-10px}
+  .panel{grid-template-columns:1fr}
+  .infos .grid{grid-template-columns:1fr}
+  .bar nav a:not(.call){display:none}
+  .spit-note{right:-56px;bottom:2%}
+}
+@media (prefers-reduced-motion:reduce){
+  .meat-bands,.glow{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="#top"><i aria-hidden="true"></i>Istanbul Grill Kebab</a>
+    <nav aria-label="Navigation principale">
+      <a href="#carte">La carte</a>
+      <a href="#infos">Horaires et accès</a>
+      <a class="call" href="tel:+33605721483">06 05 72 14 83</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1><span>Port-Royal</span>Istanbul Grill Kebab</h1>
+        <p class="lead">Kebab, grillades au feu et assiettes turques, juste à la sortie du RER Port-Royal. Sur place ou à emporter.</p>
+        <div class="status" id="status" role="status"><b aria-hidden="true"></b><span>Lundi au samedi, 11h à 22h</span></div>
+        <div class="ctas">
+          <a class="btn solid" href="#carte">Voir la carte</a>
+          <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=Istanbul+Grill+Kebab+94+Boulevard+de+Port-Royal+75005+Paris" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            Itinéraire
+          </a>
+        </div>
+      </div>
+
+      <div class="spit" aria-hidden="true">
+        <div class="glow"></div>
+        <svg viewBox="0 0 300 400">
+          <defs>
+            <clipPath id="cone"><path d="M78 70 Q150 52 222 70 L200 330 Q150 344 100 330 Z"/></clipPath>
+            <linearGradient id="shade" x1="0" x2="1">
+              <stop offset="0" stop-color="#000" stop-opacity=".38"/>
+              <stop offset=".45" stop-color="#000" stop-opacity="0"/>
+              <stop offset=".8" stop-color="#ffb347" stop-opacity=".25"/>
+              <stop offset="1" stop-color="#000" stop-opacity=".2"/>
+            </linearGradient>
+            <pattern id="bands" width="48" height="400" patternUnits="userSpaceOnUse">
+              <rect width="48" height="400" fill="#A65A2A"/>
+              <rect x="0" width="10" height="400" fill="#7E3E1C"/>
+              <rect x="20" width="6" height="400" fill="#C9783A"/>
+              <rect x="34" width="4" height="400" fill="#6B3317"/>
+            </pattern>
+            <pattern id="crust" width="300" height="14" patternUnits="userSpaceOnUse">
+              <rect width="300" height="3" fill="#000" opacity=".12"/>
+            </pattern>
+          </defs>
+          <!-- skewer -->
+          <rect x="146" y="14" width="8" height="372" rx="4" fill="#E9E4DF"/>
+          <circle cx="150" cy="22" r="13" fill="#F4B02A"/>
+          <rect x="112" y="358" width="76" height="18" rx="9" fill="#2A211D"/>
+          <!-- meat cone -->
+          <g clip-path="url(#cone)">
+            <g class="meat-bands"><rect x="0" y="0" width="400" height="400" fill="url(#bands)"/></g>
+            <rect width="300" height="400" fill="url(#crust)"/>
+            <rect width="300" height="400" fill="url(#shade)"/>
+          </g>
+          <!-- top cap -->
+          <ellipse cx="150" cy="68" rx="72" ry="13" fill="#5E2C14"/>
+          <!-- heater -->
+          <rect x="250" y="64" width="22" height="276" rx="11" fill="#2A211D"/>
+          <rect x="255" y="76" width="12" height="252" rx="6" fill="#FF8A2B"/>
+          <rect x="255" y="76" width="12" height="252" rx="6" fill="#FFD27A" opacity=".55"/>
+        </svg>
+        <div class="spit-note">à la broche</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="student" aria-label="Menu étudiant">
+    <div class="wrap">
+      <h2>Menu étudiant</h2>
+      <p>Pain et viande au choix, frites, boisson.<br><small>Tarif affiché au comptoir.</small></p>
+      <a class="btn solid" href="#carte" style="border-color:var(--fries);background:var(--fries);color:var(--ink)">Toute la carte</a>
+    </div>
+  </section>
+
+  <section class="carte" id="carte">
+    <div class="wrap">
+      <div class="head">
+        <h2>La carte</h2>
+        <p>Sandwichs dans le pain ou la galette, grillades, assiettes complètes et barquettes à emporter.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Catégories de la carte">
+        <button role="tab" aria-selected="true" aria-controls="p-sand" id="t-sand">Sandwichs</button>
+        <button role="tab" aria-selected="false" aria-controls="p-assiettes" id="t-assiettes" tabindex="-1">Assiettes</button>
+        <button role="tab" aria-selected="false" aria-controls="p-barquette" id="t-barquette" tabindex="-1">Barquettes</button>
+        <button role="tab" aria-selected="false" aria-controls="p-burgers" id="t-burgers" tabindex="-1">Burgers</button>
+        <button role="tab" aria-selected="false" aria-controls="p-paninis" id="t-paninis" tabindex="-1">Paninis et tacos</button>
+        <button role="tab" aria-selected="false" aria-controls="p-sauces" id="t-sauces" tabindex="-1">Sauces</button>
+        <button role="tab" aria-selected="false" aria-controls="p-supp" id="t-supp" tabindex="-1">Suppléments</button>
+        <button role="tab" aria-selected="false" aria-controls="p-boissons" id="t-boissons" tabindex="-1">Boissons</button>
+      </div>
+
+      <!-- Sandwichs -->
+      <div class="panel" role="tabpanel" id="p-sand" aria-labelledby="t-sand">
+        <div class="item"><h3>Kebab</h3><p>Viande de kebab à la broche</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Chicken curry</h3><p>Poulet au curry</p><div class="price">8,00 €<small>menu 9,50 €</small></div></div>
+        <div class="item"><h3>Poulet</h3><p>Morceaux de cuisse de poulet grillés</p><div class="price">8,00 €<small>menu 9,50 €</small></div></div>
+        <div class="item"><h3>Adana</h3><p>Brochette de viande hachée épicée</p><div class="price">8,00 €<small>menu 9,50 €</small></div></div>
+        <div class="item"><h3>Agneau</h3><p>Brochette d’agneau</p><div class="price">9,00 €<small>menu 10,50 €</small></div></div>
+        <div class="item"><h3>Köfte</h3><p>Boulettes de bœuf grillées</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Merguez</h3><p>Merguez grillées</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Steak</h3><p>Steak haché</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Cordon bleu</h3><p>Cordon bleu pané</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Galette steak fromage</h3><p>Steak et fromage dans une galette</p><div class="price">au comptoir</div></div>
+        <p class="panel-note">Le menu ajoute frites et boisson 33 cl. Pain ou galette au choix.</p>
+      </div>
+
+      <!-- Assiettes -->
+      <div class="panel" role="tabpanel" id="p-assiettes" aria-labelledby="t-assiettes" hidden>
+        <div class="item"><h3>Döner kebab</h3><p>Viande de kebab à la broche</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Grillades mixtes</h3><p>Assortiment de viandes grillées</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Côtes d’agneau</h3><p>Côtelettes d’agneau grillées</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Entrecôte</h3><p>Entrecôte grillée</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Agneau</h3><p>Brochettes d’agneau</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Poulet</h3><p>Brochettes de poulet</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Adana</h3><p>Brochettes de viande hachée</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Chicken</h3><p>Poulet façon chicken chika</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Köfte</h3><p>Boulettes de bœuf</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Merguez, cordon bleu ou steak haché</h3><p>Pour les classiques</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Végétarienne</h3><p>Salade, tomates, frites, boulgour</p><div class="price">au comptoir</div></div>
+        <p class="panel-note">Chaque assiette est servie avec salade, tomates, oignons, frites et boulgour. En menu assiette (kebab, poulet ou côtes d’agneau), la boisson est comprise.</p>
+      </div>
+
+      <!-- Barquettes -->
+      <div class="panel" role="tabpanel" id="p-barquette" aria-labelledby="t-barquette" hidden>
+        <div class="item"><h3>Barquette kebab</h3><p></p><div class="price">9,00 €</div></div>
+        <div class="item"><h3>Barquette poulet</h3><p></p><div class="price">9,00 €</div></div>
+        <div class="item"><h3>Barquette chicken curry</h3><p></p><div class="price">9,00 €</div></div>
+        <div class="item"><h3>Barquette agneau</h3><p></p><div class="price">10,00 €</div></div>
+      </div>
+
+      <!-- Burgers -->
+      <div class="panel" role="tabpanel" id="p-burgers" aria-labelledby="t-burgers" hidden>
+        <div class="item"><h3>Cheeseburger</h3><p></p><div class="price">6,00 €<small>menu 7,50 €</small></div></div>
+        <div class="item"><h3>Double cheese</h3><p>Deux steaks, deux fromages</p><div class="price">7,00 €<small>menu 8,50 €</small></div></div>
+        <div class="item"><h3>Mega cheese</h3><p></p><div class="price">8,00 €<small>menu 9,50 €</small></div></div>
+        <div class="item"><h3>Menu nuggets</h3><p>6 nuggets, frites, boisson 33 cl</p><div class="price">8,00 €</div></div>
+      </div>
+
+      <!-- Paninis & tacos -->
+      <div class="panel" role="tabpanel" id="p-paninis" aria-labelledby="t-paninis" hidden>
+        <div class="item"><h3>Panini kebab</h3><p></p><div class="price">6,50 €<small>menu 8,50 €</small></div></div>
+        <div class="item"><h3>Panini poulet</h3><p></p><div class="price">6,50 €<small>menu 8,50 €</small></div></div>
+        <div class="item"><h3>Panini 3 fromages</h3><p></p><div class="price">6,50 €<small>menu 8,50 €</small></div></div>
+        <div class="item"><h3>Panini merguez</h3><p></p><div class="price">6,50 €<small>menu 8,50 €</small></div></div>
+        <div class="item"><h3>Tacos M, L, XL, XXL</h3><p>Garnis de frites et sauce fromagère, de 1 à 4 viandes</p><div class="price">au comptoir</div></div>
+        <div class="item"><h3>Sandwich falafel</h3><p></p><div class="price">au comptoir</div></div>
+      </div>
+
+      <!-- Sauces -->
+      <div class="panel" role="tabpanel" id="p-sauces" aria-labelledby="t-sauces" hidden>
+        <p class="panel-note" style="margin:0 0 6px">Une ou deux sauces au choix comprises. À partir de la troisième, 0,30 € la sauce.</p>
+        <div class="sauces">
+          <span>Blanche</span><span>Algérienne</span><span>Samouraï</span><span>Harissa</span><span>Andalouse</span><span>Barbecue</span><span>Burger</span><span>Poivre</span><span>Moutarde</span><span>Ketchup</span><span>Mayonnaise</span><span class="extra">Fromagère +1 €</span>
+        </div>
+      </div>
+
+      <!-- Suppléments -->
+      <div class="panel" role="tabpanel" id="p-supp" aria-labelledby="t-supp" hidden>
+        <div class="item"><h3>Sauce supplémentaire</h3><p>À partir de la 3e</p><div class="price">0,30 €</div></div>
+        <div class="item"><h3>Cheddar</h3><p>Une tranche</p><div class="price">0,50 €</div></div>
+        <div class="item"><h3>Pain ou tortilla</h3><p></p><div class="price">1,00 €</div></div>
+        <div class="item"><h3>Œuf</h3><p></p><div class="price">1,00 €</div></div>
+        <div class="item"><h3>Falafel</h3><p>La pièce</p><div class="price">2,00 €</div></div>
+        <div class="item"><h3>Steak, köfte, merguez ou cordon bleu</h3><p>La pièce</p><div class="price">3,00 €</div></div>
+        <div class="item"><h3>Kebab, poulet ou chicken curry</h3><p>Portion de viande</p><div class="price">5,00 €</div></div>
+        <div class="item"><h3>Adana</h3><p>Portion</p><div class="price">6,00 €</div></div>
+        <div class="item"><h3>Agneau</h3><p>Portion</p><div class="price">8,00 €</div></div>
+        <div class="item"><h3>Côte d’agneau ou entrecôte</h3><p>La pièce</p><div class="price">9,00 €</div></div>
+      </div>
+
+      <!-- Boissons -->
+      <div class="panel" role="tabpanel" id="p-boissons" aria-labelledby="t-boissons" hidden>
+        <div class="item"><h3>Canette</h3><p>33 cl</p><div class="price">1,80 €</div></div>
+        <div class="item"><h3>San Pellegrino</h3><p>50 cl</p><div class="price">2,50 €</div></div>
+        <div class="item"><h3>Cristaline</h3><p>1,5 L</p><div class="price">2,50 €</div></div>
+        <div class="item"><h3>Grande bouteille de jus</h3><p></p><div class="price">3,50 €</div></div>
+        <div class="item"><h3>Bière en canette</h3><p>33 cl / 50 cl</p><div class="price">2,50 €<small>50 cl 3,50 €</small></div></div>
+        <div class="item"><h3>Bière pression</h3><p>25 cl / 50 cl</p><div class="price">3,50 €<small>50 cl 6,00 €</small></div></div>
+        <p class="panel-note">L’abus d’alcool est dangereux pour la santé, à consommer avec modération.</p>
+      </div>
+
+      <p class="fineprint">Prix relevés sur la carte en boutique, donnés à titre indicatif. Le tarif affiché au comptoir fait foi.</p>
+    </div>
+  </section>
+
+  <section class="infos" id="infos">
+    <div class="wrap grid">
+      <div>
+        <h2>Horaires</h2>
+        <table class="hours" id="hours">
+          <tbody>
+            <tr data-d="1"><td>Lundi</td><td>11h – 22h</td></tr>
+            <tr data-d="2"><td>Mardi</td><td>11h – 22h</td></tr>
+            <tr data-d="3"><td>Mercredi</td><td>11h – 22h</td></tr>
+            <tr data-d="4"><td>Jeudi</td><td>11h – 22h</td></tr>
+            <tr data-d="5"><td>Vendredi</td><td>11h – 22h</td></tr>
+            <tr data-d="6"><td>Samedi</td><td>11h – 22h</td></tr>
+            <tr data-d="0"><td>Dimanche</td><td>Fermé</td></tr>
+          </tbody>
+        </table>
+
+        <p class="addr">94 boulevard de Port-Royal<br>75005 Paris</p>
+        <ul class="access">
+          <li><span class="chip rer">RER B</span>Port-Royal, à 1 minute à pied</li>
+          <li><span class="chip bus">Bus</span>38 et 91, arrêt Port-Royal</li>
+        </ul>
+        <div class="ctas">
+          <a class="btn solid" href="tel:+33605721483">Appeler le 06 05 72 14 83</a>
+          <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=Istanbul+Grill+Kebab+94+Boulevard+de+Port-Royal+75005+Paris" target="_blank" rel="noopener">Itinéraire</a>
+        </div>
+      </div>
+      <iframe class="map" title="Plan d’accès, 94 boulevard de Port-Royal" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        src="https://www.google.com/maps?q=Istanbul+Grill+Kebab,+94+Boulevard+de+Port-Royal,+75005+Paris&z=17&output=embed"></iframe>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Istanbul Grill Kebab · 94 bd de Port-Royal, Paris 5e</span>
+    <span><a href="https://www.instagram.com/kebab_paris5/" target="_blank" rel="noopener">Instagram</a></span>
+  </div>
+</footer>
+
+<script>
+// Tabs (keyboard accessible)
+const tabs=[...document.querySelectorAll('[role="tab"]')];
+function select(t){
+  tabs.forEach(x=>{const on=x===t;x.setAttribute('aria-selected',on);x.tabIndex=on?0:-1;document.getElementById(x.getAttribute('aria-controls')).hidden=!on;});
+}
+tabs.forEach((t,i)=>{
+  t.addEventListener('click',()=>select(t));
+  t.addEventListener('keydown',e=>{
+    let j=null;
+    if(e.key==='ArrowRight')j=(i+1)%tabs.length;
+    if(e.key==='ArrowLeft')j=(i-1+tabs.length)%tabs.length;
+    if(j!==null){e.preventDefault();tabs[j].focus();select(tabs[j]);}
+  });
+});
+
+// Live open/closed status in Paris time
+(function(){
+  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Paris',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const get=k=>parts.find(p=>p.type===k).value;
+  const day=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'].indexOf(get('weekday'));
+  const mins=parseInt(get('hour'))*60+parseInt(get('minute'));
+  const row=document.querySelector('#hours tr[data-d="'+day+'"]');
+  if(row)row.classList.add('today');
+  const s=document.getElementById('status'), label=s.querySelector('span');
+  const open=day!==0 && mins>=660 && mins<1320;
+  if(open){label.textContent='Ouvert maintenant, jusqu’à 22h';}
+  else{
+    s.classList.add('closed');
+    let next;
+    if(day!==0 && mins<660) next='aujourd’hui à 11h';
+    else if(day===6 || day===0) next='lundi à 11h';
+    else next='demain à 11h';
+    label.textContent='Fermé, réouverture '+next;
+  }
+})();
+</script>
+</body>
+</html>
