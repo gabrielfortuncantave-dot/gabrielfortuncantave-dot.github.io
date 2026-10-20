@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Vache Folle | Bar dansant, 32 rue Dauphine, Paris 6e</title>
+<meta name="description" content="La Vache Folle, bar dansant au 32 rue Dauphine (Paris 6e, métro Odéon). Ouvert tous les jours de 15h à 2h. Happy hour, DJ le vendredi et le samedi, karaoké, fléchettes, beer pong, privatisation jusqu'à 170 personnes.">
+<meta property="og:title" content="La Vache Folle, bar dansant rue Dauphine">
+<meta property="og:description" content="Pintes pas chères, DJ le week-end, karaoké et fléchettes. 32 rue Dauphine, Paris 6e.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Instrument+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarOrPub",
+  "name": "La Vache Folle",
+  "address": {"@type": "PostalAddress","streetAddress": "32 rue Dauphine","postalCode": "75006","addressLocality": "Paris","addressCountry": "FR"},
+  "telephone": "+33609246249",
+  "openingHours": "Mo-Su 15:00-02:00",
+  "priceRange": "€",
+  "geo": {"@type": "GeoCoordinates","latitude": 48.854578,"longitude": 2.339123}
+}
+</script>
+<style>
+  :root{
+    --lait:#ffffff;
+    --noir:#000000;
+    --rose:#ff3d8b;      /* museau / néon */
+    --jaune:#ffe14d;     /* étiquettes de prix */
+    --herbe:#1f7a3a;     /* touche rare */
+    --gris:#5c5c5c;
+    --display:"Bagel Fat One", "Arial Black", system-ui, sans-serif;
+    --body:"Instrument Sans", system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--body);background:var(--lait);color:var(--noir);font-size:1.125rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  :focus-visible{outline:3px solid var(--rose);outline-offset:3px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 1.25rem}
+
+  /* ---------- nav ---------- */
+  .nav{position:sticky;top:0;z-index:20;background:var(--lait);border-bottom:3px solid var(--noir)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
+  .nav-logo{font-family:var(--display);font-size:1.35rem;text-decoration:none;letter-spacing:.01em}
+  .nav ul{list-style:none;display:flex;gap:1.4rem;font-weight:500;font-size:1rem}
+  .nav ul a{text-decoration:none}
+  .nav ul a:hover{text-decoration:underline;text-decoration-thickness:3px;text-decoration-color:var(--rose);text-underline-offset:5px}
+  .nav-cta{background:var(--rose);color:var(--lait);text-decoration:none;font-weight:700;padding:.5rem 1rem;border-radius:999px;font-size:1rem;white-space:nowrap}
+
+  /* ---------- hero : la robe de la vache ---------- */
+  .hero{position:relative;overflow:hidden;background:var(--lait);border-bottom:3px solid var(--noir);min-height:min(88vh,760px);display:flex;align-items:center}
+  .spots{position:absolute;inset:0;width:100%;height:100%}
+  .spots path{fill:var(--noir)}
+  .hero-inner{position:relative;z-index:2;padding:4rem 0 5rem}
+  .hero h1{font-family:var(--display);font-weight:400;line-height:.86;font-size:clamp(4.2rem,15vw,12.5rem);letter-spacing:-.01em;color:var(--rose);
+    -webkit-text-stroke:3px var(--noir);paint-order:stroke fill;text-shadow:7px 7px 0 var(--noir)}
+  .hero h1 span{display:block}
+  .hero h1 .l2{padding-left:clamp(0rem,8vw,7rem)}
+  .tag{display:inline-block;margin-top:2rem;background:var(--lait);border:3px solid var(--noir);padding:.9rem 1.2rem;max-width:30rem;font-size:1.15rem;border-radius:18px 18px 18px 4px;box-shadow:6px 6px 0 var(--noir)}
+  .tag strong{font-weight:700}
+  .open-now{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;font-weight:700;font-size:.95rem;background:var(--noir);color:var(--lait);padding:.35rem .8rem;border-radius:999px}
+  .open-now i{width:.6rem;height:.6rem;border-radius:50%;background:var(--gris)}
+  .open-now.is-open i{background:#3ee07a;box-shadow:0 0 0 3px rgba(62,224,122,.3)}
+
+  /* la cloche qui bouge : le seul mouvement de la page */
+  .cloche{position:absolute;z-index:3;right:clamp(1rem,7vw,6rem);bottom:clamp(1.5rem,6vw,4rem);width:clamp(90px,13vw,150px);transform-origin:50% 0;animation:dong 2.4s ease-in-out infinite}
+  @keyframes dong{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+  @media (prefers-reduced-motion:reduce){.cloche{animation:none}html{scroll-behavior:auto}}
+
+  /* ---------- sections ---------- */
+  section{padding:5.5rem 0}
+  h2{font-family:var(--display);font-weight:400;font-size:clamp(2.4rem,6vw,4.2rem);line-height:.95;margin-bottom:1.4rem}
+  .lead{max-width:38rem;font-size:1.2rem;color:#222}
+
+  /* happy hour */
+  .hh{background:var(--rose);color:var(--noir);border-bottom:3px solid var(--noir)}
+  .hh .lead{color:var(--noir)}
+  .prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem;margin-top:2.6rem}
+  .price{background:var(--jaune);border:3px solid var(--noir);padding:1.3rem 1.3rem 1.1rem;position:relative}
+  .price:nth-child(odd){transform:rotate(-1.5deg)}
+  .price:nth-child(even){transform:rotate(1.2deg)}
+  .price h3{font-size:1.05rem;font-weight:700}
+  .price .now{font-family:var(--display);font-size:3.4rem;line-height:1;margin-top:.5rem}
+  .price .was{font-size:.95rem;color:#333;margin-top:.25rem}
+  .price .was s{text-decoration-thickness:2px}
+  .fine{margin-top:2rem;font-size:.95rem}
+
+  /* au programme */
+  .prog-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:start}
+  .week{border:3px solid var(--noir)}
+  .week div{display:grid;grid-template-columns:7.5rem 1fr;border-bottom:3px solid var(--noir)}
+  .week div:last-child{border-bottom:0}
+  .week dt,.week dd{padding:1rem 1.1rem}
+  .week dt{font-weight:700;border-right:3px solid var(--noir)}
+  .week .fete{background:var(--noir);color:var(--lait)}
+  .week .fete dt{border-right-color:var(--lait)}
+  .jeux{list-style:none;display:flex;flex-direction:column;gap:1.4rem}
+  .jeux li{display:grid;grid-template-columns:3.2rem 1fr;gap:1rem;align-items:start}
+  .jeux svg{width:3.2rem;height:3.2rem}
+  .jeux h3{font-size:1.2rem;font-weight:700;margin-bottom:.15rem}
+  .jeux p{color:#333}
+
+  /* privatisation */
+  .priv{background:var(--noir);color:var(--lait);position:relative;overflow:hidden}
+  .priv .spots path{fill:#1a1a1a}
+  .priv .wrap{position:relative;z-index:2}
+  .priv .lead{color:#e8e8e8}
+  .big170{font-family:var(--display);font-size:clamp(6rem,22vw,15rem);line-height:.8;color:var(--rose);margin:1rem 0 1.6rem}
+  .priv-list{display:flex;flex-wrap:wrap;gap:.6rem;margin:2rem 0 2.4rem;list-style:none}
+  .priv-list li{border:2px solid var(--lait);border-radius:999px;padding:.4rem .95rem;font-size:1rem}
+  .btn{display:inline-block;background:var(--rose);color:var(--lait);font-weight:700;text-decoration:none;padding:1rem 1.6rem;border-radius:999px;font-size:1.1rem;border:3px solid var(--rose)}
+  .btn:hover{background:var(--lait);color:var(--noir);border-color:var(--lait)}
+  .btn.ghost{background:transparent;color:var(--lait);border-color:var(--lait);margin-left:.6rem}
+  .btn.ghost:hover{background:var(--lait);color:var(--noir)}
+
+  /* infos */
+  .infos-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+  .infos-grid h3{font-size:1.2rem;font-weight:700;margin-bottom:.4rem}
+  .infos-grid .block{margin-bottom:1.8rem}
+  .metro{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+  .metro li{display:flex;align-items:center;gap:.6rem}
+  .ligne{display:inline-grid;place-items:center;min-width:1.9rem;height:1.9rem;border-radius:50%;font-weight:700;font-size:.85rem;color:#fff}
+  .l4{background:#a0006e}.l10{background:#c9910d;color:#000}.l7{background:#fa9aba;color:#000}.rer{background:#fff;color:#000;border:2px solid #000;border-radius:6px;min-width:2.6rem}
+  .map{border:3px solid var(--noir);width:100%;height:100%;min-height:340px;filter:grayscale(1) contrast(1.1)}
+  .tel{font-family:var(--display);font-size:2rem;text-decoration:none}
+  .tel:hover{color:var(--rose)}
+
+  footer{border-top:3px solid var(--noir);padding:2rem 0 2.4rem;font-size:.95rem}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+  footer .moo{font-family:var(--display);font-size:1.3rem}
+
+  @media (max-width:820px){
+    .nav ul{display:none}
+    .prog-grid,.infos-grid{grid-template-columns:1fr}
+    section{padding:4rem 0}
+    .btn.ghost{margin:.8rem 0 0}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Navigation principale">
+  <div class="wrap">
+    <a class="nav-logo" href="#top">La Vache Folle</a>
+    <ul>
+      <li><a href="#happy-hour">Happy hour</a></li>
+      <li><a href="#programme">Au programme</a></li>
+      <li><a href="#privatiser">Privatiser</a></li>
+      <li><a href="#venir">Venir</a></li>
+    </ul>
+    <a class="nav-cta" href="tel:+33609246249">Appeler le bar</a>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <!-- la robe Holstein -->
+  <svg class="spots" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M-40 -30 C120 -40 260 20 300 110 C340 200 250 260 170 300 C90 340 20 420 -40 410 Z"/>
+    <path d="M520 -40 C640 -10 760 40 740 130 C720 210 610 190 560 250 C505 315 420 260 430 170 C440 90 430 -20 520 -40 Z"/>
+    <path d="M960 60 C1060 30 1230 60 1240 170 L1240 470 C1170 520 1060 470 1020 400 C975 320 1050 290 990 230 C930 170 870 90 960 60 Z"/>
+    <path d="M60 560 C140 500 280 520 330 590 C380 660 330 800 220 800 L-40 800 L-40 640 C0 610 20 590 60 560 Z"/>
+    <path d="M640 520 C720 480 830 520 850 600 C870 690 780 720 700 700 C610 680 560 570 640 520 Z"/>
+    <path d="M380 380 C420 360 470 380 470 420 C470 460 420 470 390 450 C360 432 350 395 380 380 Z"/>
+    <path d="M1100 620 C1140 600 1190 630 1180 670 C1170 710 1110 715 1090 685 C1072 660 1075 632 1100 620 Z"/>
+  </svg>
+
+  <div class="wrap hero-inner">
+    <h1 aria-label="La Vache Folle">
+      <span>La Vache</span>
+      <span class="l2">Folle</span>
+    </h1>
+    <p class="tag"><strong>Bar dansant au 32 rue Dauphine.</strong> Pintes pas chères, DJ le week-end, karaoké et fléchettes, à deux pas d'Odéon.</p>
+    <br>
+    <p class="open-now" id="openNow" aria-live="polite"><i></i><span>Tous les jours de 15h à 2h</span></p>
+  </div>
+
+  <!-- la cloche de la vache -->
+  <svg class="cloche" viewBox="0 0 120 160" aria-hidden="true">
+    <path d="M44 4 h32 v22 h-32 z" fill="#000"/>
+    <path d="M30 26 h60 l16 96 c2 12 -6 18 -18 18 h-56 c-12 0 -20 -6 -18 -18 z" fill="#ffe14d" stroke="#000" stroke-width="6" stroke-linejoin="round"/>
+    <path d="M38 50 l-8 60" stroke="#000" stroke-width="5" stroke-linecap="round" opacity=".25"/>
+    <circle cx="60" cy="146" r="11" fill="#ff3d8b" stroke="#000" stroke-width="5"/>
+  </svg>
+</header>
+
+<main>
+
+<section class="hh" id="happy-hour">
+  <div class="wrap">
+    <h2>Happy hour tous les jours</h2>
+    <p class="lead">Ici on vient pour boire à prix doux avant que la soirée décolle. Le happy hour tourne sept jours sur sept.</p>
+    <!-- Prix relevés sur Privateaser (sept. 2026). À faire valider par le bar avant mise en ligne. -->
+    <div class="prices">
+      <article class="price">
+        <h3>Pinte de blonde</h3>
+        <p class="now">3 €</p>
+        <p class="was">au lieu de <s>4,50 €</s></p>
+      </article>
+      <article class="price">
+        <h3>Demi de blonde</h3>
+        <p class="now">2,80 €</p>
+        <p class="was">le petit format</p>
+      </article>
+      <article class="price">
+        <h3>Cocktail</h3>
+        <p class="now">5 €</p>
+        <p class="was">au lieu de <s>8,50 €</s></p>
+      </article>
+      <article class="price">
+        <h3>Verre de rosé de Provence</h3>
+        <p class="now">5 €</p>
+        <p class="was">pour ceux qui ne font pas la bière</p>
+      </article>
+    </div>
+    <p class="fine">Prix indicatifs, demandez au comptoir. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
+  </div>
+</section>
+
+<section id="programme">
+  <div class="wrap prog-grid">
+    <div>
+      <h2>Ça monte au fil de la soirée</h2>
+      <p class="lead" style="margin-bottom:2rem">Calme à l'ouverture, animé à la nuit tombée, franchement dansant quand le DJ prend les platines.</p>
+      <dl class="week">
+        <div><dt>Lun. au jeu.</dt><dd>Bières entre amis, fléchettes, karaoké et matchs.</dd></div>
+        <div class="fete"><dt>Vendredi</dt><dd>DJ set : dance, disco, rap. On pousse les tables.</dd></div>
+        <div class="fete"><dt>Samedi</dt><dd>DJ set, et la piste ne désemplit pas jusqu'à 2h.</dd></div>
+        <div><dt>Dimanche</dt><dd>Happy hour et fléchettes pour finir le week-end.</dd></div>
+      </dl>
+    </div>
+
+    <ul class="jeux">
+      <li>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21" fill="#fff" stroke="#000" stroke-width="3"/><circle cx="24" cy="24" r="13" fill="#ff3d8b" stroke="#000" stroke-width="3"/><circle cx="24" cy="24" r="5" fill="#000"/></svg>
+        <div><h3>Fléchettes</h3><p>1 € la partie, il suffit de demander au bar.</p></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="17" y="4" width="14" height="24" rx="7" fill="#ffe14d" stroke="#000" stroke-width="3"/><path d="M11 22 a13 13 0 0 0 26 0" fill="none" stroke="#000" stroke-width="3"/><path d="M24 35 v8 M16 44 h16" stroke="#000" stroke-width="3" stroke-linecap="round"/></svg>
+        <div><h3>Karaoké</h3><p>Micro dispo au comptoir jusqu'à une certaine heure. Après, c'est le DJ qui chante.</p></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14 h14 l-3 28 h-8 z" fill="#ff3d8b" stroke="#000" stroke-width="3" stroke-linejoin="round"/><path d="M26 14 h14 l-3 28 h-8 z" fill="#ff3d8b" stroke="#000" stroke-width="3" stroke-linejoin="round"/><circle cx="24" cy="7" r="4" fill="#fff" stroke="#000" stroke-width="3"/></svg>
+        <div><h3>Beer pong</h3><p>Pour les anniversaires qui veulent du sport.</p></div>
+      </li>
+      <li>
+        <svg viewBox="0 0 48 48" aria-hidden="true"><rect x="4" y="9" width="40" height="26" rx="3" fill="#fff" stroke="#000" stroke-width="3"/><path d="M24 9 v26" stroke="#1f7a3a" stroke-width="2"/><circle cx="24" cy="22" r="5" fill="none" stroke="#1f7a3a" stroke-width="2"/><path d="M16 42 h16" stroke="#000" stroke-width="3" stroke-linecap="round"/></svg>
+        <div><h3>Matchs</h3><p>Les grands matchs passent à l'écran, avec une pinte à la main.</p></div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="priv" id="privatiser">
+  <svg class="spots" viewBox="0 0 1200 760" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <path d="M820 -40 C980 -20 1240 20 1240 160 L1240 330 C1140 380 1020 330 980 250 C940 170 760 120 820 -40 Z"/>
+    <path d="M-40 500 C60 450 220 470 260 560 C300 650 220 800 100 800 L-40 800 Z"/>
+  </svg>
+  <div class="wrap">
+    <h2>Privatisez la Vache</h2>
+    <p class="big170" aria-hidden="true">170</p>
+    <p class="lead">Jusqu'à 170 personnes, en privatisation partielle ou complète. Sono, micro et possibilité de passer votre propre musique. Vous pouvez apporter à manger et votre gâteau d'anniversaire, sur demande.</p>
+    <ul class="priv-list">
+      <li>Anniversaires</li>
+      <li>Soirées étudiantes</li>
+      <li>Pots de départ</li>
+      <li>Afterworks</li>
+      <li>Verres entre amis</li>
+      <li>Accessible PMR</li>
+    </ul>
+    <a class="btn" href="tel:+33609246249">Appeler pour réserver</a>
+    <a class="btn ghost" href="https://www.privateaser.com/lieu/55199-la-vache-folle" target="_blank" rel="noopener">Réserver en ligne</a>
+  </div>
+</section>
+
+<section id="venir">
+  <div class="wrap infos-grid">
+    <div>
+      <h2>Venir boire un coup</h2>
+      <div class="block">
+        <h3>Adresse</h3>
+        <p>32 rue Dauphine<br>75006 Paris</p>
+      </div>
+      <div class="block">
+        <h3>Horaires</h3>
+        <p>Tous les jours, de 15h à 2h.</p>
+      </div>
+      <div class="block">
+        <h3>Téléphone</h3>
+        <a class="tel" href="tel:+33609246249">06 09 24 62 49</a>
+      </div>
+      <div class="block">
+        <h3>Métro et RER</h3>
+        <ul class="metro">
+          <li><span class="ligne l4">4</span><span class="ligne l10">10</span> Odéon, 4 minutes à pied</li>
+          <li><span class="ligne rer">RER</span> Saint-Michel Notre-Dame (B et C)</li>
+          <li><span class="ligne l7">7</span> Pont Neuf, de l'autre côté de la Seine</li>
+        </ul>
+      </div>
+    </div>
+    <iframe class="map" title="Plan d'accès à La Vache Folle, 32 rue Dauphine" loading="lazy"
+      src="https://www.openstreetmap.org/export/embed.html?bbox=2.3355%2C48.8528%2C2.3427%2C48.8563&amp;layer=mapnik&amp;marker=48.854578%2C2.339123"></iframe>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="moo">La Vache Folle</span>
+    <span>32 rue Dauphine, Paris 6e. <a href="https://www.google.com/maps/search/?api=1&query=32+Rue+Dauphine+75006+Paris" target="_blank" rel="noopener">Itinéraire</a></span>
+  </div>
+</footer>
+
+<script>
+  // Indique si le bar est ouvert maintenant (heure de Paris, 15h à 2h)
+  (function(){
+    const el = document.getElementById('openNow');
+    const parts = new Intl.DateTimeFormat('en-GB',{hour:'2-digit',hourCycle:'h23',timeZone:'Europe/Paris'}).formatToParts(new Date());
+    const h = Number(parts.find(p => p.type === 'hour').value);
+    const open = h >= 15 || h < 2;
+    el.classList.toggle('is-open', open);
+    el.querySelector('span').textContent = open
+      ? 'Ouvert en ce moment, jusqu\u2019à 2h'
+      : 'Fermé, on ouvre à 15h';
+  })();
+</script>
+</body>
+</html>
