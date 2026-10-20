@@ -8,6 +8,15 @@
 <meta property="og:title" content="Gabriel Fortun · Sites web pour commerces de quartier">
 <meta property="og:description" content="Sites sur mesure pour restaurants, bars et boutiques. Voir les démos.">
 <meta property="og:image" content="https://gabrielfortun.com/assets/pizza-trancio.jpg">
+<meta property="og:image:width" content="1600">
+<meta property="og:image:height" content="1000">
+<meta property="og:image:alt" content="Aperçu de la démo Pizza Trancio">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://gabrielfortun.com/">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:site_name" content="Gabriel Fortun">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://gabrielfortun.com/">
 <meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -138,7 +147,7 @@ section{position:relative}
 .f{border-radius:22px;border:1px solid rgba(255,255,255,.09);background:rgba(10,10,10,.7);backdrop-filter:blur(6px);padding:28px 26px 30px;transition:border-color .3s,transform .3s}
 .f:hover{border-color:rgba(255,255,255,.22);transform:translateY(-3px)}
 .f svg{width:26px;height:26px;stroke:var(--warm1);margin-bottom:22px}
-.f h4{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.f h3{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
 .f p{color:#a9a9a4;font-size:15.5px}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
 .st{border-radius:22px;border:1px solid rgba(255,255,255,.09);background:rgba(8,8,8,.7);padding:26px}
@@ -151,7 +160,7 @@ section{position:relative}
 .steps{width:min(1000px,88vw);margin:80px auto 0;border-top:1px solid rgba(0,0,0,.12)}
 .step{display:grid;grid-template-columns:130px 1fr;padding:44px 20px;border-bottom:1px solid rgba(0,0,0,.12)}
 .step .n{font-family:"Inter Tight";font-size:64px;font-weight:600;line-height:.9;letter-spacing:-.04em}
-.step h4{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
+.step h3{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
 .step p{color:#3d3d39;font-size:18px;margin-top:12px;max-width:680px}
 .cream .center{text-align:center;margin-top:60px}
 .pill.k{background:#0e0e0d;color:#fff;box-shadow:0 14px 40px rgba(0,0,0,.25)}
@@ -215,6 +224,8 @@ footer a:hover{color:#fff}
   .reveal-up,.iv{opacity:1;transform:none;filter:none}
 }
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "ProfessionalService", "name": "Gabriel Fortun", "url": "https://gabrielfortun.com/", "description": "Je conçois des sites sur mesure pour les restaurants, bars et boutiques de quartier : carte, horaires, itinéraire et appel en un clic. Démos en ligne.", "email": "gabrielfortuncantave@gmail.com", "telephone": "+33787211613", "image": "https://gabrielfortun.com/assets/pizza-trancio.jpg", "sameAs": ["https://www.linkedin.com/in/gabriel-fortun-277295339/", "https://www.instagram.com/frtn.gabriel/", "https://github.com/gabrielfortuncantave-dot"]}</script>
+<style>:focus-visible{outline:2px solid #ffc46b;outline-offset:3px;border-radius:4px}.dots button{position:relative}.dots button::before{content:"";position:absolute;left:-4px;right:-4px;top:-14px;bottom:-14px}footer .soc a{display:inline-block;padding:11px 0}@media (max-width:480px){.hero .lead,.hero .ctas{padding-left:20px;padding-right:20px}.hero .ctas .pill.big{padding:15px 20px;font-size:16px}}</style>
 </head>
 <body>
 <div id="prog"></div>
@@ -236,6 +247,7 @@ footer a:hover{color:#fff}
   </div>
 </nav>
 
+<main id="main">
 <header class="hero">
   <div class="badge reveal-up" style="animation-delay:.1s"><span class="dot"></span>4 démos en ligne</div>
   <h1 class="h reveal-up" style="animation-delay:.25s">Votre commerce mérite un vrai site.</h1>
@@ -248,10 +260,10 @@ footer a:hover{color:#fff}
   <div class="frame reveal-up" style="animation-delay:.75s">
     <div class="screen" id="screen">
       <div class="bar"><i></i><i></i><i></i><em class="url" id="url">gabrielfortun.com/demos/pizza-trancio</em></div>
-      <a class="slide on" href="demos/pizza-trancio/" data-url="gabrielfortun.com/demos/pizza-trancio"><img src="assets/pizza-trancio.jpg" alt="Démo du site Pizza Trancio"></a>
-      <a class="slide" href="demos/friends-burger/" data-url="gabrielfortun.com/demos/friends-burger"><img src="assets/friends-burger.jpg" alt="Démo du site Friends Burger" loading="lazy"></a>
-      <a class="slide" href="demos/la-vache-folle/" data-url="gabrielfortun.com/demos/la-vache-folle"><img src="assets/la-vache-folle.jpg" alt="Démo du site La Vache Folle" loading="lazy"></a>
-      <a class="slide" href="demos/istanbul-grill/" data-url="gabrielfortun.com/demos/istanbul-grill"><img src="assets/istanbul-grill.jpg" alt="Démo du site Istanbul Grill Kebab" loading="lazy"></a>
+      <a class="slide on" href="demos/pizza-trancio/" data-url="gabrielfortun.com/demos/pizza-trancio"><img src="assets/pizza-trancio.webp" width="1600" height="1000" alt="Démo du site Pizza Trancio" fetchpriority="high"></a>
+      <a class="slide" href="demos/friends-burger/" data-url="gabrielfortun.com/demos/friends-burger"><img src="assets/friends-burger.webp" width="1600" height="1000" alt="Démo du site Friends Burger" loading="lazy" decoding="async"></a>
+      <a class="slide" href="demos/la-vache-folle/" data-url="gabrielfortun.com/demos/la-vache-folle"><img src="assets/la-vache-folle.webp" width="1600" height="1000" alt="Démo du site La Vache Folle" loading="lazy" decoding="async"></a>
+      <a class="slide" href="demos/istanbul-grill/" data-url="gabrielfortun.com/demos/istanbul-grill"><img src="assets/istanbul-grill.webp" width="1600" height="1000" alt="Démo du site Istanbul Grill Kebab" loading="lazy" decoding="async"></a>
       <div class="chip c1"><span class="ic" style="background:#1f7a46"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><b>Ouvert en ce moment</b><small>Horaires à jour, calculés en direct</small></span></div>
       <div class="chip c2"><span class="ic" style="background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg></span><span><b>Itinéraire en un clic</b><small>Métro, RER, plan intégré</small></span></div>
     </div>
@@ -287,7 +299,7 @@ footer a:hover{color:#fff}
 
     <div class="demos">
       <article class="demo iv">
-        <a class="media" href="demos/pizza-trancio/" target="_blank" rel="noopener"><div class="inner"><img src="assets/pizza-trancio.jpg" alt="Site Pizza Trancio" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <a class="media" href="demos/pizza-trancio/" target="_blank" rel="noopener"><div class="inner"><img src="assets/pizza-trancio.webp" width="1600" height="1000" alt="Site Pizza Trancio" loading="lazy" decoding="async"><span class="open">Ouvrir ↗</span></div></a>
         <div class="dtext">
           <div class="kind"><i style="background:#d9774f"></i>Pizzeria al taglio · Paris 5e</div>
           <h3 class="h">Pizza Trancio</h3>
@@ -298,7 +310,7 @@ footer a:hover{color:#fff}
       </article>
 
       <article class="demo iv">
-        <a class="media" href="demos/friends-burger/" target="_blank" rel="noopener"><div class="inner"><img src="assets/friends-burger.jpg" alt="Site Friends Burger" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <a class="media" href="demos/friends-burger/" target="_blank" rel="noopener"><div class="inner"><img src="assets/friends-burger.webp" width="1600" height="1000" alt="Site Friends Burger" loading="lazy" decoding="async"><span class="open">Ouvrir ↗</span></div></a>
         <div class="dtext">
           <div class="kind"><i style="background:#6cf28f"></i>Burgers, tacos, crêpes · Paris 5e</div>
           <h3 class="h">Friends Burger</h3>
@@ -309,7 +321,7 @@ footer a:hover{color:#fff}
       </article>
 
       <article class="demo iv">
-        <a class="media" href="demos/la-vache-folle/" target="_blank" rel="noopener"><div class="inner"><img src="assets/la-vache-folle.jpg" alt="Site La Vache Folle" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <a class="media" href="demos/la-vache-folle/" target="_blank" rel="noopener"><div class="inner"><img src="assets/la-vache-folle.webp" width="1600" height="1000" alt="Site La Vache Folle" loading="lazy" decoding="async"><span class="open">Ouvrir ↗</span></div></a>
         <div class="dtext">
           <div class="kind"><i style="background:#e84f8c"></i>Bar dansant · Paris 6e</div>
           <h3 class="h">La Vache Folle</h3>
@@ -320,7 +332,7 @@ footer a:hover{color:#fff}
       </article>
 
       <article class="demo iv">
-        <a class="media" href="demos/istanbul-grill/" target="_blank" rel="noopener"><div class="inner"><img src="assets/istanbul-grill.jpg" alt="Site Istanbul Grill Kebab" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <a class="media" href="demos/istanbul-grill/" target="_blank" rel="noopener"><div class="inner"><img src="assets/istanbul-grill.webp" width="1600" height="1000" alt="Site Istanbul Grill Kebab" loading="lazy" decoding="async"><span class="open">Ouvrir ↗</span></div></a>
         <div class="dtext">
           <div class="kind"><i style="background:#c8322b"></i>Kebab & grillades · Paris 5e</div>
           <h3 class="h">Istanbul Grill</h3>
@@ -340,12 +352,12 @@ footer a:hover{color:#fff}
       <div class="eyebrow">Ce qui est inclus</div>
       <h2 class="h sech" style="max-width:17ch">Tout ce qu'un client cherche avant de venir.</h2>
       <div class="feat">
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg><h4>Design sur mesure</h4><p>Vos couleurs, vos photos, votre ton. Le site ressemble à votre lieu, pas à un modèle.</p></div>
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg><h4>Carte complète</h4><p>Plats, prix, catégories et formules, lisibles sur téléphone et faciles à mettre à jour.</p></div>
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h4>Horaires en direct</h4><p>Un badge « ouvert / fermé » calculé à l'heure de Paris, et le jour en cours surligné.</p></div>
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h4>Plan & itinéraire</h4><p>Carte intégrée, transports à proximité et itinéraire en un clic.</p></div>
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><h4>Appel & commande</h4><p>Bouton d'appel fixe sur mobile, liens Uber Eats, Deliveroo ou réservation.</p></div>
-        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><h4>Référencement local</h4><p>Données structurées pour Google, titres et descriptions pensés pour votre quartier.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg><h3>Design sur mesure</h3><p>Vos couleurs, vos photos, votre ton. Le site ressemble à votre lieu, pas à un modèle.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg><h3>Carte complète</h3><p>Plats, prix, catégories et formules, lisibles sur téléphone et faciles à mettre à jour.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>Horaires en direct</h3><p>Un badge « ouvert / fermé » calculé à l'heure de Paris, et le jour en cours surligné.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h3>Plan & itinéraire</h3><p>Carte intégrée, transports à proximité et itinéraire en un clic.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><h3>Appel & commande</h3><p>Bouton d'appel fixe sur mobile, liens Uber Eats, Deliveroo ou réservation.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><h3>Référencement local</h3><p>Données structurées pour Google, titres et descriptions pensés pour votre quartier.</p></div>
       </div>
       <div class="stats">
         <div class="st"><b>100 %</b><small>Sur mesure</small></div>
@@ -361,9 +373,9 @@ footer a:hover{color:#fff}
     <div class="eyebrow" style="text-align:center;color:#6b6b64">Méthode</div>
     <h2 class="h sech">Trois étapes jusqu'à votre site.</h2>
     <div class="steps">
-      <div class="step"><div class="n">1</div><div><h4>On se rencontre</h4><p>Je passe au commerce ou on s'appelle. Je récupère la carte, les horaires, quelques photos, et je regarde ce qui fait l'identité du lieu.</p></div></div>
-      <div class="step"><div class="n">2</div><div><h4>Je construis la maquette</h4><p>Vous recevez un lien vers une première version en ligne. Vous corrigez, je retouche, jusqu'à ce que ça vous ressemble.</p></div></div>
-      <div class="step"><div class="n">3</div><div><h4>Vous êtes en ligne</h4><p>Je m'occupe du nom de domaine, de la mise en ligne et du lien avec votre fiche Google. Vous n'avez rien de technique à gérer.</p></div></div>
+      <div class="step"><div class="n">1</div><div><h3>On se rencontre</h3><p>Je passe au commerce ou on s'appelle. Je récupère la carte, les horaires, quelques photos, et je regarde ce qui fait l'identité du lieu.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h3>Je construis la maquette</h3><p>Vous recevez un lien vers une première version en ligne. Vous corrigez, je retouche, jusqu'à ce que ça vous ressemble.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h3>Vous êtes en ligne</h3><p>Je m'occupe du nom de domaine, de la mise en ligne et du lien avec votre fiche Google. Vous n'avez rien de technique à gérer.</p></div></div>
     </div>
     <div class="center"><a class="pill k big" href="#contact">Demander ma maquette <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
   </div>
@@ -401,6 +413,7 @@ footer a:hover{color:#fff}
   </div>
 </section>
 
+</main>
 <footer>
   <div class="wrap">
     <span>© <span id="yr">2026</span> Gabriel Fortun · Paris</span>
