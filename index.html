@@ -1,629 +1,512 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabriel Fortun Cantave</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Palette: Undergrowth, warm dark wood, earthy olive tones (Optimized WCAG AA contrast) */
-            --bg: #0d0a07;
-            --panel-bg: #15120e;
-            --text-main: #f0ebd8;
-            --text-muted: #9a8e7e;
-            --accent: #8f9e70; /* Soft olive green */
-            --accent-glow: rgba(143, 158, 112, 0.2);
-            --branch: #423a30; /* Warm dark wood line */
-            --border: #28221b;
-            
-            --font-heading: 'Cormorant Garamond', serif;
-            --font-body: 'DM Sans', sans-serif;
-            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gabriel Fortun · Sites web pour commerces de quartier</title>
+<meta name="description" content="Je conçois des sites sur mesure pour les restaurants, bars et boutiques de quartier : carte, horaires, itinéraire et appel en un clic. Démos en ligne.">
+<meta property="og:title" content="Gabriel Fortun · Sites web pour commerces de quartier">
+<meta property="og:description" content="Sites sur mesure pour restaurants, bars et boutiques. Voir les démos.">
+<meta property="og:image" content="https://gabrielfortun.com/assets/pizza-trancio.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffc46b'/%3E%3Cstop offset='1' stop-color='%23e8613a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath fill='url(%23g)' d='M16 1c1.4 8.2 6.8 13.6 15 15-8.2 1.4-13.6 6.8-15 15-1.4-8.2-6.8-13.6-15-15C9.2 14.6 14.6 9.2 16 1z'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#000; --ink:#f4f4f2; --mute:#9a9a96; --line:rgba(255,255,255,.09);
+  --card:#0c0c0c; --cream:#f0f0eb; --warm1:#ffc46b; --warm2:#e8613a;
+  --r:28px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:"Space Grotesk",system-ui,sans-serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.h{font-family:"Inter Tight","Space Grotesk",sans-serif;font-weight:600;letter-spacing:-.045em;line-height:.98}
+.wrap{width:min(1240px,92vw);margin:0 auto}
 
-        /* Reset & Box Sizing */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+/* progress bar */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;background:#fff;z-index:60}
 
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            font-family: var(--font-body);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-        }
+/* nav */
+nav.top{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:50;width:min(960px,94vw);
+  display:flex;align-items:center;justify-content:space-between;gap:20px;padding:10px 12px 10px 22px;border-radius:999px;
+  background:rgba(18,18,18,.0);border:1px solid transparent;transition:background .4s,border-color .4s,backdrop-filter .4s,box-shadow .4s}
+nav.top.solid{background:rgba(16,16,16,.72);border-color:rgba(255,255,255,.08);backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);box-shadow:0 10px 40px rgba(0,0,0,.5)}
+nav.top.light{background:rgba(255,255,255,.85);border-color:rgba(0,0,0,.06);color:#111;box-shadow:0 10px 40px rgba(0,0,0,.12)}
+nav.top.light .pill.o{border-color:rgba(0,0,0,.2)}
+nav.top.light .pill.w{background:#111;color:#fff}
+.logo{display:flex;align-items:center;gap:10px;font-weight:600;font-size:20px;letter-spacing:-.02em}
+.logo svg{width:26px;height:26px;animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.links{display:flex;gap:26px;font-size:15px;font-weight:500}
+.links a{opacity:.85;transition:opacity .2s}.links a:hover{opacity:1}
+.navcta{display:flex;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:9px;border-radius:999px;font-weight:600;font-size:15px;padding:11px 20px;transition:transform .2s,background .2s,box-shadow .2s;white-space:nowrap}
+.pill svg{width:17px;height:17px}
+.pill.w{background:#fff;color:#000}
+.pill.w:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(255,255,255,.18)}
+.pill.o{border:1px solid rgba(255,255,255,.28)}
+.pill.o:hover{background:rgba(255,255,255,.08)}
+.pill.b{background:#000;color:#fff;border:1px solid rgba(255,255,255,.12)}
+.pill.b:hover{background:#111}
+.pill.big{font-size:17px;padding:16px 28px}
 
-        /* Focus State for Accessibility */
-        a:focus-visible, button:focus-visible {
-            outline: 1px solid var(--accent);
-            outline-offset: 4px;
-        }
+/* hero */
+.hero{position:relative;padding:190px 0 0;text-align:center;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-10% 0 auto 0;height:1100px;pointer-events:none;
+  background:radial-gradient(ellipse 38% 60% at 50% 0%,rgba(255,255,255,.42),rgba(255,255,255,.12) 45%,transparent 72%),
+             radial-gradient(ellipse 70% 50% at 50% 0%,rgba(255,255,255,.08),transparent 70%)}
+.hero>*{position:relative}
+.badge{display:inline-flex;align-items:center;gap:10px;padding:8px 16px;border-radius:999px;background:#0b0b0b;border:1px solid rgba(255,255,255,.1);font-size:14.5px;font-weight:500}
+.dot{width:9px;height:9px;border-radius:50%;background:#45d483;box-shadow:0 0 0 0 rgba(69,212,131,.6);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(69,212,131,0)}100%{box-shadow:0 0 0 0 rgba(69,212,131,0)}}
+.hero h1{font-size:clamp(46px,8.2vw,112px);margin:34px auto 26px;max-width:12ch}
+.hero p.lead{font-size:clamp(18px,1.7vw,22px);color:#d9d9d5;max-width:640px;margin:0 auto}
+.hero .ctas{display:flex;gap:14px;justify-content:center;margin-top:38px;flex-wrap:wrap}
+.reveal-up{opacity:0;transform:translateY(24px);filter:blur(8px);animation:up 1s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes up{to{opacity:1;transform:none;filter:none}}
 
-        /* Layout Structure */
-        .container {
-            width: 100%;
-            max-width: 680px;
-            padding: 10vh 24px 14vh 24px;
-            animation: fadeIn 1.4s var(--ease-out-expo) forwards;
-        }
+/* showcase frame */
+.frame{margin:80px auto 0;width:min(1240px,94vw);border-radius:34px;padding:10px;background:linear-gradient(#2a2a2a,#121212);border:1px solid rgba(255,255,255,.08);box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 0 1px rgba(0,0,0,.6) inset}
+.screen{position:relative;border-radius:26px;overflow:hidden;aspect-ratio:16/10;background:#111}
+.screen .bar{position:absolute;top:0;left:0;right:0;height:38px;background:rgba(20,20,20,.9);backdrop-filter:blur(8px);display:flex;align-items:center;gap:7px;padding:0 16px;z-index:3;border-bottom:1px solid rgba(255,255,255,.06)}
+.screen .bar i{width:11px;height:11px;border-radius:50%;background:#3a3a3a}
+.screen .bar .url{margin-left:14px;flex:1;max-width:420px;height:24px;border-radius:8px;background:#0d0d0d;font-size:12.5px;color:#aaa;display:flex;align-items:center;padding:0 12px;font-style:normal;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.slide{position:absolute;inset:38px 0 0 0;opacity:0;transition:opacity 1.1s ease,transform 6s ease;transform:scale(1.04)}
+.slide.on{opacity:1;transform:scale(1)}
+.slide img{width:100%;height:100%;object-fit:cover;object-position:top}
+.chip{position:absolute;z-index:4;display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:18px;background:rgba(30,30,30,.55);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(16px) saturate(150%);-webkit-backdrop-filter:blur(16px) saturate(150%);font-size:14px;text-align:left;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.chip b{display:block;font-weight:600}
+.chip small{color:#c9c9c4;font-size:12.5px}
+.chip .ic{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;flex:none}
+.chip.c1{left:4%;bottom:12%;animation:float 6s ease-in-out infinite}
+.chip.c2{right:4%;top:22%;animation:float 7s ease-in-out -2s infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+.dots{display:flex;gap:8px;justify-content:center;margin-top:22px}
+.dots button{width:30px;height:4px;border-radius:4px;border:0;background:#2a2a2a;cursor:pointer;transition:background .3s,width .3s}
+.dots button.on{background:#fff;width:48px}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+/* statement / scroll story */
+.story{position:relative;height:330vh}
+.story .stick{position:sticky;top:0;height:100vh;display:flex;align-items:center;overflow:hidden}
+#ribbons{position:absolute;left:0;right:0;top:50%;height:60vh;transform:translateY(-6%);width:100%;filter:blur(9px);opacity:.9;pointer-events:none}
+.story .glow{position:absolute;inset:0;background:radial-gradient(circle at 60% 45%,rgba(255,255,255,.05),transparent 55%);pointer-events:none}
+.story .grid{position:relative;display:grid;grid-template-columns:1fr 2.1fr;gap:40px;align-items:start;width:min(1300px,90vw);margin:0 auto}
+.count{display:inline-block;padding:9px 15px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:#0a0a0a;font-size:14px;color:#aaa;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.stitle{font-size:clamp(26px,2.6vw,36px);margin-top:22px}
+.sbody{position:relative;min-height:3.6em;font-size:clamp(26px,3.3vw,46px)}
+.sbody p{position:absolute;inset:0 0 auto 0;font-weight:600;letter-spacing:-.03em;line-height:1.16;transition:opacity .5s,filter .5s}
+.sbody p.off{opacity:0;filter:blur(14px)}
+.sbody span{color:rgba(255,255,255,.14);transition:color .25s}
+.sbody span.lit{color:#fff}
 
-        .row {
-            display: flex;
-            align-items: stretch;
-            width: 100%;
-        }
+/* section heads */
+section{position:relative}
+.sec{padding:150px 0}
+.eyebrow{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute);font-weight:500}
+.sech{font-size:clamp(40px,6vw,84px);margin-top:18px}
+.sub{color:#bdbdb8;font-size:19px;max-width:620px;margin-top:22px}
 
-        .branch-col {
-            width: 64px;
-            flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* demos */
+.demo{display:grid;grid-template-columns:1.12fr 1fr;gap:64px;align-items:center;margin-top:120px}
+.demo:nth-child(even) .media{order:2}
+.media{border-radius:var(--r);padding:9px;background:linear-gradient(#262626,#0f0f0f);border:1px solid rgba(255,255,255,.08);box-shadow:0 30px 90px rgba(0,0,0,.7);transform:perspective(1400px) rotateY(0) rotateX(0);transition:transform .5s cubic-bezier(.2,.7,.2,1),box-shadow .5s;display:block}
+.media .inner{border-radius:20px;overflow:hidden;aspect-ratio:16/10.6;position:relative}
+.media img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.media:hover img{transform:scale(1.035)}
+.media .open{position:absolute;right:16px;bottom:16px;background:rgba(0,0,0,.6);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.18);padding:9px 15px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;transform:translateY(6px);transition:.3s}
+.media:hover .open{opacity:1;transform:none}
+.dtext .kind{display:flex;gap:10px;align-items:center;color:var(--mute);font-size:14.5px}
+.dtext .kind i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.dtext h3{font-size:clamp(40px,4.6vw,66px);margin:14px 0 18px}
+.dtext p{color:#c8c8c3;font-size:18.5px;max-width:470px}
+.dtext p b{color:#fff;font-weight:600}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 30px}
+.tags span{font-size:13.5px;padding:7px 13px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#dcdcd8;background:#0a0a0a}
+.sq{display:inline-flex;align-items:center;gap:12px;padding:15px 24px;border:1px solid rgba(255,255,255,.22);font-weight:600;font-size:16px;position:relative;transition:background .25s}
+.sq:before{content:"";position:absolute;top:-1px;left:30%;right:30%;height:1px;background:linear-gradient(90deg,transparent,#fff,transparent);opacity:.7}
+.sq:hover{background:rgba(255,255,255,.06)}
+.sq svg{width:17px;height:17px;transition:transform .25s}.sq:hover svg{transform:translateX(4px)}
+.note{margin-top:110px;color:#77776f;font-size:14px;text-align:center}
 
-        .branch-col svg {
-            display: block;
-            width: 100%;
-            height: 100%;
-            overflow: visible;
-            shape-rendering: geometricPrecision;
-        }
+/* included */
+.panel{border-radius:34px;border:1px solid rgba(255,255,255,.08);background:radial-gradient(ellipse 60% 70% at 50% 120%,rgba(232,97,58,.22),transparent 60%),radial-gradient(ellipse 50% 60% at 15% -10%,rgba(255,196,107,.10),transparent 60%),#070707;padding:clamp(34px,5vw,70px);overflow:hidden;position:relative}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:56px}
+.f{border-radius:22px;border:1px solid rgba(255,255,255,.09);background:rgba(10,10,10,.7);backdrop-filter:blur(6px);padding:28px 26px 30px;transition:border-color .3s,transform .3s}
+.f:hover{border-color:rgba(255,255,255,.22);transform:translateY(-3px)}
+.f svg{width:26px;height:26px;stroke:var(--warm1);margin-bottom:22px}
+.f h4{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.f p{color:#a9a9a4;font-size:15.5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.st{border-radius:22px;border:1px solid rgba(255,255,255,.09);background:rgba(8,8,8,.7);padding:26px}
+.st b{font-family:"Inter Tight";font-size:40px;letter-spacing:-.04em;font-weight:600;display:block;line-height:1}
+.st small{letter-spacing:.18em;text-transform:uppercase;font-size:12.5px;color:#cfcfca;display:block;margin-top:10px}
 
-        .content-col {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding-left: 12px;
-        }
+/* cream steps */
+.cream{background:var(--cream);color:#121210;border-radius:40px;width:min(1360px,96vw);margin:0 auto;padding:130px 0 120px}
+.cream .sech{text-align:center;margin:0 auto;max-width:12ch}
+.steps{width:min(1000px,88vw);margin:80px auto 0;border-top:1px solid rgba(0,0,0,.12)}
+.step{display:grid;grid-template-columns:130px 1fr;padding:44px 20px;border-bottom:1px solid rgba(0,0,0,.12)}
+.step .n{font-family:"Inter Tight";font-size:64px;font-weight:600;line-height:.9;letter-spacing:-.04em}
+.step h4{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-.035em;line-height:1.05}
+.step p{color:#3d3d39;font-size:18px;margin-top:12px;max-width:680px}
+.cream .center{text-align:center;margin-top:60px}
+.pill.k{background:#0e0e0d;color:#fff;box-shadow:0 14px 40px rgba(0,0,0,.25)}
+.pill.k:hover{transform:translateY(-2px)}
 
-        /* Section Heights */
-        .header-row { min-height: 160px; margin-bottom: 24px; }
-        .project-row { min-height: 88px; }
-        .footer-row { min-height: 120px; margin-top: 16px; }
+/* faq */
+.faqbox{display:grid;grid-template-columns:1.55fr 1fr;gap:40px;border-radius:34px;border:1px solid rgba(255,255,255,.08);background:#060606;padding:clamp(28px,4vw,46px);margin-top:44px}
+details{border:1px solid rgba(255,255,255,.08);background:#0e0e0e;margin-bottom:12px;transition:background .3s}
+details[open]{background:#141414}
+summary{list-style:none;cursor:pointer;padding:24px 28px;font-size:19px;font-weight:500;display:flex;justify-content:space-between;align-items:center;gap:20px}
+summary::-webkit-details-marker{display:none}
+summary svg{width:18px;height:18px;flex:none;transition:transform .3s;opacity:.7}
+details[open] summary svg{transform:rotate(180deg)}
+details p{padding:0 28px 26px;color:#a3a39e;font-size:16.5px;max-width:640px}
+.helper{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:34px}
+.helper small{color:#888;font-size:15px}
+.ring{width:210px;height:210px;border-radius:50%;position:relative}
+.ring:before{content:"";position:absolute;inset:0;border-radius:50%;padding:3px;background:conic-gradient(from 200deg,transparent 0deg,rgba(255,196,107,.0) 40deg,#e8613a 150deg,#ffe2b3 210deg,#e8613a 250deg,transparent 330deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 14px rgba(232,97,58,.8));animation:spin 9s linear infinite}
+.ring:after{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,rgba(232,97,58,.16),transparent 70%)}
 
-        /* Typography & Header */
-        h1 {
-            font-family: var(--font-heading);
-            font-size: clamp(32px, 5vw, 38px);
-            font-weight: 500;
-            color: var(--text-main);
-            margin-bottom: 8px;
-            letter-spacing: 0.01em;
-            line-height: 1.15;
-        }
+/* footer */
+.final{text-align:center;padding:170px 0 120px;position:relative;overflow:hidden}
+.final:before{content:"";position:absolute;left:50%;bottom:-420px;width:1100px;height:700px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(232,97,58,.35),rgba(255,196,107,.08) 40%,transparent 68%);pointer-events:none}
+.final h2{font-size:clamp(48px,8vw,118px);max-width:11ch;margin:0 auto}
+.final p{color:#c4c4bf;font-size:19px;margin:26px auto 0;max-width:520px}
+.final .ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:40px;position:relative}
+footer{border-top:1px solid var(--line);padding:34px 0 46px;color:#86867f;font-size:14.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+footer .soc{display:flex;gap:22px}
+footer a:hover{color:#fff}
 
-        .tagline {
-            font-size: 13px;
-            font-weight: 300;
-            color: var(--text-muted);
-            line-height: 1.7;
-            max-width: 440px;
-        }
+/* in-view */
+.iv{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.iv.in{opacity:1;transform:none}
 
-        /* Index Tracker Indicator */
-        .index-tracker {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 0 24px 76px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 12px;
-        }
+/* mobile bar */
+.mbar{display:none}
 
-        .tracker-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: var(--text-muted);
-            font-weight: 500;
-        }
-
-        .tracker-status {
-            font-size: 10px;
-            font-family: var(--font-heading);
-            font-style: italic;
-            letter-spacing: 0.05em;
-            color: var(--accent);
-        }
-
-        /* Project Items */
-        .project-item {
-            opacity: 0.8;
-            transition: opacity 0.5s var(--ease-out-expo);
-        }
-
-        .project-item:hover {
-            opacity: 1;
-        }
-
-        .project-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 0;
-            border-bottom: 1px solid rgba(40, 34, 27, 0.7);
-            transition: padding 0.5s var(--ease-out-expo), border-color 0.5s var(--ease-out-expo);
-        }
-
-        .project-meta {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        h2 {
-            font-family: var(--font-heading);
-            font-size: 22px;
-            font-weight: 400;
-            color: var(--text-main);
-            transition: color 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
-        }
-
-        .project-badges {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .status-badge {
-            font-size: 9px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: var(--text-muted);
-            font-weight: 400;
-            transition: color 0.5s var(--ease-out-expo);
-        }
-
-        /* Lock Icon Styling */
-        .lock-icon {
-            width: 11px;
-            height: 11px;
-            stroke: var(--text-muted);
-            fill: none;
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            transition: stroke 0.5s var(--ease-out-expo), opacity 0.5s var(--ease-out-expo);
-            opacity: 0.6;
-        }
-
-        /* Project Row Hover Effects (Using Transform & Opacity for Zero Jank) */
-        .project-row:hover .project-content {
-            padding-left: 8px;
-            border-bottom-color: var(--border);
-        }
-
-        .project-row:hover h2 {
-            color: var(--accent);
-            transform: translateX(2px);
-        }
-
-        .project-row:hover .status-badge {
-            color: var(--text-main);
-        }
-
-        .project-row:hover .lock-icon {
-            stroke: var(--accent);
-            opacity: 1;
-        }
-
-        .leaf-node {
-            transition: fill 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo);
-            transform-origin: center;
-        }
-
-        .project-row:hover .leaf-node {
-            fill: var(--accent);
-            transform: scale(1.35);
-        }
-
-        /* Bio Button */
-        .bio-btn {
-            background: transparent;
-            border: 1px solid var(--branch);
-            color: var(--text-muted);
-            font-family: var(--font-body);
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
-            padding: 12px 26px;
-            border-radius: 40px;
-            cursor: pointer;
-            transition: border-color 0.5s var(--ease-out-expo), color 0.5s var(--ease-out-expo), background-color 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
-            outline: none;
-            align-self: flex-start;
-        }
-
-        .bio-btn:hover {
-            border-color: var(--accent);
-            color: var(--bg);
-            background-color: var(--accent);
-            box-shadow: 0 0 24px var(--accent-glow);
-        }
-
-        /* Bio Panel Overlay & Panel */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(13, 10, 7, 0.82);
-            backdrop-filter: blur(6px);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.6s var(--ease-out-expo);
-            z-index: 50;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .bio-panel {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--panel-bg);
-            border-top: 1px solid var(--border);
-            padding: 56px 24px;
-            transform: translateY(100%);
-            transition: transform 0.7s var(--ease-out-expo);
-            z-index: 100;
-        }
-
-        .bio-panel.active {
-            transform: translateY(0);
-        }
-
-        .bio-content {
-            max-width: 680px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .bio-title {
-            font-family: var(--font-heading);
-            font-size: 26px;
-            font-style: italic;
-            color: var(--accent);
-            margin-bottom: 20px;
-            font-weight: 400;
-        }
-
-        .bio-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 28px;
-            max-width: 520px;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-family: var(--font-body);
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: color 0.5s var(--ease-out-expo);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .close-btn::before {
-            content: '';
-            display: block;
-            width: 18px;
-            height: 1px;
-            background-color: var(--text-muted);
-            transition: background-color 0.5s var(--ease-out-expo), width 0.5s var(--ease-out-expo);
-        }
-
-        .close-btn:hover {
-            color: var(--text-main);
-        }
-
-        .close-btn:hover::before {
-            background-color: var(--accent);
-            width: 28px;
-        }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 480px) {
-            .container {
-                padding: 6vh 16px 10vh 16px;
-            }
-            .index-tracker {
-                padding-left: 54px;
-            }
-            .branch-col {
-                width: 48px;
-            }
-        }
-    </style>
+@media (max-width:900px){
+  .links{display:none}
+  .navcta .pill.o{display:none}
+  .hero{padding-top:150px}
+  .chip{display:none}
+  .story{height:300vh}
+  .story .grid{grid-template-columns:1fr;gap:18px}
+  .sbody{min-height:7.5em}
+  .demo{grid-template-columns:1fr;gap:32px;margin-top:90px}
+  .demo:nth-child(even) .media{order:0}
+  .feat,.stats{grid-template-columns:1fr}
+  .step{grid-template-columns:70px 1fr;padding:34px 6px}
+  .step .n{font-size:44px}
+  .faqbox{grid-template-columns:1fr}
+  .helper{padding:30px 0 10px}
+  .sec{padding:110px 0}
+  .mbar{display:flex;position:fixed;left:12px;right:12px;bottom:12px;z-index:55;gap:8px}
+  .mbar a{flex:1;justify-content:center}
+  footer{padding-bottom:100px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important}
+  .reveal-up,.iv{opacity:1;transform:none;filter:none}
+}
+</style>
 </head>
 <body>
+<div id="prog"></div>
 
-    <div class="overlay" id="overlay" aria-hidden="true"></div>
+<nav class="top" id="nav" aria-label="Navigation principale">
+  <a href="#" class="logo" aria-label="Gabriel Fortun, accueil">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc46b"/><stop offset="1" stop-color="#e8613a"/></linearGradient></defs><path fill="url(#lg)" d="M16 1c1.4 8.2 6.8 13.6 15 15-8.2 1.4-13.6 6.8-15 15-1.4-8.2-6.8-13.6-15-15C9.2 14.6 14.6 9.2 16 1z"/></svg>
+    Gabriel Fortun
+  </a>
+  <div class="links">
+    <a href="#demos">Démos</a>
+    <a href="#inclus">Inclus</a>
+    <a href="#methode">Méthode</a>
+    <a href="#faq">FAQ</a>
+  </div>
+  <div class="navcta">
+    <a class="pill o" href="https://wa.me/33787211613" target="_blank" rel="noopener">WhatsApp</a>
+    <a class="pill w" href="#contact">Me contacter</a>
+  </div>
+</nav>
 
-    <div class="container">
-        
-        <!-- Header Section -->
-        <header class="row header-row">
-            <div class="branch-col" aria-hidden="true">
-                <svg viewBox="0 0 64 160" width="64" height="160">
-                    <circle cx="32" cy="80" r="3" fill="var(--accent)" />
-                    <path d="M 32,80 C 14,115 48,135 32,160" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                </svg>
-            </div>
-            <div class="content-col">
-                <h1>Gabriel Fortun Cantave</h1>
-                <p class="tagline">Global BBA student at ESSEC Business School, Asia-Pacific campus in Singapore</p>
-            </div>
-        </header>
+<header class="hero">
+  <div class="badge reveal-up" style="animation-delay:.1s"><span class="dot"></span>4 démos en ligne</div>
+  <h1 class="h reveal-up" style="animation-delay:.25s">Votre commerce mérite un vrai site.</h1>
+  <p class="lead reveal-up" style="animation-delay:.4s">Je conçois des sites sur mesure pour les restaurants, bars et boutiques de quartier. La carte, les horaires, l'itinéraire et l'appel : tout ce que vos clients cherchent, en un clic.</p>
+  <div class="ctas reveal-up" style="animation-delay:.55s">
+    <a class="pill w big" href="#demos">Voir les démos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <a class="pill b big" href="tel:+33787211613"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>M'appeler</a>
+  </div>
 
-        <!-- Index Progress Tracker -->
-        <div class="index-tracker" aria-label="Portfolio progress">
-            <span class="tracker-label">Index // 08 Ventures</span>
-            <span class="tracker-status">More roots growing soon</span>
-        </div>
+  <div class="frame reveal-up" style="animation-delay:.75s">
+    <div class="screen" id="screen">
+      <div class="bar"><i></i><i></i><i></i><em class="url" id="url">gabrielfortun.com/demos/pizza-trancio</em></div>
+      <a class="slide on" href="demos/pizza-trancio/" data-url="gabrielfortun.com/demos/pizza-trancio"><img src="assets/pizza-trancio.jpg" alt="Démo du site Pizza Trancio"></a>
+      <a class="slide" href="demos/friends-burger/" data-url="gabrielfortun.com/demos/friends-burger"><img src="assets/friends-burger.jpg" alt="Démo du site Friends Burger" loading="lazy"></a>
+      <a class="slide" href="demos/la-vache-folle/" data-url="gabrielfortun.com/demos/la-vache-folle"><img src="assets/la-vache-folle.jpg" alt="Démo du site La Vache Folle" loading="lazy"></a>
+      <a class="slide" href="demos/istanbul-grill/" data-url="gabrielfortun.com/demos/istanbul-grill"><img src="assets/istanbul-grill.jpg" alt="Démo du site Istanbul Grill Kebab" loading="lazy"></a>
+      <div class="chip c1"><span class="ic" style="background:#1f7a46"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span><b>Ouvert en ce moment</b><small>Horaires à jour, calculés en direct</small></span></div>
+      <div class="chip c2"><span class="ic" style="background:#fff"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2"><path d="M3 11l18-8-8 18-2-8-8-2z"/></svg></span><span><b>Itinéraire en un clic</b><small>Métro, RER, plan intégré</small></span></div>
+    </div>
+  </div>
+  <div class="dots" id="dots"></div>
+</header>
 
-        <!-- Project List -->
-        <main>
-            <!-- Events -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Events</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<section class="story" id="story" aria-label="Pourquoi un site">
+  <div class="stick">
+    <canvas id="ribbons" aria-hidden="true"></canvas>
+    <div class="glow"></div>
+    <div class="grid">
+      <div>
+        <span class="count" id="scount">01 / 03</span>
+        <h2 class="h stitle" id="stitle">Le problème</h2>
+      </div>
+      <div class="sbody" id="sbody">
+        <p data-title="Le problème">Vos clients vous cherchent sur Google avant de passer la porte. Sans site, ils tombent sur des horaires faux, une carte illisible et quelques photos floues.</p>
+        <p data-title="La solution" class="off">Un site à votre image, rapide sur téléphone, qui montre la carte, les horaires et le chemin, et qui fait sonner le téléphone.</p>
+        <p data-title="Le résultat" class="off">Les gens savent quoi commander avant d'arriver. Votre lieu a enfin une image à la hauteur de ce que vous servez.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-            <!-- Web Design -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Web Design</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Clothing -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Clothing</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Trading -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Trading</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Etsy -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Etsy</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Hackathon -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 26,24 38,64 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 32,44 C 42,38 50,48 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Hackathon</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Ideas -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 18,26 46,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 28,44 C 40,34 50,52 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>Ideas</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- App -->
-            <div class="row project-row project-item">
-                <div class="branch-col" aria-hidden="true">
-                    <svg viewBox="0 0 64 88" width="64" height="88">
-                        <path d="M 32,0 C 46,26 18,58 32,88" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <path d="M 36,44 C 46,52 52,34 58,44" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                        <circle cx="58" cy="44" r="2.2" fill="var(--text-muted)" class="leaf-node" />
-                    </svg>
-                </div>
-                <div class="content-col">
-                    <div class="project-content">
-                        <div class="project-meta">
-                            <h2>App</h2>
-                        </div>
-                        <div class="project-badges">
-                            <span class="status-badge">Coming soon</span>
-                            <svg class="lock-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <!-- Footer / Bio Toggle -->
-        <footer class="row footer-row">
-            <div class="branch-col" aria-hidden="true">
-                <svg viewBox="0 0 64 120" width="64" height="120">
-                    <path d="M 32,0 C 32,35 42,48 54,64" stroke="var(--branch)" stroke-width="1.2" fill="none" />
-                    <circle cx="54" cy="64" r="3" fill="var(--accent)" />
-                </svg>
-            </div>
-            <div class="content-col">
-                <button class="bio-btn" id="btn-bio" aria-expanded="false" aria-controls="bio-panel">Read Bio</button>
-            </div>
-        </footer>
-
+<section class="sec" id="demos">
+  <div class="wrap">
+    <div class="iv">
+      <div class="eyebrow">Démos</div>
+      <h2 class="h sech">Quatre lieux,<br>quatre identités.</h2>
+      <p class="sub">Chaque site part du lieu : ses couleurs, sa clientèle, sa carte. Aucun modèle recyclé. Cliquez pour ouvrir la démo complète.</p>
     </div>
 
-    <!-- Bio Panel -->
-    <aside class="bio-panel" id="bio-panel" aria-hidden="true" role="dialog" aria-label="Biography">
-        <div class="bio-content">
-            <h3 class="bio-title">Roots & Growth</h3>
-            <p class="bio-text">
-                Gabriel Fortun Cantave. Global BBA student positioned at the intersection of business strategy and organic execution. Cultivating thoughtful ventures across digital and physical domains from Singapore.
-            </p>
-            <button class="close-btn" id="close-bio">Return</button>
+    <div class="demos">
+      <article class="demo iv">
+        <a class="media" href="demos/pizza-trancio/" target="_blank" rel="noopener"><div class="inner"><img src="assets/pizza-trancio.jpg" alt="Site Pizza Trancio" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <div class="dtext">
+          <div class="kind"><i style="background:#d9774f"></i>Pizzeria al taglio · Paris 5e</div>
+          <h3 class="h">Pizza Trancio</h3>
+          <p>Une ambiance de <b>trattoria romaine</b> : tons terracotta, serif éditorial et vraies photos de la vitrine. La carte à la part ou au poids, la réservation et l'appel au comptoir restent toujours à portée de pouce.</p>
+          <div class="tags"><span>Carte complète</span><span>Réservation</span><span>Avis Google</span><span>Plan d'accès</span></div>
+          <a class="sq" href="demos/pizza-trancio/" target="_blank" rel="noopener">Voir la démo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         </div>
-    </aside>
+      </article>
 
-    <script>
-        const btnBio = document.getElementById('btn-bio');
-        const closeBio = document.getElementById('close-bio');
-        const bioPanel = document.getElementById('bio-panel');
-        const overlay = document.getElementById('overlay');
+      <article class="demo iv">
+        <a class="media" href="demos/friends-burger/" target="_blank" rel="noopener"><div class="inner"><img src="assets/friends-burger.jpg" alt="Site Friends Burger" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <div class="dtext">
+          <div class="kind"><i style="background:#6cf28f"></i>Burgers, tacos, crêpes · Paris 5e</div>
+          <h3 class="h">Friends Burger</h3>
+          <p>Le vert de la devanture du boulevard Saint-Michel devient <b>néon</b>. Toute la carte rangée en onglets, le petit-déj' étudiant mis en avant, et les liens de commande en ligne.</p>
+          <div class="tags"><span>Carte en onglets</span><span>Commande Uber Eats / Deliveroo</span><span>Ouvert jusqu'à 2h</span></div>
+          <a class="sq" href="demos/friends-burger/" target="_blank" rel="noopener">Voir la démo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
 
-        function openBio() {
-            bioPanel.classList.add('active');
-            overlay.classList.add('active');
-            btnBio.setAttribute('aria-expanded', 'true');
-            bioPanel.setAttribute('aria-hidden', 'false');
-            closeBio.focus();
+      <article class="demo iv">
+        <a class="media" href="demos/la-vache-folle/" target="_blank" rel="noopener"><div class="inner"><img src="assets/la-vache-folle.jpg" alt="Site La Vache Folle" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <div class="dtext">
+          <div class="kind"><i style="background:#e84f8c"></i>Bar dansant · Paris 6e</div>
+          <h3 class="h">La Vache Folle</h3>
+          <p>Un bar étudiant, donc un site qui <b>ose</b> : taches de vache, titre rose bonbon et une cloche qui se balance. Happy hour, soirées DJ, karaoké et privatisation, tout est lisible en trois secondes.</p>
+          <div class="tags"><span>Happy hour</span><span>Programme</span><span>Privatisation</span><span>Badge « ouvert »</span></div>
+          <a class="sq" href="demos/la-vache-folle/" target="_blank" rel="noopener">Voir la démo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="demo iv">
+        <a class="media" href="demos/istanbul-grill/" target="_blank" rel="noopener"><div class="inner"><img src="assets/istanbul-grill.jpg" alt="Site Istanbul Grill Kebab" loading="lazy"><span class="open">Ouvrir ↗</span></div></a>
+        <div class="dtext">
+          <div class="kind"><i style="background:#c8322b"></i>Kebab & grillades · Paris 5e</div>
+          <h3 class="h">Istanbul Grill</h3>
+          <p>Rouge, jaune frites et une <b>broche animée</b> devant sa résistance qui chauffe. Le menu étudiant en bandeau, la carte complète, et les horaires du jour surlignés à la sortie du RER Port-Royal.</p>
+          <div class="tags"><span>Animation sur mesure</span><span>Menu étudiant</span><span>Horaires du jour</span></div>
+          <a class="sq" href="demos/istanbul-grill/" target="_blank" rel="noopener">Voir la démo <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+    </div>
+    <p class="note">Démos conçues à titre d'exemple pour des commerces du Quartier latin. Elles ne sont ni commandées ni validées par les établissements.</p>
+  </div>
+</section>
+
+<section class="sec" id="inclus" style="padding-top:40px">
+  <div class="wrap">
+    <div class="panel iv">
+      <div class="eyebrow">Ce qui est inclus</div>
+      <h2 class="h sech" style="max-width:17ch">Tout ce qu'un client cherche avant de venir.</h2>
+      <div class="feat">
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 3l2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/></svg><h4>Design sur mesure</h4><p>Vos couleurs, vos photos, votre ton. Le site ressemble à votre lieu, pas à un modèle.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 5h16M4 10h16M4 15h10M4 20h7"/></svg><h4>Carte complète</h4><p>Plats, prix, catégories et formules, lisibles sur téléphone et faciles à mettre à jour.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h4>Horaires en direct</h4><p>Un badge « ouvert / fermé » calculé à l'heure de Paris, et le jour en cours surligné.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><h4>Plan & itinéraire</h4><p>Carte intégrée, transports à proximité et itinéraire en un clic.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><h4>Appel & commande</h4><p>Bouton d'appel fixe sur mobile, liens Uber Eats, Deliveroo ou réservation.</p></div>
+        <div class="f"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><h4>Référencement local</h4><p>Données structurées pour Google, titres et descriptions pensés pour votre quartier.</p></div>
+      </div>
+      <div class="stats">
+        <div class="st"><b>100 %</b><small>Sur mesure</small></div>
+        <div class="st"><b>Mobile</b><small>Pensé pour le téléphone</small></div>
+        <div class="st"><b>Clé en main</b><small>Domaine & mise en ligne</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="methode" style="padding:30px 0 0">
+  <div class="cream iv">
+    <div class="eyebrow" style="text-align:center;color:#6b6b64">Méthode</div>
+    <h2 class="h sech">Trois étapes jusqu'à votre site.</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div><h4>On se rencontre</h4><p>Je passe au commerce ou on s'appelle. Je récupère la carte, les horaires, quelques photos, et je regarde ce qui fait l'identité du lieu.</p></div></div>
+      <div class="step"><div class="n">2</div><div><h4>Je construis la maquette</h4><p>Vous recevez un lien vers une première version en ligne. Vous corrigez, je retouche, jusqu'à ce que ça vous ressemble.</p></div></div>
+      <div class="step"><div class="n">3</div><div><h4>Vous êtes en ligne</h4><p>Je m'occupe du nom de domaine, de la mise en ligne et du lien avec votre fiche Google. Vous n'avez rien de technique à gérer.</p></div></div>
+    </div>
+    <div class="center"><a class="pill k big" href="#contact">Demander ma maquette <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
+  </div>
+</section>
+
+<section class="sec" id="faq">
+  <div class="wrap">
+    <h2 class="h sech iv" style="font-size:clamp(40px,4.4vw,60px)">FAQ</h2>
+    <div class="faqbox iv">
+      <div>
+        <details open><summary>Combien ça coûte ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Ça dépend de la taille du site et de ce dont vous avez besoin. Après un premier échange, je vous donne un prix fixe, sans surprise.</p></details>
+        <details><summary>Combien de temps pour être en ligne ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Une première maquette arrive vite, en général en quelques jours. Le délai final dépend surtout du temps pour réunir la carte, les photos et vos retours.</p></details>
+        <details><summary>Je ne suis pas à l'aise avec la technique.<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Pas besoin. Je gère le nom de domaine, l'hébergement et la mise en ligne. Vous validez simplement ce que vous voyez.</p></details>
+        <details><summary>Et si ma carte ou mes horaires changent ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Vous m'envoyez un message avec les changements et je mets le site à jour.</p></details>
+        <details><summary>Pourquoi pas juste Instagram ou Google Maps ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Ils sont utiles, mais ils ne vous appartiennent pas et la carte y est souvent incomplète. Un site complète votre fiche Google, rassure les nouveaux clients et regroupe tout au même endroit.</p></details>
+        <details><summary>Les démos sont-elles de vrais clients ?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg></summary><p>Non. Ce sont des maquettes réalisées pour montrer ce que je peux faire pour des commerces du quartier, à partir d'informations publiques. Elles ne sont pas commandées par les établissements.</p></details>
+      </div>
+      <div class="helper">
+        <small>Une question ?</small>
+        <div class="ring" aria-hidden="true"></div>
+        <a class="pill w big" href="tel:+33787211613"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>07 87 21 16 13</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="contact">
+  <div class="wrap">
+    <h2 class="h iv">Parlons de<br>votre site.</h2>
+    <p class="iv">Un appel, un message WhatsApp ou un e-mail : je vous réponds rapidement et je vous montre une maquette pour votre lieu.</p>
+    <div class="ctas iv">
+      <a class="pill w big" href="https://wa.me/33787211613?text=Bonjour%20Gabriel%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20un%20site%20pour%20mon%20commerce." target="_blank" rel="noopener">Écrire sur WhatsApp</a>
+      <a class="pill b big" href="mailto:gabrielfortuncantave@gmail.com?subject=Site%20pour%20mon%20commerce">gabrielfortuncantave@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Gabriel Fortun · Paris</span>
+    <div class="soc">
+      <a href="https://www.linkedin.com/in/gabriel-fortun-277295339/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.instagram.com/frtn.gabriel/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://github.com/gabrielfortuncantave-dot" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+<div class="mbar">
+  <a class="pill w" href="tel:+33787211613">Appeler</a>
+  <a class="pill b" href="https://wa.me/33787211613" target="_blank" rel="noopener">WhatsApp</a>
+</div>
+
+<script>
+(()=>{
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+/* nav + progress */
+const nav = document.getElementById('nav'), prog = document.getElementById('prog'), cream = document.querySelector('.cream');
+const onScroll = () => {
+  const y = scrollY, h = document.documentElement.scrollHeight - innerHeight;
+  nav.classList.toggle('solid', y > 40);
+  const cr = cream.getBoundingClientRect(); nav.classList.toggle('light', cr.top < 60 && cr.bottom > 60);
+  prog.style.width = (h > 0 ? y / h * 100 : 0) + '%';
+  story();
+};
+addEventListener('scroll', onScroll, {passive:true});
+
+/* showcase slider */
+const slides = [...document.querySelectorAll('.slide')], url = document.getElementById('url'), dots = document.getElementById('dots');
+let cur = 0, timer;
+slides.forEach((s,i)=>{const b=document.createElement('button');b.setAttribute('aria-label','Démo '+(i+1));b.onclick=()=>{go(i);restart()};dots.appendChild(b)});
+function go(i){slides[cur].classList.remove('on');dots.children[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');dots.children[cur].classList.add('on');url.textContent=slides[cur].dataset.url}
+function restart(){clearInterval(timer);if(!reduce)timer=setInterval(()=>go((cur+1)%slides.length),4200)}
+go(0);restart();
+
+/* story: split words */
+const ps = [...document.querySelectorAll('#sbody p')];
+ps.forEach(p=>{p.innerHTML=p.textContent.trim().split(/\s+/).map(w=>'<span>'+w+'</span>').join(' ')});
+const sec = document.getElementById('story'), sc = document.getElementById('scount'), st = document.getElementById('stitle');
+let lastIdx = -1;
+function story(){
+  const r = sec.getBoundingClientRect(), total = sec.offsetHeight - innerHeight;
+  let t = Math.min(1, Math.max(0, -r.top / total));
+  const n = ps.length, idx = Math.min(n-1, Math.floor(t * n)), local = t * n - idx;
+  if (idx !== lastIdx){
+    ps.forEach((p,i)=>p.classList.toggle('off', i!==idx));
+    sc.textContent = '0'+(idx+1)+' / 0'+n; st.textContent = ps[idx].dataset.title; lastIdx = idx;
+  }
+  const words = ps[idx].children, lit = reduce ? words.length : Math.round(Math.min(1, local / .7) * words.length);
+  for (let i=0;i<words.length;i++) words[i].classList.toggle('lit', i < lit);
+}
+
+/* ribbons */
+const cv = document.getElementById('ribbons'), ctx = cv.getContext('2d');
+let W,H,dpr;
+function size(){dpr=Math.min(2,devicePixelRatio||1);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0)}
+size(); addEventListener('resize', size);
+const ribs = [
+  {c:[255,196,107], a:.55, amp:.22, f:1.3, s:.00023, ph:0,   w:34},
+  {c:[255,255,255], a:.30, amp:.18, f:1.7, s:.00031, ph:2,   w:26},
+  {c:[232,97,58],   a:.45, amp:.26, f:1.0, s:.00019, ph:4,   w:30},
+  {c:[150,120,255], a:.28, amp:.20, f:2.1, s:.00027, ph:1.3, w:22},
+];
+let vis = false;
+new IntersectionObserver(e=>{vis=e[0].isIntersecting}).observe(sec);
+function draw(ts){
+  if (vis){
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+    const prog = lastIdx < 0 ? 0 : lastIdx;
+    ribs.forEach((r,k)=>{
+      for (let j=0;j<9;j++){
+        ctx.beginPath();
+        for (let x=0;x<=W;x+=12){
+          const u = x/W;
+          const y = H*.5 + Math.sin(u*Math.PI*r.f*2 + ts*r.s*6 + r.ph + j*.06) * H*r.amp*(.7+.3*Math.sin(ts*.0003+k)) + (j-4)*r.w/9*2.2 + Math.sin(u*9+ts*.0006)*6;
+          x ? ctx.lineTo(x,y) : ctx.moveTo(x,y);
         }
+        const tint = prog===2 && k===3 ? 1.6 : 1;
+        ctx.strokeStyle=`rgba(${r.c[0]},${r.c[1]},${r.c[2]},${r.a*.42*tint})`;
+        ctx.lineWidth=5; ctx.stroke();
+      }
+    });
+  }
+  if(!reduce) requestAnimationFrame(draw);
+}
+requestAnimationFrame(draw);
 
-        function closeBioPanel() {
-            bioPanel.classList.remove('active');
-            overlay.classList.remove('active');
-            btnBio.setAttribute('aria-expanded', 'false');
-            bioPanel.setAttribute('aria-hidden', 'true');
-            btnBio.focus();
-        }
+/* in-view reveals */
+const io = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.iv').forEach(el=>io.observe(el));
 
-        btnBio.addEventListener('click', openBio);
-        closeBio.addEventListener('click', closeBioPanel);
-        overlay.addEventListener('click', closeBioPanel);
-
-        window.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && bioPanel.classList.contains('active')) {
-                closeBioPanel();
-            }
-        });
-    </script>
+/* tilt on demo media */
+if(!reduce && matchMedia('(pointer:fine)').matches){
+  document.querySelectorAll('.media').forEach(m=>{
+    m.addEventListener('mousemove',e=>{const b=m.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;m.style.transform=`perspective(1400px) rotateY(${x*6}deg) rotateX(${-y*6}deg)`});
+    m.addEventListener('mouseleave',()=>m.style.transform='');
+  });
+}
+onScroll();
+})();
+</script>
 </body>
 </html>
