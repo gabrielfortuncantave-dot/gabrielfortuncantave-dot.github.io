@@ -148,6 +148,33 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
   .meat-bands,.glow{animation:none}
   html{scroll-behavior:auto}
 }
+
+/* photos réelles */
+.hero-photo{justify-self:center;position:relative;margin:0;width:min(420px,82vw);transform:rotate(2deg)}
+.hero-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:22px;border:6px solid #fff;box-shadow:0 24px 50px rgba(0,0,0,.35)}
+.hero-photo figcaption{position:absolute;left:-18px;bottom:22px;background:var(--fries);color:var(--ink);font:400 30px/1 var(--script);padding:8px 16px 10px;border-radius:12px;transform:rotate(-6deg);box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.photos{background:#fff;padding:80px 0 30px}
+.photos .head h2{margin:0 0 8px;font:400 clamp(52px,6vw,76px)/.9 var(--script);color:var(--red)}
+.photos .head p{margin:0 0 30px;color:#6b5f58}
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pgrid figure{margin:0;position:relative;overflow:hidden;border-radius:16px;background:var(--mist)}
+.pgrid img{display:block;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;transition:transform .5s ease}
+.pgrid figure:hover img{transform:scale(1.04)}
+.pgrid figcaption{position:absolute;left:10px;right:10px;bottom:10px;background:rgba(35,28,25,.82);color:#fff;font:600 16px/1.2 var(--cond);padding:7px 11px;border-radius:9px;width:fit-content;max-width:calc(100% - 20px)}
+.where{display:grid;gap:16px}
+.devanture{margin:0}
+.devanture img{display:block;width:100%;height:auto;aspect-ratio:600/270;object-fit:cover;border-radius:18px}
+.devanture figcaption{margin-top:8px;font:600 15px/1.3 var(--cond);color:#6b5f58}
+footer .credit{opacity:.8}
+@media (max-width:860px){
+  .hero-photo{width:min(250px,64vw);order:-1;margin:0 auto 4px;transform:rotate(1.5deg)}
+  .hero-photo img{aspect-ratio:1/1;border-width:5px}
+  .hero-photo figcaption{font-size:24px;left:-10px}
+  .pgrid{grid-template-columns:repeat(2,1fr);gap:10px}
+  .pgrid figcaption{font-size:13px;left:6px;bottom:6px;padding:4px 7px}
+  .photos{padding:56px 0 16px}
+}
+@media (prefers-reduced-motion:reduce){.pgrid img{transition:none}.pgrid figure:hover img{transform:none}}
 </style>
 <link rel="canonical" href="https://gabrielfortun.com/demos/istanbul-grill/">
 <meta name="robots" content="noindex, follow">
@@ -177,6 +204,7 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
     <a class="brand" href="#top"><i aria-hidden="true"></i>Istanbul Grill Kebab</a>
     <nav aria-label="Navigation principale">
       <a href="#carte">La carte</a>
+      <a href="#photos">Photos</a>
       <a href="#infos">Horaires et accès</a>
       <a class="call" href="tel:+33605721483">06 05 72 14 83</a>
     </nav>
@@ -199,46 +227,10 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
         </div>
       </div>
 
-      <div class="spit" aria-hidden="true">
-        <div class="glow"></div>
-        <svg viewBox="0 0 300 400">
-          <defs>
-            <clipPath id="cone"><path d="M78 70 Q150 52 222 70 L200 330 Q150 344 100 330 Z"/></clipPath>
-            <linearGradient id="shade" x1="0" x2="1">
-              <stop offset="0" stop-color="#000" stop-opacity=".38"/>
-              <stop offset=".45" stop-color="#000" stop-opacity="0"/>
-              <stop offset=".8" stop-color="#ffb347" stop-opacity=".25"/>
-              <stop offset="1" stop-color="#000" stop-opacity=".2"/>
-            </linearGradient>
-            <pattern id="bands" width="48" height="400" patternUnits="userSpaceOnUse">
-              <rect width="48" height="400" fill="#A65A2A"/>
-              <rect x="0" width="10" height="400" fill="#7E3E1C"/>
-              <rect x="20" width="6" height="400" fill="#C9783A"/>
-              <rect x="34" width="4" height="400" fill="#6B3317"/>
-            </pattern>
-            <pattern id="crust" width="300" height="14" patternUnits="userSpaceOnUse">
-              <rect width="300" height="3" fill="#000" opacity=".12"/>
-            </pattern>
-          </defs>
-          <!-- skewer -->
-          <rect x="146" y="14" width="8" height="372" rx="4" fill="#E9E4DF"/>
-          <circle cx="150" cy="22" r="13" fill="#F4B02A"/>
-          <rect x="112" y="358" width="76" height="18" rx="9" fill="#2A211D"/>
-          <!-- meat cone -->
-          <g clip-path="url(#cone)">
-            <g class="meat-bands"><rect x="0" y="0" width="400" height="400" fill="url(#bands)"/></g>
-            <rect width="300" height="400" fill="url(#crust)"/>
-            <rect width="300" height="400" fill="url(#shade)"/>
-          </g>
-          <!-- top cap -->
-          <ellipse cx="150" cy="68" rx="72" ry="13" fill="#5E2C14"/>
-          <!-- heater -->
-          <rect x="250" y="64" width="22" height="276" rx="11" fill="#2A211D"/>
-          <rect x="255" y="76" width="12" height="252" rx="6" fill="#FF8A2B"/>
-          <rect x="255" y="76" width="12" height="252" rx="6" fill="#FFD27A" opacity=".55"/>
-        </svg>
-        <div class="spit-note">à la broche</div>
-      </div>
+      <figure class="hero-photo">
+        <img src="hero-520.webp" srcset="hero-520.webp 520w, hero-900.webp 900w" sizes="(max-width:860px) 82vw, 420px" width="520" height="650" alt="Sandwich kebab et frites, Istanbul Grill Kebab" fetchpriority="high" decoding="async">
+        <figcaption>à la broche</figcaption>
+      </figure>
     </div>
   </section>
 
@@ -247,6 +239,23 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
       <h2>Menu étudiant</h2>
       <p>Pain et viande au choix, frites, boisson.<br><small>Tarif affiché au comptoir.</small></p>
       <a class="btn solid" href="#carte" style="border-color:var(--fries);background:var(--fries);color:var(--ink)">Toute la carte</a>
+    </div>
+  </section>
+
+    <section class="photos" id="photos" aria-labelledby="photos-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="photos-h">En images</h2>
+        <p>Photos prises sur place par des clients.</p>
+      </div>
+      <div class="pgrid">
+        <figure><img src="assiette-poulet-440.webp" srcset="assiette-poulet-440.webp 440w, assiette-poulet-800.webp 720w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Assiette poulet, riz et frites" loading="lazy" decoding="async"><figcaption>Assiette poulet, riz et frites</figcaption></figure>
+        <figure><img src="barquette-kebab-440.webp" srcset="barquette-kebab-440.webp 440w, barquette-kebab-800.webp 800w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Barquette kebab, salade et frites" loading="lazy" decoding="async"><figcaption>Barquette kebab, salade et frites</figcaption></figure>
+        <figure><img src="burger-440.webp" srcset="burger-440.webp 440w, burger-800.webp 800w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Cheeseburger" loading="lazy" decoding="async"><figcaption>Cheeseburger</figcaption></figure>
+        <figure><img src="sandwich-steak-440.webp" srcset="sandwich-steak-440.webp 440w, sandwich-steak-800.webp 800w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Sandwich steak et frites" loading="lazy" decoding="async"><figcaption>Sandwich steak et frites</figcaption></figure>
+        <figure><img src="assiette-kebab-440.webp" srcset="assiette-kebab-440.webp 440w, assiette-kebab-800.webp 800w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Assiette kebab, boulgour et salade" loading="lazy" decoding="async"><figcaption>Assiette kebab, boulgour et salade</figcaption></figure>
+        <figure><img src="comptoir-440.webp" srcset="comptoir-440.webp 440w, comptoir-800.webp 800w" sizes="(max-width:600px) 46vw, (max-width:1000px) 31vw, 300px" width="440" height="440" alt="Le comptoir et la carte lumineuse" loading="lazy" decoding="async"><figcaption>Le comptoir et la carte lumineuse</figcaption></figure>
+      </div>
     </div>
   </section>
 
@@ -388,8 +397,11 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
           <a class="btn ghost" href="https://www.google.com/maps/dir/?api=1&destination=Istanbul+Grill+Kebab+94+Boulevard+de+Port-Royal+75005+Paris" target="_blank" rel="noopener">Itinéraire</a>
         </div>
       </div>
+      <div class="where">
+        <figure class="devanture"><img src="devanture-600.webp" srcset="devanture-600.webp 600w, devanture-1100.webp 1100w" sizes="(max-width:860px) 92vw, 560px" width="600" height="270" alt="La devanture rouge d’Istanbul Kebab Grill, boulevard de Port-Royal" loading="lazy" decoding="async"><figcaption>La devanture rouge, au 94 bd de Port-Royal</figcaption></figure>
       <iframe class="map" title="Plan d’accès, 94 boulevard de Port-Royal" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
         src="https://www.google.com/maps?q=Istanbul+Grill+Kebab,+94+Boulevard+de+Port-Royal,+75005+Paris&z=17&output=embed"></iframe>
+      </div>
     </div>
   </section>
 </main>
@@ -397,6 +409,7 @@ footer a{text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4)}
 <footer>
   <div class="wrap">
     <span>Istanbul Grill Kebab · 94 bd de Port-Royal, Paris 5e</span>
+    <span class="credit">Photos : clients sur Google Maps</span>
     <span><a href="https://www.instagram.com/kebab_paris5/" target="_blank" rel="noopener">Instagram</a></span>
   </div>
 </footer>
